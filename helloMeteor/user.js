@@ -1,11 +1,27 @@
 //Every user has:
+
 // id
 // name
-// username
+//	first
+//	middle
+//	last
+// username (password will be in authentication?)
 // location (latitude, longitude)
-// state - availability
-// state - status
-// TODO: character limit?
+
+// list of Friends
+
+// Status - state
+//	available, busy, invisible -- enums?
+// Status - text
+// 	DISCUSS: character limit?
+
+
+// Setters
+// add Friend
+// delete Friend
+
+
+//Getters
 // getLocation
 // getStatus
 // getName
