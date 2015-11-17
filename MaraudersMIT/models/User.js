@@ -9,6 +9,7 @@
 // location (latitude, longitude)
 
 // list of Friends
+// list of Friend Requests
 
 // Status - state
 //	available, busy, invisible -- enums?
@@ -18,7 +19,8 @@
 
 // Setters
 // add Friend
-// delete Friend
+// accept Friend (only for people in list of Friend Requests)
+// delete Friend (only for people in list of Friends)
 
 
 //Getters
