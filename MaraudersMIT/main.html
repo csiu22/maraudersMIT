@@ -18,7 +18,7 @@
 			    center: {lat: 42.359155, lng: -71.093058}, // 77 Mass Ave
 			    zoom: 18
 			  });
-			  var infoWindow = new google.maps.InfoWindow({map: map});
+			 // var infoWindow = new google.maps.InfoWindow({map: map});
 
 			  // Try HTML5 geolocation.
 			  if (navigator.geolocation) {
@@ -28,9 +28,12 @@
 						lng: position.coords.longitude
 				      	};
 
-						infoWindow.setPosition(pos);
-						infoWindow.setContent('You are here.');
+						//infoWindow.setPosition(pos);
+						//infoWindow.setContent('You are here.');
+
 						map.setCenter(pos);
+						displayFriends(updateUser(pos), map);
+
 				}, function() {
 					handleLocationError(true, infoWindow, map.getCenter());
 				});
@@ -38,6 +41,7 @@
 			    	// Browser doesn't support Geolocation
 			    	handleLocationError(false, infoWindow, map.getCenter());
 			  }
+
 		}
 
 		function handleLocationError(browserHasGeolocation, infoWindow, pos) {
@@ -46,6 +50,49 @@
 		                        'Error: The Geolocation service failed.' :
 		                        'Error: Your browser doesn\'t support geolocation.');
 		}
+
+
+		function updateUser(pos){
+
+			//Update user location
+			var Caitlin = {
+				name: "Caitlin Mehl",
+				loc: pos,
+				pic: '/user_images/test_image.png', 
+				status: 'available'
+			};
+
+			var friends = [Caitlin];
+			return friends;
+		}
+
+		function displayFriends(friends, map) {
+
+			friends.forEach(function(friend){
+
+				var image = {
+				    url: friend.pic,
+					
+					/* These need to be set but I'm not 100% sure how to do it yet 
+				    size: new google.maps.Size(20, 32),
+				    origin: new google.maps.Point(0, 0),
+				    anchor: new google.maps.Point(0, 32)
+				    */
+				 };
+
+				var marker = new google.maps.Marker({
+				      position: friend.loc,
+				      map: map,
+				      icon: image,
+				      //shape: shape,
+				      title: friend.name,
+				    });
+
+			});
+		}
+
+
+
 
 	</script>
 	<script async defer
