@@ -1,4 +1,7 @@
 <head>
+
+
+
 	<style type="text/css">
 		  html, body { height: 100%; margin: 0; padding: 0; }
 		  #map { height: 100%; }
@@ -19,8 +22,29 @@
 
 <template name = "googleMap">
   <div id="map"></div>
+
+<script type="text/javascript">
+
+/*
+[
+  "https://maps.googleapis.com/maps/api/js?key=AIzaSyAmUWvkqoAwT70st_eiDUo0xcnIcUGgo9g",
+  'https://google-maps-utility-library-v3.googlecode.com/svn-history/r435/trunk/richmarker/src/richmarker-compiled.js'
+].forEach(function(src) {
+  var script = document.createElement('script');
+  script.src = src;
+  script.async = false;
+  document.head.appendChild(script);
+});
+*/
+
+</script>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAmUWvkqoAwT70st_eiDUo0xcnIcUGgo9g"></script>
+<script src='https://google-maps-utility-library-v3.googlecode.com/svn-history/r435/trunk/richmarker/src/richmarker-compiled.js'></script>
+
+
     <script type="text/javascript">
-		  function initMap() {
+		 if ("geolocation" in navigator) {
 			  var map = new google.maps.Map(document.getElementById('map'), {
 			    center: {lat: 42.359155, lng: -71.093058}, // 77 Mass Ave
 			    zoom: 18
@@ -47,7 +71,10 @@
 			   	// Browser doesn't support Geolocation
 			   	handleLocationError(false, infoWindow, map.getCenter());
 			 }
-		}
+		} else {
+		/* geolocation IS NOT available */
+		console.log("geo not available");
+	}
 
 		function handleLocationError(browserHasGeolocation, infoWindow, pos) {
 			infoWindow.setPosition(pos);
@@ -88,6 +115,18 @@
   				    anchor: new google.maps.Point(0, 32)
   				    */
           };
+
+          // Test RichMarker
+         var div = document.createElement('DIV');
+        div.innerHTML = '<div class="my-other-marker">I am flat marker!</div>';
+        marker2 = new RichMarker({
+          map: map,
+          position: {lat: function(){return 42.359155}, lng: function(){return -71.093058}}, // 77 Mass Ave
+          draggable: false,
+          flat: true,
+          anchor: RichMarkerPosition.MIDDLE,
+          content: div
+        });
   
   		  	var marker = new google.maps.Marker({
                 position: {lat: friend.loc.lat + .00003, lng: friend.loc.lng - .000005},
@@ -109,7 +148,4 @@
 		}
 	</script>
 
-	<script async defer
-	      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAmUWvkqoAwT70st_eiDUo0xcnIcUGgo9g&callback=initMap">
-	</script>
 </template>
