@@ -16,13 +16,18 @@ $.getScript('https://maps.googleapis.com/maps/api/js?key=AIzaSyAmUWvkqoAwT70st_e
   				renderMap();
  		});
  	});
-
 }
 
-Template.sideBar.rendered = function() {
-  
+Template.sideBar.events({
+      "click .check_in": function () {
+             console.log("Checking in");
+      },
+      
+      "click .map": function () {
+            console.log("map yo");
+      },
+      "click .friends": function () {
+            console.log("FRAAANDS");
+      }
+  });
 }
-	
-}
-
-
