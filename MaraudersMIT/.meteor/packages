@@ -27,3 +27,4 @@ meteorhacks:ssr
 coffeescript
 accounts-ui
 twbs:bootstrap
+iron:router

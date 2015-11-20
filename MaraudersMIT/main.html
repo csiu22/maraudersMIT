@@ -8,6 +8,12 @@
 </head>
 
 <body>
+	<!-- Elements that are shared by every page is defined in the alwaysPresent template -->
+	<!-- Login -->
+	<!-- Sidebar -->
+</body>
+
+<template name="alwaysPresent">
 	{{> loginButtons}}
 
 	{{#if currentUser}}
@@ -15,42 +21,51 @@
       		 <span>{{currentUser.profile.name}}</span>
 	{{/if}}
 
-	{{> googleMap}}
+	{{> sideBar}}
 
-	{{> sideBar }}
-</body>
+	{{> yield}}
 
-<template name = "googleMap">
+	<hr />
+    	<p>Copyright &copy; MaraudersMIT, 2015.</p>
+
+</template>
+
+<template name="checkin">
+	<div id="pageRightSide">
+		<h2>
+			CheckIn Page CheckIn Page CheckIn Page CheckIn Page CheckIn Page CheckIn Page CheckIn Page CheckIn Page CheckIn Page CheckIn Page CheckIn Page CheckIn Page CheckIn Page CheckIn Page CheckIn Page CheckIn Page CheckIn Page CheckIn Page CheckIn Page CheckIn Page CheckIn Page CheckIn Page CheckIn Page CheckIn Page CheckIn Page CheckIn Page CheckIn Page CheckIn Page CheckIn Page CheckIn Page
+		</h2>
+    	</div>
+</template>
+
+<template name = "maraudersMap">
 	<div id="map"></div>
+</template>
+
+<template name="friends">
+	<div id="pageRightSide">
+		<h2>
+			Friends Page Friends Page Friends Page Friends Page Friends Page Friends Page Friends Page Friends Page Friends Page Friends Page Friends Page Friends Page Friends Page Friends Page Friends Page Friends Page Friends Page Friends Page Friends Page Friends Page Friends Page Friends Page Friends Page Friends Page Friends Page Friends Page Friends Page Friends Page Friends Page Friends Page Friends Page Friends Page Friends Page Friends Page Friends Page Friends Page Friends Page Friends Page Friends Page 
+		</h2>
+	</div>
+</template>
+
+<template name="navigation">
+	<ul>
+		<li><a href="{{pathFor route='checkin'}}">Check In</a></li>
+		<li><a href="{{pathFor route='maraudersMap'}}">View Map</a></li>
+		<li><a href="{{pathFor route='friends'}}">Friends</a></li>
+	</ul>
 </template>
 
 <template name = "sideBar" >
 	<div id="sidebar">
-<!-- 		      <a href="{{pathFor 'map'}}" class="{{activePage 'map'}}">
-			<span class="wrapper-menu-item">
-				<span class="icon-map"></span>
-				<span class="google-map">View Map</span>
-			</span>
-		      </a> -->
-
-
     		This is the side bar
-    		<div id="navigator">
-    			<button class="check_in">Check In</button>
-    			<button class="map">View Map</button>
-    			<button class="friends">Friends</button>
-    		<!-- <div id="buttons" class="row-fluid">
-    			<div class="span4">
-				<button class="btn btn-sm btn-default">Check In</button>
-    			</div>
-    			<div class="span4">
-				<button class="btn btn-sm btn-default">View Map</button>
-    			</div>
-    			<div class="span4">
-				<button class="btn btn-sm btn-default">Friends</button>
-    			</div>
-    		</div> -->
-
-		</div>
+    		<hr />
+    		<ul>
+			<li><a href="{{pathFor route='checkin'}}">Check In</a></li>
+			<li><a href="{{pathFor route='maraudersMap'}}">View Map</a></li>
+			<li><a href="{{pathFor route='friends'}}">Friends</a></li>
+		</ul>
 	</div>
 </template>

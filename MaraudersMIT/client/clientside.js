@@ -10,7 +10,7 @@ if (Meteor.isClient) {
   		});
 	});
 
-Template.googleMap.rendered = function() {
+Template.maraudersMap.rendered = function() {
 $.getScript('https://maps.googleapis.com/maps/api/js?key=AIzaSyAmUWvkqoAwT70st_eiDUo0xcnIcUGgo9g', function(){
   			$.getScript('https://google-maps-utility-library-v3.googlecode.com/svn-history/r435/trunk/richmarker/src/richmarker-compiled.js', function(){
   				renderMap();
@@ -18,16 +18,4 @@ $.getScript('https://maps.googleapis.com/maps/api/js?key=AIzaSyAmUWvkqoAwT70st_e
  	});
 }
 
-Template.sideBar.events({
-      "click .check_in": function () {
-             console.log("Checking in");
-      },
-      
-      "click .map": function () {
-            console.log("map yo");
-      },
-      "click .friends": function () {
-            console.log("FRAAANDS");
-      }
-  });
 }
