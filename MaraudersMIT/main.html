@@ -30,12 +30,8 @@
 
 </template>
 
-<template name="checkin">
-	<div id="pageRightSide">
-		<h2>
-			CheckIn Page CheckIn Page CheckIn Page CheckIn Page CheckIn Page CheckIn Page CheckIn Page CheckIn Page CheckIn Page CheckIn Page CheckIn Page CheckIn Page CheckIn Page CheckIn Page CheckIn Page CheckIn Page CheckIn Page CheckIn Page CheckIn Page CheckIn Page CheckIn Page CheckIn Page CheckIn Page CheckIn Page CheckIn Page CheckIn Page CheckIn Page CheckIn Page CheckIn Page CheckIn Page
-		</h2>
-    	</div>
+<template name="checkIn">
+	<div id="map"></div>
 </template>
 
 <template name = "maraudersMap">
@@ -43,7 +39,7 @@
 </template>
 
 <template name="friends">
-	<div id="pageRightSide">
+	<div id="friendsPage">
 		<h2>
 			Friends Page Friends Page Friends Page Friends Page Friends Page Friends Page Friends Page Friends Page Friends Page Friends Page Friends Page Friends Page Friends Page Friends Page Friends Page Friends Page Friends Page Friends Page Friends Page Friends Page Friends Page Friends Page Friends Page Friends Page Friends Page Friends Page Friends Page Friends Page Friends Page Friends Page Friends Page Friends Page Friends Page Friends Page Friends Page Friends Page Friends Page Friends Page Friends Page 
 		</h2>
@@ -52,11 +48,14 @@
 
 <template name = "sideBar" >
 	<div id="sidebar">
-    		<!-- This is the side bar -->
-
-
+    		<h3> [Search for a friend]</h3>
+    		<ul>
+    			<li> Friend 1 </li>
+    			<li> Friend 2 </li>
+    			<li> etc... </li>
+    		</ul>
  		<div id="icons">
-			<a href="{{pathFor route='checkin'}}" >
+			<a href="{{pathFor route='checkIn'}}" >
 				<span class="icon-check-in" data-icon="&#xe900;" ><br> Check-In </span>
 			</a>
 			<a href="{{pathFor route='maraudersMap'}}">

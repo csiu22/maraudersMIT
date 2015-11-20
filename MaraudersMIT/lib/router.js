@@ -4,7 +4,7 @@ Router.route('/', {
     template: 'maraudersMap'
 });
 
-Router.route('/checkin');
+Router.route('/checkIn');
 Router.route('/maraudersMap');
 Router.route('/friends');
 
