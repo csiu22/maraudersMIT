@@ -50,22 +50,25 @@
 	</div>
 </template>
 
-<template name="navigation">
-	<ul>
-		<li><a href="{{pathFor route='checkin'}}">Check In</a></li>
-		<li><a href="{{pathFor route='maraudersMap'}}">View Map</a></li>
-		<li><a href="{{pathFor route='friends'}}">Friends</a></li>
-	</ul>
-</template>
-
 <template name = "sideBar" >
 	<div id="sidebar">
     		This is the side bar
     		<hr />
     		<ul>
-			<li><a href="{{pathFor route='checkin'}}">Check In</a></li>
-			<li><a href="{{pathFor route='maraudersMap'}}">View Map</a></li>
-			<li><a href="{{pathFor route='friends'}}">Friends</a></li>
+			<li>
+				<a href="{{pathFor route='checkin'}}" data-icon="&#xe900;" >
+					Check-In
+				</a>
+			</li>
+			<li>
+				<!-- use 902 for white map -->
+				<a href="{{pathFor route='maraudersMap'}}" data-icon="&#xe901;" >
+					View Map
+				</a>
+			</li>
+			<li>
+				<a href="{{pathFor route='friends'}}" data-icon="&#xe903;" >Friends</a>
+			</li>
 		</ul>
 	</div>
 </template>

@@ -1,18 +1,64 @@
 /* CSS declarations go here */
 
-#map {
-    margin-left:200px;
+/*@font-face {
+    font-family: 'icomoon';
+    src:url('icons/icomoon/icomoon.eot');
+    src:url('icons/icomoon/icomoon.eot?#iefix') format('embedded-opentype'),
+        url('icons/icomoon/icomoon.woff') format('woff'),
+        url('icons/icomoon/icomoon.ttf') format('truetype'),
+        url('icons/icomoon/icomoon.svg#icomoon') format('svg');
+    font-weight: normal;
+    font-style: normal;
 }
+*/
+
+
+@font-face {
+    font-family: 'icomoon';
+    src:url('icons/icomoon/icomoon.eot?-o0h7nb');
+    src:url('icons/icomoon/comoon.eot?#iefix-o0h7nb') format('embedded-opentype'),
+        url('icons/icomoon/icomoon.woff?-o0h7nb') format('woff'),
+        url('icons/icomoon/icomoon.ttf?-o0h7nb') format('truetype'),
+        url('icons/icomoon/icomoon.svg?-o0h7nb#icomoon') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+[data-icon]::before {
+    font-family: 'icomoon';
+    content: attr(data-icon);
+    margin-right: 8px;
+    speak: none;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+}
+
+
+.icon-friends:before {
+    content: "\e903";
+}
+
+
 
 #sidebar {
     background:red;
-    width:200px;
-    height:300px;
+    width:250px;
+    height:100%;
     position:fixed;
-    top:50px;
+    /*top:50px;*/
     left:0;
 }
 
 #pageRightSide {
-    margin-left:200px;
+    margin-left:250px;
 }
+
+#map {
+    margin-left:250px;
+}
+/*
+.icon-check-in:before {
+    content: "\1f4cd";
+}*/
