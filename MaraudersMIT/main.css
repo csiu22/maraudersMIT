@@ -35,30 +35,48 @@
     line-height: 1;
 }
 
-
-.icon-friends:before {
-    content: "\e903";
-}
-
-
-
 #sidebar {
     background:red;
-    width:250px;
+    width:25%;
     height:100%;
     position:fixed;
     /*top:50px;*/
     left:0;
 }
 
+/*Place Icons on the bottom of the sidebar*/
+#icons {
+    position: absolute;
+    bottom: 0px;
+    /*height: 40px;*/
+
+    text-align: justify;
+    -ms-text-justify: distribute-all-lines;
+    text-justify: distribute-all-lines;
+}
+
+.icon-check-in, .icon-map, .icon-friends {
+    /*width: 150px;*/
+    height: 125px;
+    /*width: 33%;*/
+    vertical-align: top;
+    display: inline-block;
+    *display: inline;
+    zoom: 1
+}
+
+.stretch {
+    width: 100%;
+    display: inline-block;
+    font-size: 0;
+    line-height: 0
+}
+
 #pageRightSide {
+    width: 75%;
     margin-left:250px;
 }
 
 #map {
     margin-left:250px;
 }
-/*
-.icon-check-in:before {
-    content: "\1f4cd";
-}*/
