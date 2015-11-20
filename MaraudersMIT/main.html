@@ -41,8 +41,16 @@
 <template name="friends">
 	<div id="friendsPage">
 		<h2>
-			Friends Page Friends Page Friends Page Friends Page Friends Page Friends Page Friends Page Friends Page Friends Page Friends Page Friends Page Friends Page Friends Page Friends Page Friends Page Friends Page Friends Page Friends Page Friends Page Friends Page Friends Page Friends Page Friends Page Friends Page Friends Page Friends Page Friends Page Friends Page Friends Page Friends Page Friends Page Friends Page Friends Page Friends Page Friends Page Friends Page Friends Page Friends Page Friends Page 
+			Your Friends
 		</h2>
+
+		<ul>
+			{{#each friends}}
+				<br>
+				{{ name }}
+			{{/each}}
+		</ul>
+
 	</div>
 </template>
 

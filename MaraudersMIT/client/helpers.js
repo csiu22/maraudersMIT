@@ -4,3 +4,14 @@ Handlebars.registerHelper('activePage', function() {
 
   return _.include(routeNames, Router.current().route.name) && 'active';
 });
+
+
+  Template.friends.helpers({
+    friends: [
+      { name: "Linda" },
+      { name: "Connie" },
+      { name: "Tiffany" },
+      { name: "Caitlin" },
+      { name: "Ara" },
+    ]
+  });
