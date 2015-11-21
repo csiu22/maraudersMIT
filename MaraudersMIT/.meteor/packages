@@ -28,3 +28,4 @@ coffeescript
 accounts-ui
 twbs:bootstrap
 iron:router
+grigio:overlay

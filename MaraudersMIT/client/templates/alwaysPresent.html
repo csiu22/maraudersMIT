@@ -12,6 +12,8 @@
 	{{else}}
 		{{#if ifRouteIs 'register'}}
 			{{> yield}}
+			
+			{{> overlay }}
 		{{else}}
 			{{> login}}
 		{{/if}}
