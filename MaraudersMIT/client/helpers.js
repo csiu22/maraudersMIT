@@ -6,6 +6,10 @@ Handlebars.registerHelper('activePage', function() {
 });
 
 
+Handlebars.registerHelper('ifRouteIs', function (routeName) {
+      return Router.current().route._path === "/" + routeName;
+});
+
  Template.friends.helpers({
     friends: [
       { name: "Linda" },
