@@ -1,11 +1,11 @@
 <template name="friends">
 	<div id="friendsPage">
 		<h2>
-			Your Friends
+			Your (Facebook + Marauders ?) friends
 		</h2>
 
 		<ul>
-			{{#each friends}}
+			{{#each getMyFriends }}
 				<br>
 				{{ name }}
 			{{/each}}

@@ -1,11 +1,14 @@
 <template name = "sideBar" >
 	<div id="sidebar">
     		<h3> [Search for a friend]</h3>
-    		<ul>
-    			<li> Friend 1 </li>
-    			<li> Friend 2 </li>
-    			<li> etc... </li>
-    		</ul>
+
+    		<div id="friendsList">
+    		Your Marauder friends:
+			{{#each getMyFriends}}
+				<br>
+				{{ name }}
+			{{/each}}
+		</div>
  		<div id="icons">
  			<!-- TODO : Instead of the map, maybe just do a pop up. -->
 			<a href="{{pathFor route='checkIn'}}" >
@@ -20,6 +23,5 @@
 			</a>
 		</div>
 		<span class="stretch"></span>
-
 	</div>
 </template>

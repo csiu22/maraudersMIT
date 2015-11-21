@@ -10,12 +10,14 @@ Handlebars.registerHelper('ifRouteIs', function (routeName) {
       return Router.current().route._path === "/" + routeName;
 });
 
- Template.friends.helpers({
-    friends: [
+Handlebars.registerHelper('getMyFriends', function() {
+  friends = [
       { name: "Linda" },
       { name: "Connie" },
       { name: "Tiffany" },
       { name: "Caitlin" },
       { name: "Ara" },
     ]
-  });
+
+     return friends
+});
