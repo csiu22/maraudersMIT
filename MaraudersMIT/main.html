@@ -4,7 +4,11 @@
 		  html, body { height: 100%; margin: 0; padding: 0; }
 		  #map { height: 100%; }
 	</style>
+	<!-- <link rel="icon" sizes="16x16 32x32" href="/favicon.ico?v=2"> -->
+	 <link rel="shortcut icon" type="image/png" href="/favicon.png?123" sizes="16x16 32x32 64x64">
+
 	<title> Welcome to the Marauder's Map</title>
+
 </head>
 
 <body>
@@ -28,6 +32,15 @@
 	<hr />
     	<p>Copyright &copy; MaraudersMIT, 2015.</p>
 
+</template>
+
+
+<template name="login">
+	{{#if currentUser}}
+ 		 <h1> You are already logged in! </h1>
+ 	{{else}}
+ 		<h1> Log in </h1>
+	{{/if}}
 </template>
 
 <template name="checkIn">
