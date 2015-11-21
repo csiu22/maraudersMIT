@@ -6,7 +6,7 @@ Handlebars.registerHelper('activePage', function() {
 });
 
 
-  Template.friends.helpers({
+ Template.friends.helpers({
     friends: [
       { name: "Linda" },
       { name: "Connie" },

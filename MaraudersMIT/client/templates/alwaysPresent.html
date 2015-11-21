@@ -1,0 +1,16 @@
+<template name="alwaysPresent">
+	{{> loginButtons}}
+
+	{{#if currentUser}}
+ 		 <img src="{{currentUser.profile.picture}}" alt="picture">
+      		 <span>{{currentUser.profile.name}}</span>
+	{{/if}}
+
+	{{> sideBar}}
+
+	{{> yield}}
+
+	<hr />
+    	<p>Copyright &copy; MaraudersMIT, 2015.</p>
+
+</template>

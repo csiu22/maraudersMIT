@@ -1,0 +1,24 @@
+<template name = "sideBar" >
+	<div id="sidebar">
+    		<h3> [Search for a friend]</h3>
+    		<ul>
+    			<li> Friend 1 </li>
+    			<li> Friend 2 </li>
+    			<li> etc... </li>
+    		</ul>
+ 		<div id="icons">
+			<a href="{{pathFor route='checkIn'}}" >
+				<span class="icon-check-in" data-icon="&#xe900;" ><br> Check In</span>
+			</a>
+			<a href="{{pathFor route='maraudersMap'}}">
+				<!-- use 902 for white map -->
+				<span class="icon-map" data-icon="&#xe901;" ><br> View Map</span>
+			</a>
+			<a href="{{pathFor route='friends'}}" >
+				<span class="icon-friends" data-icon="&#xe903;" ><br> Friends </span>
+			</a>
+		</div>
+		<span class="stretch"></span>
+
+	</div>
+</template>

@@ -1,5 +1,4 @@
 /* CSS declarations go here */
-
 @font-face {
     font-family: 'icomoon';
     src:url('icons/icomoon/icomoon.eot?-o0h7nb');
@@ -32,35 +31,21 @@
 
 /*Place Icons on the bottom of the sidebar*/
 #icons {
-    position: absolute;
+    width:25%;
+    text-align:justify;
+    position:absolute;
     bottom: 0px;
-
-    text-align: justify;
-    -ms-text-justify: distribute-all-lines;
-    text-justify: distribute-all-lines;
-    text-align: justify;
+    padding-left:10px;
+    padding-right:10px;
 }
 
-.icon-check-in, .icon-map, .icon-friends {
-    vertical-align: top;
-    display: inline-block;
-    *display: inline;
-    zoom: 1
+#icons span {
+    display:inline-block;
+    width:50px;
 }
 
-.stretch {
-    width: 100%;
-    display: inline-block;
-    font-size: 0;
-    line-height: 0
-}
-
-#friendsPage {
-    float: right;
-    width: 70%;
-}
-
-#map {
-    float: right;
-    width: 70%;
+#icons:after {
+    display:inline-block;
+    width:100%;
+    content:'';
 }
