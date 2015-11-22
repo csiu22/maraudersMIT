@@ -7,5 +7,8 @@ if (Meteor.isClient) {
       				Session.set('errorMessage', err.reason || 'Unknown error');
     			}
   		});
+      // Meteor.subscribe("access_token");
 	});
+
+
 }
