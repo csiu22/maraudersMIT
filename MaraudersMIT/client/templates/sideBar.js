@@ -1,5 +1,5 @@
   Template.sideBar.events({
-    'click .js-overlay-open': function () {
-      Overlay.show('hello');
+    'click .check-in': function () {
+      Overlay.show('checkInOverlay');
     }
   });

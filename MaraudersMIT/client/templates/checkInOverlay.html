@@ -1,11 +1,13 @@
-<template name="hello">
+<template name="checkInOverlay">
 	<h2>{{title}}</h2>
 
 	{{#unless isInOverlay}}
 		<button class="js-overlay-open">Open Overlay</button>
 	{{/unless}}
 
+	<div id = CheckInInfo>
 	<p>
 	PUT YOUR CHECK IN INFORMATION HERE
 	</p>
+	</div>
 </template>
