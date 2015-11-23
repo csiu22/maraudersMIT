@@ -10,7 +10,7 @@ Router.route('/', function() {
 });
 
 Router.route('/login'); // Useful for debugging but don't include this in final version.
-Router.route('/register');
+Router.route('/newuser');
 Router.route('/checkIn');
 Router.route('/maraudersMap');
 Router.route('/friends');

@@ -1,8 +1,19 @@
 <template name="login">
 	{{#if currentUser}}
-		<h1> You are already logged in! </h1>
+
+		{{redirect_main}}
+
 	{{else}}
-		<h1> Log in with Facebook</h1>
-		<a href="{{pathFor route='register'}}" ><h1> Register </h1></a>
+		<div>
+			<img id="front_image" src="/backgrounds/front_image.png" alt="Log in with Facebook">
+			<div>
+			<img id="login" src="/icons/facebook_signin.png" alt="Log in with Facebook">
+			</div>
+		</div>
+
+		<a href="{{pathFor route='newuser'}}" >
+
+		</a>
 	{{/if}}
 </template>
+

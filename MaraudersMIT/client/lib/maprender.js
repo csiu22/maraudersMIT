@@ -1,42 +1,43 @@
-renderMap = function() {
+renderMap = function (){
 
-	if ("geolocation" in navigator) {
+	buildMap = function() {
 
-			  var map = new google.maps.Map(document.getElementById('map'), {
-			    center: {lat: 42.359155, lng: -71.093058}, // 77 Mass Ave
-			    zoom: 18
-			  });
+		if ("geolocation" in navigator) {
 
-			  // Try HTML5 geolocation.
-			  if (navigator.geolocation) {
-				  navigator.geolocation.getCurrentPosition(function(position) {
-				  	var pos = {
-					  	lat: position.coords.latitude,
-					  	lng: position.coords.longitude
-				  	};
+				  var map = new google.maps.Map(document.getElementById('map'), {
+				    center: {lat: 42.359155, lng: -71.093058}, // 77 Mass Ave
+				    zoom: 18
+				  });
 
-					  map.setCenter(pos);
-					  displayUsers(map, pos);
-				 }, function() {
-				  	handleLocationError(true, infoWindow, map.getCenter());
-				 });
-			 } else {
-			   	// Browser doesn't support Geolocation
-			   	handleLocationError(false, infoWindow, map.getCenter());
-			 }
+				  if (navigator.geolocation) {
+					  navigator.geolocation.getCurrentPosition(function(position) {
+					  	var pos = {
+						  	lat: position.coords.latitude,
+						  	lng: position.coords.longitude
+					  	};
 
-		function handleLocationError(browserHasGeolocation, infoWindow, pos) {
-			infoWindow.setPosition(pos);
-			infoWindow.setContent(browserHasGeolocation ?
-		                        'Error: The Geolocation service failed.' :
-		                        'Error: Your browser doesn\'t support geolocation.');
+						  map.setCenter(pos);
+						  displayUsers(map, pos);
+					 }, function() {
+					  	handleLocationError(true, infoWindow, map.getCenter());
+					 });
+				 } else {
+				   	// Browser doesn't support Geolocation
+				   	handleLocationError(false, infoWindow, map.getCenter());
+				 }
+
+			function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+				infoWindow.setPosition(pos);
+				infoWindow.setContent(browserHasGeolocation ?
+			                        'Error: The Geolocation service failed.' :
+			                        'Error: Your browser doesn\'t support geolocation.');
+			}
+		} else {
+			/* geolocation IS NOT available */
+			console.log("geo not available");
 		}
-	} else {
-		/* geolocation IS NOT available */
-		console.log("geo not available");
-	}
 
-	function displayUsers(map, pos){
+		function displayUsers(map, pos){
 
 			//Update user location
 			var Caitlin = {
@@ -108,7 +109,16 @@ renderMap = function() {
        //    });
         }
    		});
+
 	}
 
+	//Make sure that the required libraries are loaded before the map is build
+	var display = function(){
+		if (! Session.get('richmarkerReady') ){
+	    	setTimeout(display,100);
+	  } else {
+	    buildMap();
+	  }
+	}();
 
 }
