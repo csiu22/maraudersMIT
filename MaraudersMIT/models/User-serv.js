@@ -22,7 +22,7 @@ if (Meteor.isServer) {
     },
     'removeFriend': function(friendId) {
       var index = Meteor.user().friends.indexOf(friendId);
-      Meteor.user.friends.splice(index, 1); 
+      Meteor.user().friends.splice(index, 1); 
       console.log("friend removed");
     }
   });
