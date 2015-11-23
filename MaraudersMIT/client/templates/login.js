@@ -2,8 +2,13 @@ if (Meteor.isClient) {
   Meteor.subscribe("users");
   Accounts.onLogin(function(){
     	  console.log("Is the user verified? " + Meteor.user().isVerified);
- 	  if(Meteor.user().isVerified){
-      		console.log("already registered");
+ 	  if(Meteor.userId() || Meteor.user().isVerified){
+ 	  	// If the user is already verified or already logged in, go directly to the map.
+ 	  	if (Meteor.userId()) {
+ 	  		console.log("already logged in");
+ 	  	} else {
+ 	  		console.log("already registered");	
+ 	  	}      		
 	  	redirect('maraudersMap');
 	  } else{
       		console.log("registering");
