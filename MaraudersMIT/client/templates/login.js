@@ -1,10 +1,9 @@
-
 var redirect_main = function() {
-	this.route('maraudersmap', {path: '/maraudersmap'});
+	Router.go('maraudersMap');
 };
 
 var redirect_register = function() {
-	this.route('newuser', {path: '/newuser'});
+	Router.go('newuser');
 };
 
 Accounts.onLogin(function(){
