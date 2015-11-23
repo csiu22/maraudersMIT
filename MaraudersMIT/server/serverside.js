@@ -26,7 +26,10 @@ if (Meteor.isServer) {
 
             user.geolocation = "bleh";  //idk isn't showing up???
             user.profile = options.profile;
+           
         }
+        user.isVerified = false;
+        
         return user;
     });
 

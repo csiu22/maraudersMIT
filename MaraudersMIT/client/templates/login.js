@@ -3,19 +3,38 @@ var redirect_main = function() {
 	this.route('maraudersmap', {path: '/maraudersmap'});
 };
 
+var redirect_register = function() {
+	this.route('newuser', {path: '/newuser'});
+};
+
+Accounts.onLogin(function(){
+	  if(Meteor.user().isNew){
+	 	redirect_register();
+	  } else{
+	  	redirect_main();
+	 }
+});
+
 Template.login.events({
 	"submit .register-email": function () {      
 		// Prevent default browser form submit
 		event.preventDefault();
 
 		// Get value from form element
-		console.log(event.target);
+
 		var email = event.target.email.value;
 		var domain = email.trim().toLowerCase().slice(-8);
 
 		if (domain === "@mit.edu") {
-			console.log("Yay that's an mit email");
+			
+		Meteor.users.update(Meteor.userId(),{
+      		$set:{isVerified: true}
+    	});
+    	
+    	redirect_main();
+
 		} else {
+			
 			console.log("You don't even go here");
 			alert("Please enter a valid MIT address");
 		}
@@ -30,17 +49,6 @@ Template.login.events({
 					
 					} else {
 						
-						Accounts.onLogin(function(){
-	  						if(Meteor.user().isNew){
-	    						Meteor.users.update(Meteor.userId(),{
-	      							$set:{
-	        							isNew: false
-	      								}
-	    						});		
-	  						} else{
-	  								redirect_main();
-	  							}
-	  					});
 					}
 				}
 			);
@@ -63,5 +71,4 @@ Template.login.events({
 Template.login.helpers = ({
 	redirect_main: redirect_main,
 });
-
 
