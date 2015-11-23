@@ -37,27 +37,29 @@ if (Meteor.isClient) {
       console.log("finding users");
       var userList = [];
       Meteor.user().profile.facebookfriends.forEach(function(user) {
-        console.log(typeof(user.id));
+        console.log(user.id);
         var isFriend = false;
-        Meteor.user().friends.forEach(function(friendId) {
-          var friend = Meteor.users.findOne({_id: friendId});
-          if (friend.services.facebook.id === user.id) {
-            console.log("friending");
-            userList.push({name: user.name, id: user.id, friend: true, request: false});
-            isFriend = true;
-          } 
-        });
-        if (!isFriend) {
-          Meteor.user().requests.forEach(function(friendId) {
+        if (Meteor.users.findOne({"services.facebook.id": user.id})) {
+          Meteor.user().friends.forEach(function(friendId) {
             var friend = Meteor.users.findOne({_id: friendId});
             if (friend.services.facebook.id === user.id) {
-              userList.push({name: user.name, id:user.id, friend: false, request: true});
+              console.log("friending");
+              userList.push({name: user.name, id: user.id, friend: true, request: false});
               isFriend = true;
-            }
+            } 
           });
-        }
-        if (!isFriend) {
-          userList.push({name: user.name, id: user.id,friend: false, request: false});
+          if (!isFriend) {
+            Meteor.user().requests.forEach(function(friendId) {
+              var friend = Meteor.users.findOne({_id: friendId});
+              if (friend.services.facebook.id === user.id) {
+                userList.push({name: user.name, id:user.id, friend: false, request: true});
+                isFriend = true;
+              }
+            });
+          }
+          if (!isFriend) {
+            userList.push({name: user.name, id: user.id,friend: false, request: false});
+          }
         }
       });
       return userList;
