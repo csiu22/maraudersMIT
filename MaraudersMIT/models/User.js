@@ -1,5 +1,22 @@
 //Every user has:
 
+// id
+// name
+//	first
+//	middle
+//	last
+// username (password will be in authentication?)
+// location (latitude, longitude)
+
+// list of Friends
+// list of Friend Requests
+
+// Status - state
+//	available, busy, invisible -- enums?
+// Status - text
+// 	DISCUSS: character limit?
+
+
 // Setters
 // add Friend
 // accept Friend (only for people in list of Friend Requests)
@@ -7,66 +24,14 @@
 
 
 //Getters
-// getAvailability
+// getLocation
 // getStatus
 // getName
 // getUsername
 
-
-// Variables:
-// id: should be same as Meteor.userId() of the user
-// name: name from Facebook
-// friends: List of user ids []
-// requests: List of user ids []
-// checkin: null if invisible
-//    else  {availability: "available" or "busy", status: "text status: duration: integer minutes?, loc: Object {lat: latitude, lng: longitude}}
 /////////Checkins and userinfo of friends as different DBS????
 
-
-// {id: 1, friends: [2, 3], requests: [], checkin: null}
-// {id: 2, friends: [1, 3], requests: [], checkin: {availability: "available", status: "hi", duration: 20, loc: {lat: 10, lng: 10}}}
-// {id: 3, friends: [2, 3], requests: [], checkin: {availability: "busy", status: "hello", duration: 20, loc: {lat: 10, lng: 10}}}
-//
-// array of {name: friend's name, pic: friend's pic, checkin: {availability: "available" or "busy", status: "hello", duration: 20: loc: {lat: 10, lng: 10}}}
 // UserInfo = new Mongo.Collection('info');
-if (Meteor.isClient) {
-  Meteor.subscribe('user_mm');
-  User_mm = new Mongo.Collection("user_mm");
-  console.dir(Template);
-
-  Template.friends.helpers({
-    users: function() {
-      console.log("finding users");
-      return User_mm.findOne({id: 1}).friends; 
-    }
-  });
-  /*
-
-  Template.maraudersMap.helpers({
-    location: function() {
-      return User_mm.find({id: Meteor.userId()}).loc;
-    }
-    friendLocs: function() {
-      // find friends associated with current users
-      var friends = User_mm.find({id: Meteor.userId()}).friends;
-      // create locations array to return. should contain: friend's name, check in info
-      var locations = [];
-      // for each friend
-      friends.forEach(function(friendId) {
-        /*
-          // find friend's profile and extract info about checkin if they are checked in 
-          var friendMM = User_mm.find({id: friendId}); 
-//          var friend = Meteor.users.find(id: 
-          // if friend exists
-          if (friend) {
-//            locations.push({name: 
-          } 
-      });
-    }
-  });
- */ 
-}
-
 
 //   var currentUserId = Meteor.userId();
 //   currentUser = UserInfo.findOne({user: currentUserId});
