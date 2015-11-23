@@ -10,6 +10,11 @@ Handlebars.registerHelper('ifRouteIs', function (routeName) {
       return Router.current().route._path === "/" + routeName;
 });
 
+Handlebars.registerHelper('redirect_main', function (routeName) {
+      Router.go('maraudersMap');
+      renderMap();
+});
+
 
 //TODO: Get Facebook and Marauder's friends using Mongo.
 Handlebars.registerHelper('getMyFacebookFriends', function() {
