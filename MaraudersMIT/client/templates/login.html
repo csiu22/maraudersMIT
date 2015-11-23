@@ -1,5 +1,14 @@
 <template name="login">
 	{{#if currentUser}}
+<<<<<<< HEAD
+		<h1> You are already logged in!</h1>
+		{{> logoutbutton}}
+	{{else}}
+		{{> loginbutton}}
+		<a href="{{pathFor route='register'}}" ><h1> Register </h1></a>
+	{{/if}}
+</template>
+=======
 
 		{{redirect_main}}
 
@@ -14,3 +23,4 @@
 	{{/if}}
 </template>
 
+>>>>>>> e34b697f676cf1825aa7ca8d66fd9a60515902c0
