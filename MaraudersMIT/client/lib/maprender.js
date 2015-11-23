@@ -37,28 +37,31 @@ renderMap = function (){
       console.log("geo not available");
     }
 
-    function displayUsers(map, pos){
+
+// array of {name: friend's name, pic: friend's pic,
+// checkin: {availability: "available" or "busy", status: "hello", duration: 20, loc: {lat: 10, lng: 10}}}
+
+    function displayUsers(map, pos, friends){
 
         //Update user location
         var Caitlin = {
           name: "Caitlin Mehl",
-          loc: pos,
           pic: '/user_images/test_image.png',
-          status: 'available',
+          checkin: {availability: "busy", status: 'yo', duration: 20, loc: pos}
+
         };
 
         var Test = {
           name: "Tester Test",
-          loc: {lat: 42.359155, lng: -71.093058},
           pic: '/user_images/test_image.png',
-          status: 'busy',
+          checkin: {availability: "available", status: 'heyyy', duration: 60, loc: {lat: 42.359155, lng: -71.093058}}
         }
         var friends = [Caitlin, Test];
 
 
       //function displayFriends(friends, map) {
         friends.forEach(function(friend){
-          if (friend.status !== 'invisible') {
+          if (friend.checkin.availability !== 'invisible') {
             var image = {
               url: friend.pic,
               size: new google.maps.Size(40, 40),
@@ -69,7 +72,7 @@ renderMap = function (){
                 */
             };
 
-            var location = new google.maps.LatLng(friend.loc.lat, friend.loc.lng);
+            var location = new google.maps.LatLng(friend.checkin.loc.lat, friend.checkin.loc.lng);
 
           //   // Test RichMarker
           //  var div = document.createElement('DIV');
@@ -80,7 +83,8 @@ renderMap = function (){
               draggable: false,
               flat: true,
               anchor: RichMarkerPosition.MIDDLE,
-              content: '<div class=' + friend.status + '><div><div>' + friend.name + '</div><img src="' + friend.pic + '"/></div>' + '<div>' + friend.status + '</div>'
+              content: '<div class=' + friend.checkin.availability + '><div><div>' + friend.name + '</div><img src="' + friend.pic + '"/></div>' +
+              '<div>' + friend.checkin.status + '</div>'
             });
 
             // var marker = new google.maps.Marker({
