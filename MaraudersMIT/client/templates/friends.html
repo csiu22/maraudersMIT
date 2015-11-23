@@ -12,7 +12,11 @@
         <button class="friend-remove">Remove friend</button>
         {{ else }}
           {{ #if this.request }}
-          <button class="friend-accept" >Accept request</button>
+            {{ #if this.requested }}
+              <button class="" >Pending</button>
+            {{ else }}
+              <button class="friend-accept" >Accept request</button>
+            {{/if}}
           {{ else }}
           <button class="friend-request">Friend request</button>
           {{/if}}

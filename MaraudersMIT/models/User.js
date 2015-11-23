@@ -39,29 +39,46 @@ if (Meteor.isClient) {
       Meteor.user().profile.facebookfriends.forEach(function(user) {
         console.log(user.id);
         var isFriend = false;
-        if (Meteor.users.findOne({"services.facebook.id": user.id})) {
+        var currentUser = Meteor.users.findOne({"services.facebook.id": user.id});
+        if (currentUser) {
           Meteor.user().friends.forEach(function(friendId) {
             var friend = Meteor.users.findOne({_id: friendId});
             if (friend.services.facebook.id === user.id) {
               console.log("friending");
-              userList.push({name: user.name, id: user.id, friend: true, request: false});
+              userList.push({name: user.name, id: currentUser._id, friend: true, request: false, requested: false});
               isFriend = true;
-            } 
+            }
           });
           if (!isFriend) {
             Meteor.user().requests.forEach(function(friendId) {
               var friend = Meteor.users.findOne({_id: friendId});
               if (friend.services.facebook.id === user.id) {
-                userList.push({name: user.name, id:user.id, friend: false, request: true});
+                userList.push({name: user.name, id: currentUser._id, friend: false, request: true, requested: false});
                 isFriend = true;
               }
             });
           }
           if (!isFriend) {
-            userList.push({name: user.name, id: user.id,friend: false, request: false});
+            console.log("here");
+            // var person = Meteor.users.findOne({_id: userId});
+            console.log(currentUser.requests);
+            currentUser.requests.forEach(function(requestId) {
+              var request = Meteor.users.findOne({_id: requestId});
+              console.log(request);
+              if (Meteor.userId() === request._id) {
+                userList.push({name: user.name, id: currentUser._id, friend: false, request: true, requested: true});
+                isFriend = true;
+              }
+            })
+
+          }
+          if (!isFriend) {
+            userList.push({name: user.name, id: currentUser._id, friend: false, request: false, requested: false});
           }
         }
       });
+      console.log("LIST");
+      console.log(userList);
       return userList;
     },
   });
@@ -82,4 +99,4 @@ if (Meteor.isClient) {
     }
   });
 
-}  
+}
