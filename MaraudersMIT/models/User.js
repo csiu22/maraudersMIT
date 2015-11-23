@@ -62,15 +62,6 @@ if (Meteor.isClient) {
       });
       return userList;
     },
-
-    addFriend: function(friendId) {
-      Meteor.user().friends.push(friendId);
-    },
-
-    removeFriend: function(friendId) {
-      var index = Meteor.user().friends.indexOf(friendId);
-      Meteor.user.friends.splice(index, 1);
-    }
   });
 
   Template.sideBar.helpers({
