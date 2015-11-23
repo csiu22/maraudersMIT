@@ -17,6 +17,27 @@ Template.checkInOverlay.events({
 
 	var availability = event.target.state.value;
 	console.log("and your availability is: " + availability);
-	Overlay.hide();
+
+         
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(function(position) {
+      var pos = {
+        lat: position.coords.latitude,
+        lng: position.coords.longitude
+      };
+      console.log(pos);
+      Meteor.call("checkIn", availability, status, duration, pos, function() {
+        console.log("done submitting");
+      });
+    //  checkIn(availability, status, duration, pos);
+    }, function() {
+      console.log("error can't get location");
+    });
+  } else {
+    // Browser doesn't support Geolocation
+    console.log("error browser doesn't support geolocation");
+  }   
+
+ 	Overlay.hide();
 }
 });

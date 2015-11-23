@@ -88,6 +88,12 @@ if (Meteor.isClient) {
       return friendNames;
     }
   });
+
+  var checkIn =  function(availability, text_status, duration, location) {
+      console.log("checking in");
+      Meteor.users.update({_id: Meteor.userId()}, {$set: {checkin: {availability: availabilty, text_status: text_status, duration: duration, loc: location}}});
+  };
+
   Template.maraudersMap.helpers({
     friendLocs: function() {
       console.log("friend locs");
