@@ -1,23 +1,28 @@
 
 var redirect_main = function() {
-	this.route('maraudersmap', {path: '/maraudersmap'});
+  Router.go("maraudersMap");
+//	this.route('maraudersMap', {path: '/maraudersmap'});
 };
 
 var redirect_register = function() {
-	this.route('newuser', {path: '/newuser'});
+  Router.go('newuser');
+//	this.route('newuser', {path: '/newuser'});
 };
 
 Accounts.onLogin(function(){
-	  if(Meteor.user().isNew){
-	 	redirect_register();
-	  } else{
+	  if(Meteor.user().isVerified){
+      console.log("already registered");
 	  	redirect_main();
+	  } else{
+      console.log("registering");
+	 	  redirect_register();
 	 }
 });
 
-Template.login.events({
-	"submit .register-email": function () {      
+Template.newuser.events({
+"submit .register-email": function () {      
 		// Prevent default browser form submit
+    console.log("submitted");
 		event.preventDefault();
 
 		// Get value from form element
@@ -26,11 +31,11 @@ Template.login.events({
 		var domain = email.trim().toLowerCase().slice(-8);
 
 		if (domain === "@mit.edu") {
-			
-		Meteor.users.update(Meteor.userId(),{
+  		Meteor.users.update(Meteor.userId(),{
       		$set:{isVerified: true}
-    	});
+     	});
     	
+      console.log("verfied!");
     	redirect_main();
 
 		} else {
@@ -38,9 +43,12 @@ Template.login.events({
 			console.log("You don't even go here");
 			alert("Please enter a valid MIT address");
 		}
-	}, 
+	},
+});
 
+Template.login.events({
 	"click #login" : function (e, tmpl) {
+    console.log("logging in");
 			Meteor.loginWithFacebook(
 				{requestPermissions: ['user_friends']}, 
 				function (err) {

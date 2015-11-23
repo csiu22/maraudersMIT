@@ -1,5 +1,10 @@
 if (Meteor.isServer) {
   Meteor.startup(function () {
+    Meteor.users.allow({
+      update: function(userId, doc) {
+        return true;
+      }
+    });
     Accounts.loginServiceConfiguration.remove({
       service: "facebook"
     });

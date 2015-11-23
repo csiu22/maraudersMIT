@@ -1,15 +1,13 @@
 <template name="newuser">
 	{{#if currentUser}}
 		<!-- TODO: add link to logout -->
-		<h1> You need to logout before you can register </h1>
-	{{else}}
-		<h3> Sign up with facebook (add facebook button)</h3>
-
 		<form class="register-email">
 			<label>Please enter your MIT email</label>
 			<br>
 			<input type="text" name="email" placeholder="@mit.edu" />
-	                	<button class="submit">Submit</button>
+     	<button class="submit">Submit</button>
 		</form>
+	{{else}}
+		<h3> Sign up with facebook (add facebook button)</h3>
 	{{/if}}
 </template>
