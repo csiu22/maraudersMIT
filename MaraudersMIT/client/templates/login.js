@@ -7,7 +7,8 @@ var redirect_register = function() {
 };
 
 Accounts.onLogin(function(){
-	  if(Meteor.user().isVerified){
+      console.log(Meteor.user().isVerified);
+	  if(Meteor.user().profile.isVerified){
       console.log("already registered");
 	  	redirect_main();
 	  } else{
@@ -29,7 +30,7 @@ Template.newuser.events({
 
 		if (domain === "@mit.edu") {
   		Meteor.users.update(Meteor.userId(),{
-      		$set:{isVerified: true}
+      		$set:{'profile.isVerified': true}
      	});
     	
       console.log("verfied!");

@@ -19,7 +19,6 @@ if (Meteor.isServer) {
 
 
     Accounts.onCreateUser(function(options, user) {
-	alert("does this work?");
         if (options.profile) {
 	    console.log('creating new user');
             options.profile.picture = getFbPicture(user.services.facebook.accessToken);
@@ -32,12 +31,14 @@ if (Meteor.isServer) {
             options.profile.availability = "invisible";
 
             options.profile.duration = 0;
+            
+            options.profile.isVerified = false; 
 
             user.geolocation = "bleh";  //idk isn't showing up???
             user.profile = options.profile;
         }
-        user.isVerified = false;
-        
+//        user.isVerified = false;
+       
         return user;
     });
 
