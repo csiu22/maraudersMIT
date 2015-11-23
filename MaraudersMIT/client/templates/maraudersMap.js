@@ -1,1 +1,1 @@
-renderMap();
+Template.maraudersMap.rendered = renderMap;
