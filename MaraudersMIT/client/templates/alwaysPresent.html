@@ -1,20 +1,17 @@
 <template name="alwaysPresent">
 	{{> loginButtons}}
 
-	{{> sideBar}}
-
 	{{#if currentUser}}
 		{{#if loggingIn}}
      			Logging In
   		{{else}}
  			<img src="{{currentUser.profile.picture}}" alt="picture">
-      			<span>{{currentUser.profile.name}}</span>
-  		{{/if}}
-      		 	
-		{{> yield}}
+      			<span>{{currentUser.profile.name}}</span>      		
+      			{{> sideBar}} 		 	
+			{{> yield}}
 
 	{{else}}
-		{{#if ifRouteIs 'register'}}
+		{{#if ifRouteIs 'newuser'}}
 			{{> yield}}
 			
 			{{> overlay }}
@@ -24,6 +21,5 @@
 	{{/if}}
 
 	<hr />
-    	<p>Copyright &copy; MaraudersMIT, 2015.</p>
 
 </template>

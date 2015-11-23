@@ -1,5 +1,6 @@
 <template name="login">
 	{{#if currentUser}}
+<<<<<<< HEAD
 		<h1> You are already logged in!</h1>
 		{{> logoutbutton}}
 	{{else}}
@@ -7,3 +8,22 @@
 		<a href="{{pathFor route='register'}}" ><h1> Register </h1></a>
 	{{/if}}
 </template>
+=======
+
+		{{redirect_main}}
+
+	{{else}}
+		<div>
+			<img id="front_image" src="/backgrounds/front_image.png" alt="Log in with Facebook">
+			<div>
+			<img id="login" src="/icons/facebook_signin.png" alt="Log in with Facebook">
+			</div>
+		</div>
+
+		<a href="{{pathFor route='newuser'}}" >
+
+		</a>
+	{{/if}}
+</template>
+
+>>>>>>> e34b697f676cf1825aa7ca8d66fd9a60515902c0
