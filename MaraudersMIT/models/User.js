@@ -73,6 +73,21 @@ if (Meteor.isClient) {
     }
   });
 
+  Template.sideBar.helpers({
+    friends: function() {
+      var friendNames = [];
+      console.log(Meteor.user());
+      console.log(Meteor.user().friends);
+      Meteor.user().friends.forEach(function(friendId) {
+        var friend = Meteor.users.findOne({_id: friendId});
+        friendNames.push(friend.services.facebook.name);
+      });
+      if (friendNames.length === 0) {
+        friendNames.push("None");
+      }
+      return friendNames;
+    }
+  });
   Template.maraudersMap.helpers({
     friendLocs: function() {
       console.log("friend locs");
