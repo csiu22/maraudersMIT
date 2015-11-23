@@ -6,47 +6,49 @@ var redirect_register = function() {
 	Router.go('newuser');
 };
 
-Accounts.onLogin(function(){
-      console.log(Meteor.user().isVerified);
-	  if(Meteor.user().profile.isVerified){
+if (Meteor.isClient) {
+  Meteor.subscribe("users");
+  Accounts.onLogin(function(){
+    console.log(Meteor.user().isVerified);
+ 	  if(Meteor.user().isVerified){
       console.log("already registered");
 	  	redirect_main();
 	  } else{
       console.log("registering");
 	 	  redirect_register();
-	 }
-});
+	  }
+  });
 
-Template.newuser.events({
-"submit .register-email": function () {      
-		// Prevent default browser form submit
-    console.log("submitted");
-		event.preventDefault();
+  Template.newuser.events({
+    "submit .register-email": function () {      
+		  // Prevent default browser form submit
+      console.log("submitted");
+		  event.preventDefault();
 
-		// Get value from form element
+		  // Get value from form element
 
-		var email = event.target.email.value;
-		var domain = email.trim().toLowerCase().slice(-8);
+		  var email = event.target.email.value;
+		  var domain = email.trim().toLowerCase().slice(-8);
 
-		if (domain === "@mit.edu") {
-  		Meteor.users.update(Meteor.userId(),{
-      		$set:{'profile.isVerified': true}
-     	});
+		  if (domain === "@mit.edu") {
+  		  Meteor.users.update(Meteor.userId(),{
+      		$set:{isVerified: true}
+     	  });
     	
-      console.log("verfied!");
-    	redirect_main();
+        console.log("verfied!");
+    	  redirect_main();
 
-		} else {
+		  } else {
 			
-			console.log("You don't even go here");
-			alert("Please enter a valid MIT address");
-		}
-	},
-});
+			  console.log("You don't even go here");
+			  alert("Please enter a valid MIT address");
+		  }
+	  },
+  });
 
-Template.login.events({
-	"click #login" : function (e, tmpl) {
-    console.log("logging in");
+  Template.login.events({
+	  "click #login" : function (e, tmpl) {
+      console.log("logging in");
 			Meteor.loginWithFacebook(
 				{requestPermissions: ['user_friends']}, 
 				function (err) {
@@ -71,5 +73,6 @@ Template.login.events({
 		}
 
 
-});
+  });
+}
 

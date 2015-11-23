@@ -1,5 +1,8 @@
 if (Meteor.isServer) {
   Meteor.startup(function () {
+    Meteor.publish("users", function() {
+      return Meteor.users.find();
+    });
     Meteor.users.allow({
       update: function(userId, doc) {
         return true;
@@ -32,12 +35,10 @@ if (Meteor.isServer) {
 
             options.profile.duration = 0;
             
-            options.profile.isVerified = false; 
-
             user.geolocation = "bleh";  //idk isn't showing up???
             user.profile = options.profile;
         }
-//        user.isVerified = false;
+        user.isVerified = false;
        
         return user;
     });
