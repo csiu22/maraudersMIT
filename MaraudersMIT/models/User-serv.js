@@ -3,6 +3,11 @@ if (Meteor.isServer) {
     'checkIn': function(availability, text_status, duration, location) {
       console.log("checking in from server");
       Meteor.users.update({_id: Meteor.userId()}, {$set: {checkin: {availability: availability, text_status: text_status, duration: duration, loc: location}}});
+      console.log("setting timeout");
+      setTimeout(Meteor.bindEnvironment(function() {
+        console.log("timing out check in");
+        Meteor.users.update({_id: Meteor.userId()}, {$set: {checkin: null}});
+      }), duration * 1000 * 60);
      },
 
     'sendFriendRequest': function(friendId) {
@@ -33,7 +38,7 @@ if (Meteor.isServer) {
       Meteor.user().friends.forEach(function(friendId) {
         var friend = Meteor.users.findOne({_id: friendId});
         if (friend.checkIn != null) {
-          locations.push({name: friend.services.facebook.name, pic: friend.services.facebook.pic,
+          locations.push({name: friend.services.facebook.name, pic: friend.services.facebook.profile.picture,
                           checkIn: friend.checkIn});
         }
       });
