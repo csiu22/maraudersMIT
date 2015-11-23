@@ -1,8 +1,24 @@
 <template name="login">
 	{{#if currentUser}}
-		<h1> You are already logged in! </h1>
+		{{redirect_main}}
 	{{else}}
-		<h1> Log in with Facebook</h1>
-		<a href="{{pathFor route='register'}}" ><h1> Register </h1></a>
+		
+		
+
+		<a href="{{pathFor route='newuser'}}" >
+
+		</a>
 	{{/if}}
+</template>
+
+
+<template name="newuser">
+
+		<form class="register-email">
+			<label>Please enter your MIT email</label>
+			<br>
+			<input type="text" name="email" placeholder="@mit.edu" />
+	                	<button class="submit">Submit</button>
+		</form>
+	
 </template>
