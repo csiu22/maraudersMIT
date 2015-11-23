@@ -66,8 +66,3 @@ Template.login.events({
 
 });
 
-
-Template.login.helpers = ({
-	redirect_main: redirect_main,
-});
-

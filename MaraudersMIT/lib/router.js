@@ -1,20 +1,33 @@
 // Route Manager
 
 Router.route('/', function() {
-	if(Meteor.userId()) {
-		// template: 'maraudersMap'
-		this.render('maraudersMap'); 
-	} else {
 		this.render('login');
-	}
 });
 
-Router.route('/login'); // Useful for debugging but don't include this in final version.
+Router.route('/login'); 
 Router.route('/newuser');
-Router.route('/checkIn');
-Router.route('/maraudersMap');
-Router.route('/friends');
 
+Router.route('checkIn', {
+        path: '/checkIn',
+        template: 'checkIn',
+        layoutTemplate: 'alwaysPresent'
+ });
+
+
+Router.route('maraudersMap', {
+        path: '/maraudersMap',
+        template: 'maraudersMap',
+        layoutTemplate: 'alwaysPresent'
+ });
+
+Router.route('friends', {
+        path: '/friends',
+        template: 'friends',
+        layoutTemplate: 'alwaysPresent'
+  });
+
+/*
 Router.configure({
     layoutTemplate: 'alwaysPresent'
 });
+*/
