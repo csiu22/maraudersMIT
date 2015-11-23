@@ -4,6 +4,7 @@ Template.register.events({
 	event.preventDefault();
 
 	// Get value from form element
+	console.log(event.target);
 	var email = event.target.email.value;
 	var domain = email.trim().toLowerCase().slice(-8);
 
