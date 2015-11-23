@@ -23,21 +23,16 @@ if (Meteor.isServer) {
 
     Accounts.onCreateUser(function(options, user) {
         if (options.profile) {
-	    console.log('creating new user');
+	          console.log('creating new user');
             options.profile.picture = getFbPicture(user.services.facebook.accessToken);
-	    options.profile.facebookfriends = getFbFriends(user.services.facebook.accessToken);
+      	    options.profile.facebookfriends = getFbFriends(user.services.facebook.accessToken);
 
-            options.profile.friends = [];
-
-            options.profile.text_status = "I solemnly swear that I'm up to no good";
-
-            options.profile.availability = "invisible";
-
-            options.profile.duration = 0;
-            
-            user.geolocation = "bleh";  //idk isn't showing up???
             user.profile = options.profile;
         }
+        user.friends = [];
+        user.requests = []
+        user.checkin = null;
+        
         user.isVerified = false;
        
         return user;
@@ -73,11 +68,7 @@ if (Meteor.isServer) {
             console.log(result.error);
         };
 	friendListData = result.data.friends.data;
-	friendNames = [];
-	for (i=0; i < friendListData.length; i++) {
-		friendNames.push(friendListData[i].name);
-	}
-        return friendNames;
+        return friendListData;
     };
 
     // Meteor.publish("access_token", function () {

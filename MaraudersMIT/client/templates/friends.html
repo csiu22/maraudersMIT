@@ -5,9 +5,20 @@
 		</h2>
 
 		<ul>
-			{{#each getMyFacebookFriends }}
+			{{#each users }}
 				<br>
-				{{ name }}
+				{{ this.name }}
+        {{#if this.friend}}
+        <button class="friend-remove">Remove friend</button>
+        {{ else }}
+          {{ #if this.request }}
+          <button class="friend-accept" >Accept request</button>
+          {{ else }}
+          <button class="friend-request">Friend request</button>
+          {{/if}}
+        {{/if}}
+
+
 			{{/each}}
 		</ul>
 

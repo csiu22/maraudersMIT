@@ -30,14 +30,63 @@
 // array of {name: friend's name, pic: friend's pic, checkin: {availability: "available" or "busy", status: "hello", duration: 20: loc: {lat: 10, lng: 10}}}
 // UserInfo = new Mongo.Collection('info');
 if (Meteor.isClient) {
-  Meteor.subscribe('user_mm');
-  User_mm = new Mongo.Collection("user_mm");
   console.dir(Template);
 
   Template.friends.helpers({
     users: function() {
       console.log("finding users");
-      return User_mm.findOne({id: 1}).friends; 
+      var userList = [];
+      Meteor.user().profile.facebookfriends.forEach(function(user) {
+        console.log(typeof(user.id));
+        var isFriend = false;
+        Meteor.user().friends.forEach(function(friendId) {
+          var friend = Meteor.users.findOne({_id: friendId});
+          if (friend.services.facebook.id === user.id) {
+            console.log("friending");
+            userList.push({name: user.name, id: user.id, friend: true, request: false});
+            isFriend = true;
+          } 
+        });
+        if (!isFriend) {
+          Meteor.user().requests.forEach(function(friendId) {
+            var friend = Meteor.users.findOne({_id: friendId});
+            if (friend.services.facebook.id === user.id) {
+              userList.push({name: user.name, id:user.id, friend: false, request: true});
+              isFriend = true;
+            }
+          });
+        }
+        if (!isFriend) {
+          userList.push({name: user.name, id: user.id,friend: false, request: false});
+        }
+      });
+      return userList;
+    },
+
+    addFriend: function(friendId) {
+      Meteor.user().friends.push(friendId);
+    },
+
+    removeFriend: function(friendId) {
+      var index = Meteor.user().friends.indexOf(friendId);
+      Meteor.user.friends.splice(index, 1);
+    }
+  });
+
+  Template.maraudersMap.helpers({
+    friendLocs: function() {
+      console.log("friend locs");
+      var friends = Meteor.user().friends;
+      var locations = [];
+      friends.forEach(function(friendId) {
+        var friend = Meteor.users.findOne({_id: friendId});
+        if (friend.checkin) {
+          locations.push({friendId});
+//          locations.push({name: friend.profile.name, pic: friend.profile.picture,
+  //                       checkin: friend.checkin});
+        } 
+      });
+      return locations;
     }
   });
   /*
