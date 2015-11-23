@@ -1,13 +1,23 @@
 <template name="checkInOverlay">
 	<h2>{{title}}</h2>
 
-	{{#unless isInOverlay}}
+<!-- 	{{#unless isInOverlay}}
 		<button class="js-overlay-open">Open Overlay</button>
-	{{/unless}}
+	{{/unless}} -->
 
-	<div id = CheckInInfo>
-	<p>
-	PUT YOUR CHECK IN INFORMATION HERE
-	</p>
+	<div id ="CheckInBox">
+		<form class="check-in-info">
+			<label> I am </label>
+			<br>
+			<input type="text" name="status" placeholder="up to no good." />
+			<br>
+			<label> for </label>
+			<br>
+			<input type="text" name="duration" placeholder="90" />
+			<br>
+			<label> mins </label>
+			<br>
+	                	<button class="submit">Submit</button>
+		</form>
 	</div>
 </template>

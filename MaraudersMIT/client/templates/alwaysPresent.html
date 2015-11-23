@@ -1,12 +1,11 @@
 <template name="alwaysPresent">
 	{{> loginButtons}}
 
-	{{> sideBar}}
-
 	{{#if currentUser}}
  		<img src="{{currentUser.profile.picture}}" alt="picture">
       		<span>{{currentUser.profile.name}}</span>
       		 	
+      		{{> sideBar}}
 		{{> yield}}
 
 	{{else}}
