@@ -4,8 +4,12 @@
 	{{> sideBar}}
 
 	{{#if currentUser}}
- 		<img src="{{currentUser.profile.picture}}" alt="picture">
-      		<span>{{currentUser.profile.name}}</span>
+		{{#if loggingIn}}
+     			Logging In
+  		{{else}}
+ 			<img src="{{currentUser.profile.picture}}" alt="picture">
+      			<span>{{currentUser.profile.name}}</span>
+  		{{/if}}
       		 	
 		{{> yield}}
 
