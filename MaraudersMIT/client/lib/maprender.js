@@ -1,4 +1,5 @@
 renderMap = function (){
+  console.log("rendering map");
 
   buildMap = function() {
 
@@ -42,6 +43,16 @@ renderMap = function (){
 // checkin: {availability: "available" or "busy", status: "hello", duration: 20, loc: {lat: 10, lng: 10}}}
 
     function displayUsers(map, pos, friends){
+      console.log('displaying users');
+      var gSelfLoc = new google.maps.LatLng(pos.lat, pos.lng);
+      var selfMarker = new RichMarker({
+        map: map,
+        position: gSelfLoc,
+        draggable: false,
+        flat: true,
+        anchor: RichMarkerPosition.MIDDLE,
+        content: '<div class="available"></div><div><img src="'+Meteor.user().profile.picture+'"/></div><div>You are here!</div>'
+      });
        Meteor.call("getFriendLocs", function(err, data) {
          if (err) {
             console.log(err);
