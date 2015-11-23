@@ -42,68 +42,27 @@ renderMap = function (){
 // checkin: {availability: "available" or "busy", status: "hello", duration: 20, loc: {lat: 10, lng: 10}}}
 
     function displayUsers(map, pos, friends){
-
-        //Update user location
-        var Caitlin = {
-          name: "Caitlin Mehl",
-          pic: '/user_images/test_image.png',
-          checkin: {availability: "busy", status: 'yo', duration: 20, loc: pos}
-
-        };
-
-        var Test = {
-          name: "Tester Test",
-          pic: '/user_images/test_image.png',
-          checkin: {availability: "available", status: 'heyyy', duration: 60, loc: {lat: 42.359155, lng: -71.093058}}
-        }
-        var friends = [Caitlin, Test];
-
-
-      //function displayFriends(friends, map) {
-        friends.forEach(function(friend){
-          if (friend.checkin.availability !== 'invisible') {
-            var image = {
-              url: friend.pic,
-              size: new google.maps.Size(40, 40),
-
-              /* These need to be set but I'm not 100% sure how to do it yet
-                origin: new google.maps.Point(0, 0),
-                anchor: new google.maps.Point(0, 32)
-                */
-            };
-
-            var location = new google.maps.LatLng(friend.checkin.loc.lat, friend.checkin.loc.lng);
-
-          //   // Test RichMarker
-          //  var div = document.createElement('DIV');
-          // div.innerHTML = '<div class="my-other-marker">I am flat marker!</div>';
-            marker2 = new RichMarker({
-              map: map,
-              position: location,
-              draggable: false,
-              flat: true,
-              anchor: RichMarkerPosition.MIDDLE,
-              content: '<div class=' + friend.checkin.availability + '><div><div>' + friend.name + '</div><img src="' + friend.pic + '"/></div>' +
-              '<div>' + friend.checkin.status + '</div>'
-            });
-
-            // var marker = new google.maps.Marker({
-            //       position: {lat: friend.loc.lat + .00003, lng: friend.loc.lng - .000005},
-            //       map: map,
-            //       icon: image,
-            //       //shape: shape,
-            //       title: friend.name,
-            //       zIndex: google.maps.Marker.MAX_ZINDEX + 1
-            // });
-
-            // var status = new google.maps.Marker({
-            //     position: friend.loc,
-            //     map: map,
-            //     icon: friend.status === 'available' ? '/icons/Available.png' : '/icons/Busy.png',
-            //     title: friend.status,
-            // });
-          }
+       Meteor.call("getFriendLocs", function(err, data) {
+         if (err) {
+            console.log(err);
+         }
+       var locations = data;;
+       locations.forEach(function(loc) {
+         var image = {
+           url: loc.pic,
+           size: new google.maps.Size(40, 40)       
+         };
+         var gLoc = new google.maps.LatLng(loc.checkin.loc.lat, loc.checkin.loc.lng);
+         var marker2 = new RichMarker({
+           map: map,
+           position: gLoc,
+           draggable: false,
+           flat: true,
+           anchor: RichMarkerPosition.MIDDLE,
+           content: '<div class=' + loc.checkin.availability + '><div><div>' + loc.name + '</div><img src="' + loc.pic + '"/></div>' + '<div>' + loc.checkin.text_status + '</div>'
+          });
         });
+      });
     }
   }
 

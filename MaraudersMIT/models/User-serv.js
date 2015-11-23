@@ -48,12 +48,13 @@ if (Meteor.isServer) {
       var locations = [];
       Meteor.user().friends.forEach(function(friendId) {
         var friend = Meteor.users.findOne({_id: friendId});
-        if (friend.checkIn != null) {
-          locations.push({name: friend.services.facebook.name, pic: friend.services.facebook.profile.picture,
-                          checkIn: friend.checkIn});
+        console.log(friend);
+        if (friend.checkin) {
+          locations.push({name: friend.services.facebook.name, pic: friend.profile.picture,
+                          checkin: friend.checkin});
         }
       });
-      callback(locations);
+      return locations;
     }
   });
 }
