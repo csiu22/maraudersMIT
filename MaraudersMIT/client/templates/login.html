@@ -1,9 +1,15 @@
 <template name="login">
 	{{#if currentUser}}
+
 		{{redirect_main}}
+
 	{{else}}
-		
-		
+		<div>
+			<img id="front_image" src="/backgrounds/front_image.png" alt="Log in with Facebook">
+			<div>
+			<img id="login" src="/icons/facebook_signin.png" alt="Log in with Facebook">
+			</div>
+		</div>
 
 		<a href="{{pathFor route='newuser'}}" >
 
@@ -11,14 +17,3 @@
 	{{/if}}
 </template>
 
-
-<template name="newuser">
-
-		<form class="register-email">
-			<label>Please enter your MIT email</label>
-			<br>
-			<input type="text" name="email" placeholder="@mit.edu" />
-	                	<button class="submit">Submit</button>
-		</form>
-	
-</template>

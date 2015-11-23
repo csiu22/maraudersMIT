@@ -3,3 +3,24 @@ body {
     background-image: url("/backgrounds/background.png");
     background-color: #FFFFFF;
 }
+
+#front_image {
+	 height: 90%;
+ 	 width: auto;
+ 	 display: block;
+
+    position: absolute;
+    top: 0; bottom:0; left: 0; right:0;
+    margin: auto;
+}
+
+#login {
+	 height: 10%;
+ 	 width: auto;
+
+ 	display: block;
+
+    position: absolute;
+    bottom:15%; left: 0; right:0;
+    margin: auto;
+}
