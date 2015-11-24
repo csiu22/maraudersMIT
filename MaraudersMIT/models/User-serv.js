@@ -33,8 +33,15 @@ if (Meteor.isServer) {
 
     'acceptFriendRequest': function(friendId) {
       var index = Meteor.user().requests.indexOf(friendId);
-      Meteor.user().requests.splice(index, 1);
-      Meteor.user().friends.push(friendId);
+      console.log(index);
+      var requests = Meteor.user().requests;
+      requests.splice(index, 1);
+
+      var friends = Meteor.user().friends;
+      friends.push(friendId);
+      Meteor.users.update({_id: Meteor.userId()}, {$set: {friends: friends, requests: requests}});
+
+      Meteor.users.update({_id: friendId}, {$push: {friends: Meteor.userId()}});
       console.log("accepted friend request");
     },
 

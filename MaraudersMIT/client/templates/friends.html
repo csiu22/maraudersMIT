@@ -9,16 +9,16 @@
 				<br>
 				{{ this.name }}
         {{#if this.friend}}
-        <button class="friend-remove">Remove friend</button>
+        <button class="friend-remove">Remove Friend</button>
         {{ else }}
           {{ #if this.request }}
             {{ #if this.requested }}
               <button class="" >Pending</button>
             {{ else }}
-              <button class="friend-accept" >Accept request</button>
+              <button class="friend-accept" >Accept Request</button>
             {{/if}}
           {{ else }}
-          <button class="friend-request">Friend request</button>
+          <button class="friend-request">Add Friend</button>
           {{/if}}
         {{/if}}
 
