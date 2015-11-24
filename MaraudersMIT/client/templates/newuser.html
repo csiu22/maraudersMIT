@@ -1,12 +1,8 @@
 <template name="newuser">
-	{{#if currentUser}}
-		{{> maraudersMap}}
-	{{else}}
 		<form class="register-email">
 			<label>Please enter your MIT email</label>
 			<br>
 			<input type="text" name="email" placeholder="@mit.edu" />
      			<button class="submit">Submit</button>
 		</form>
-	{{/if}}
 </template>
