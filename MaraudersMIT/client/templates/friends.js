@@ -1,6 +1,6 @@
 Template.friends.events({
   "click .friend-accept": function() {
-    var friendID = event.target.id;
+    var friendID = this.id;
     Meteor.call('acceptFriendRequest', friendID, function() {
       console.log("done accepting");
     });
@@ -19,7 +19,7 @@ Template.friends.events({
   },
 
   "click .friend-remove": function() {
-    var friendID = event.target.id;
+    var friendID = this.id;
     Meteor.call('removeFriend', friendID, function() {
       console.log("done unfriending");
     });
