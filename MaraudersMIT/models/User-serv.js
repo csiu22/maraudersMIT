@@ -47,7 +47,18 @@ if (Meteor.isServer) {
 
     'removeFriend': function(friendId) {
       var index = Meteor.user().friends.indexOf(friendId);
-      Meteor.user().friends.splice(index, 1);
+      var friends = Meteor.user().friends;
+      friends.splice(index, 1);
+
+
+      var deleted = Meteor.users.findOne({_id: friendId});
+      var deletedFriends = deleted.friends;
+      var otherindex = deletedFriends.indexOf(Meteor.userId());
+      deletedFriends.splice(otherindex, 1);
+
+      Meteor.users.update({_id: Meteor.userId()}, {$set: {friends: friends}});
+      Meteor.users.update({_id: friendId}, {$set: {friends: deletedFriends}});
+
       console.log("friend removed");
     },
 
