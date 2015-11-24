@@ -11,22 +11,13 @@ if (Meteor.isServer) {
      },
 
     'sendFriendRequest': function(friendId) {
-      console.log("does it even get here");
-      console.log(Meteor.user().friends.indexOf(friendId));
-      console.log(Meteor.user().friends);
-      console.log(Meteor.user().requests);
       if ((Meteor.user().friends.indexOf(friendId) >= 0) || (Meteor.user().requests.indexOf(friendId) >= 0)) {
         console.log("Invalid friend request. Already friends or already requested");
       } else {
-        console.log("hello");
-        console.log(friendId);
         var friend = Meteor.users.findOne({_id: friendId});
-        console.log(friend);
-        console.log(friend.requests);
         var requests = friend.requests;
         requests.push(Meteor.userId());
         Meteor.users.update({_id: friendId}, {$set: {requests: requests}});
-        console.log(friend.requests);
         console.log("friend request sent");
       }
     },
@@ -49,7 +40,6 @@ if (Meteor.isServer) {
       var index = Meteor.user().friends.indexOf(friendId);
       var friends = Meteor.user().friends;
       friends.splice(index, 1);
-
 
       var deleted = Meteor.users.findOne({_id: friendId});
       var deletedFriends = deleted.friends;

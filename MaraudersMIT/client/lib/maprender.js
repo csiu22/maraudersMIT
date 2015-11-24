@@ -51,7 +51,7 @@ renderMap = function (){
         draggable: false,
         flat: true,
         anchor: RichMarkerPosition.MIDDLE,
-        content: '<div class="available"></div><div><img src="'+Meteor.user().profile.picture+'"/></div><div>You are here!</div>'
+        content: '<div class="here"><div><div><img src="'+Meteor.user().profile.picture+'"/></div><div>You are here!</div>'
       });
        Meteor.call("getFriendLocs", function(err, data) {
          if (err) {
@@ -61,7 +61,7 @@ renderMap = function (){
        locations.forEach(function(loc) {
          var image = {
            url: loc.pic,
-           size: new google.maps.Size(40, 40)       
+           size: new google.maps.Size(40, 40)
          };
          var gLoc = new google.maps.LatLng(loc.checkin.loc.lat, loc.checkin.loc.lng);
          var marker2 = new RichMarker({
@@ -70,8 +70,7 @@ renderMap = function (){
            draggable: false,
            flat: true,
            anchor: RichMarkerPosition.MIDDLE,
-           content: '<div class=' + loc.checkin.availability + '><div><div>' + loc.name + '</div><img src="' + loc.pic + '"/></div>' + '<div>' + loc.checkin.text_status + '</div>'
-          });
+           content: '<div class=' + loc.checkin.availability + '><div><div>' + loc.name + '</div><img src="' + loc.pic + '"/></div>' + '<div>' + loc.checkin.text_status + '</div>'          });
         });
       });
     }

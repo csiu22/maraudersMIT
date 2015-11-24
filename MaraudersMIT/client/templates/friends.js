@@ -7,12 +7,7 @@ Template.friends.events({
   },
 
   "click .friend-request": function() {
-    // event.preventDefault();
-    console.log("friengin");
-    console.log(this);
-    console.log(this.name);
     var friendID = this.id;
-    console.log(friendID);
     Meteor.call('sendFriendRequest', friendID, function() {
       console.log("done requesting");
     });
