@@ -31,6 +31,27 @@ if (Meteor.isServer) {
             options.profile.picture = getFbPicture(user.services.facebook.accessToken);
       	    options.profile.facebookfriends = getFbFriends(user.services.facebook.accessToken);
 
+            var name = user.services.facebook.name;;
+            var fbID = user.services.facebook.id;
+            // Iterate through all FB friends that use app
+            options.profile.facebookfriends.forEach(function(friendFB) {
+                console.log("updating with new friend");
+                var isAlreadyFBFriend = false;
+                var friend = Meteor.users.findOne({"services.facebook.id": friendFB.id});
+                // For each friend, check to see if you are listed as a FB friend
+                if (friend) {
+                  friend.profile.facebookfriends.forEach(function(tempFriend) {
+                    if (tempFriend.id === fbID) {
+                      isAlreadyFBFriend = true;
+                    }
+                  });
+                  // If not, add yourself
+                  if (!isAlreadyFBFriend) {
+                    Meteor.users.update({"services.facebook.id": friendFB.id}, {$push: {"profile.facebookfriends": {name: name, id: fbID}}});
+                  }
+                }
+            });
+
             user.profile = options.profile;
         }
         user.friends = [];
@@ -38,6 +59,7 @@ if (Meteor.isServer) {
         user.checkin = null;
         
         user.isVerified = false;
+
        
         return user;
     });
