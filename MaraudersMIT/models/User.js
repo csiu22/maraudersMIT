@@ -40,7 +40,7 @@ if (Meteor.isClient) {
         console.log(user.id);
         var isFriend = false;
         var currentUser = Meteor.users.findOne({"services.facebook.id": user.id});
-        if (currentUser) {
+        if (currentUser && currentUser.isVerified) {
           Meteor.user().friends.forEach(function(friendId) {
             var friend = Meteor.users.findOne({_id: friendId});
             if (friend.services.facebook.id === user.id) {

@@ -9,5 +9,5 @@ To run this application locally, please use:
 meteor run --port 2001
 
 To see the app in action, visit:
-http://maraudersmit.meteor.com/maraudersMap
+http://maraudersmit.meteor.com
 
