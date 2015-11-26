@@ -10,17 +10,19 @@
 			{{/each}}
 		</div>
  		<div id="icons">
-			<a href= "{{pathFor route='maraudersMap'}}">
-				<span class="check-in" data-icon="&#xe900;" ><br> Check In!</span>
+
+ 			<a href="{{pathFor route='maraudersMap'}}">
+				<img id="check-in" class="icon" src="/icons/check-in.png" data-toggle="tooltip" data-original-title="Check In" alt="Check In" data-placement="top">
+			</a>
+	
+			<a href="{{pathFor route='maraudersMap'}}">
+				<img id="map-icon" class="icon" src="/icons/map.png" data-toggle="tooltip" data-original-title="View Map" alt="View Map" data-placement="top" >
 			</a>
 
-			<a href="{{pathFor route='maraudersMap'}}">
-				<!-- use 902 for white map -->
-				<span class="icon-map" data-icon="&#xe901;" ><br> View Map</span>
+			<a href="{{pathFor route='friends'}}">
+				<img id="friends-icon" class="icon" src="/icons/Friends.png" data-toggle="tooltip" data-original-title="Manage Friends" alt="Manage Friends" data-placement="top">
 			</a>
-			<a href="{{pathFor route='friends'}}" >
-				<span class="icon-friends" data-icon="&#xe903;" ><br> Friends </span>
-			</a>
+
 		</div>
 		<span class="stretch"></span>
 	</div>
