@@ -79,8 +79,10 @@ renderMap = function (){
   //Make sure that the required libraries are loaded before the map is build
   var display = function(){
     if (! Session.get('richmarkerReady') ){
+        console.log("waiting for libraries");
         setTimeout(display,100);
     } else {
+      console.log("libraries loaded");
       buildMap();
     }
   }();

@@ -5,7 +5,6 @@ var userFocus = function(){
 
 }
 
-
   Template.sideBar.events({
     'click #check-in': function () {
     	userFocus();
