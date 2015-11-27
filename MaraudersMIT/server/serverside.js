@@ -19,8 +19,8 @@ if (Meteor.isServer) {
       appId: "1490929597876207",
       secret: "48b68810d152e9508b23f35fa3addc34",
       // Deploy
-      // appId: "211487295849565",
-      // secret: "67be26f2e83883370b4802109488ed25",
+//       appId: "211487295849565",
+//       secret: "67be26f2e83883370b4802109488ed25",
       requestPermissions: ['user_friends']
     });
 

@@ -29,3 +29,4 @@ twbs:bootstrap
 iron:router
 grigio:overlay
 bootstrap
+reactive-var

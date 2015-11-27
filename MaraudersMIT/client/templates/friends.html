@@ -5,10 +5,10 @@
 		</h2>
 
 		<ul>
-			{{#each users }}
+			{{ #each facebookFriends }}
 				<br>
 				{{ this.name }}
-        {{#if this.friend}}
+        {{ #if this.friend }}
         <button class="friend-remove">Remove Friend</button>
         {{ else }}
           {{ #if this.request }}
