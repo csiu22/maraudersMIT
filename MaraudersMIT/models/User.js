@@ -57,13 +57,14 @@ if (Meteor.isServer) {
     // Allows a user to get all of their friends' checkins to be displayed on the map
     'getFriendLocs': function() {
       var locations = [];
-      Meteor.user().friends.forEach(function(friendId) {
-        var friend = Meteor.users.findOne({_id: friendId});
-        if (friend.checkin) {
-          locations.push({name: friend.services.facebook.name, pic: friend.profile.picture,
-                          checkin: friend.checkin});
-        }
-      });
+      if(Meteor.user() && Meteor.user().friends){
+          Meteor.user().friends.forEach(function(friendId) {
+          var friend = Meteor.users.findOne({_id: friendId});
+          if (friend.checkin) {
+                locations.push({name: friend.services.facebook.name, pic: friend.profile.picture, checkin: friend.checkin});
+          }
+        });
+      }
       return locations;
     },
 
@@ -126,17 +127,19 @@ if (Meteor.isServer) {
     'getMarauderFriends': function() {
       if (Meteor.user()) {
         var friendNames = []; 
-//        console.log(Meteor.user());
-//        console.log(Meteor.user().friends);
-        Meteor.user().friends.forEach(function(friendId) {
-          var friend = Meteor.users.findOne({_id: friendId});
-          friendNames.push(friend.services.facebook.name);
-        }); 
-        if (friendNames.length === 0) {
-          friendNames.push("None");
-        }   
+
+        if(Meteor.user() && Meteor.user().friends){
+            Meteor.user().friends.forEach(function(friendId) {
+              var friend = Meteor.users.findOne({_id: friendId});
+              friendNames.push(friend.services.facebook.name);
+            }); 
+            if (friendNames.length === 0) {
+              friendNames.push("None");
+            } 
+      }
         return friendNames; 
       }
-    } 
+    }
+     
   });
 }

@@ -1,6 +1,6 @@
 var wait_for_libraries = function() {
 
-if ( Session.get('richmarkerReady')) renderMap();
+if ( Session.get('richmarkerReady')) Map.renderMap();
 else setTimeout(wait_for_libraries, 500); 
 
 }
