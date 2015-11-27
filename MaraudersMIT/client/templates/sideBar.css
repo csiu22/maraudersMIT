@@ -4,8 +4,6 @@
 
 #sidebar {
     background:#FAEBD7;
-    float: left;
-    width:25%;
     height:100%;
     overflow: hidden;
 }
@@ -16,12 +14,8 @@
 
 /*Place Icons on the bottom of the sidebar*/
 #icons {
-    width:25%;
-    text-align:justify;
     position:absolute;
     bottom: 0px;
-  /*  padding-left:5px;*/
-     padding-right:5px;
 }
 
 #icons span {
@@ -36,8 +30,12 @@
 }
 
 .icon {
-    height:85px;
+    height:80px;
     width: auto;
+    bottom: 0px;
+
+    padding-right:5px;
+    padding-left:5px;
 
     display: inline-block;
     vertical-align: middle;

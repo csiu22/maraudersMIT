@@ -37,18 +37,18 @@ Router.route('newuser', {
 Router.route('checkIn', {
         path: '/checkIn',
         template: 'checkIn',
-        layoutTemplate: 'alwaysPresent',
+        layoutTemplate: 'mainTemplate',
  });
 
 Router.route('maraudersMap', {
         path: '/',
         template: 'maraudersMap',
-        layoutTemplate: 'alwaysPresent',
+        layoutTemplate: 'mainTemplate',
  });
 
 Router.route('friends', {
         path: '/friends',
         template: 'friends',
-        layoutTemplate: 'alwaysPresent'
+        layoutTemplate: 'mainTemplate'
   });
 

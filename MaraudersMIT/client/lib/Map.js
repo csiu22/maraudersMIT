@@ -14,6 +14,22 @@ Map = function(){
                 zoom: 18
             });
 
+      // // limit map to the Boston / Cambridge area
+      // var allowedBounds = new google.maps.LatLngBounds(
+      //     new google.maps.LatLng( 42.345, 42.38),
+      //     new google.maps.LatLng( -71.12, -71.045)
+      // );
+      // var lastValidCenter = that.map.getCenter();
+
+      // google.maps.event.addListener(that.map, 'center_changed', function() {
+      //         if (allowedBounds.contains(that.map.getCenter())) {
+      //             // still within valid bounds, so save the last valid position
+      //             lastValidCenter = that.map.getCenter();
+      //         return;
+      //         }
+      //         that.map.panTo(lastValidCenter);
+      // });
+
     that.displaySelf = function(pos){
         if(!pos) return;
         var gSelfLoc = new google.maps.LatLng(pos.lat, pos.lng);
@@ -105,7 +121,6 @@ Map = function(){
 
       //Geolocation is necessary in order for the user to be able to use this app
       if ("geolocation" in navigator) {
-            that.redraw();
 
             var displayUsers = function(pos){
                 that.map.setCenter(pos);
@@ -121,6 +136,10 @@ Map = function(){
         console.log("geo not available");
       }    
   }
+
+  /*
+  Currently doesn't work, not sure why :(
+    */
 
   that.redraw = function(){
      var x = that.map.getZoom();
