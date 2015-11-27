@@ -10,6 +10,10 @@ if (Meteor.isServer) {
       }), duration * MILLISECONDS_IN_MINUTE);
      },
 
+    'checkOut': function() {
+      Meteor.users.update({_id: Meteor.userId()}, {$set: {checkin: null}});
+     },
+
     // Allows user to send a friend request to another user
     'sendFriendRequest': function(friendId) {
       if ((Meteor.user().friends.indexOf(friendId) >= 0) || (Meteor.user().requests.indexOf(friendId) >= 0)) {

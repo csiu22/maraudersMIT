@@ -9,3 +9,7 @@ Handlebars.registerHelper('activePage', function() {
 Handlebars.registerHelper('ifRouteIs', function (routeName) {
       return Router.current().route._path === "/" + routeName;
 });
+
+Handlebars.registerHelper('isCheckedIn', function () {
+      return Meteor.user().checkin !== null;
+});
