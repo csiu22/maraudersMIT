@@ -6,9 +6,7 @@ loginroutes =  ["login", "newuser"];
 Router.onBeforeAction(function () {
     if (!Meteor.userId() && !Meteor.loggingIn()) { this.redirect("login"); this.next();} 
     else if (Meteor.userId() != null && !Meteor.user().isVerified) { this.redirect("newuser"); this.next();}           
-    else {}
-
-        this.next();
+    else {this.next();}
 
 }, {except: loginroutes});
 
@@ -19,7 +17,9 @@ Router.onBeforeAction(function (){
         this.redirect("maraudersMap");
         this.next();
     }
-    this.next();
+    else{
+        this.next();
+    }
 
 }, {only: loginroutes });
 

@@ -55,6 +55,7 @@ renderMap = function (){
       });
        Meteor.call("getFriendLocs", function(err, data) {
          if (err) {
+            console.log("error occurred");
             console.log(err);
          }
        var locations = data;;
