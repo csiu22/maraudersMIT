@@ -2,18 +2,33 @@
 	<div id="sidebar">
 		
 		<div id="profilebox">
-		<img src="{{currentUser.profile.picture}}" alt="picture">
-      	{{> loginButtons}}
+			<img src="{{currentUser.profile.picture}}" alt="picture">
+	      	{{> loginButtons}}
       	</div>
 
-    		<h3> [Search for a friend]</h3>
+      		<!-- Search for Friends  -->
 
-    		<div id="friendsList">
-    		Your Marauder friends:
-			{{#each marauderFriends}}
-				<br>
-				{{ this }}
-			{{/each}}
+      		<div id="searchbox">
+
+	      			<div id="searchbar">
+		    			<input id="input-searchbar" type="text" placeholder="Search for a Friend">
+		    			<button type="button" class="btn btn-default">
+		    				<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+		    			</button>
+	    			</div>
+	    		
+
+	    	<!-- Results -->
+
+	    		<div id="friendsList">
+		    		Your Marauder friends:
+		    		<ul>
+						{{#each marauderFriends}}
+							<li> {{ this }} </li>
+						{{/each}}
+					</ul>
+				</div>
+
 		</div>
 
 

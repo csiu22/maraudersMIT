@@ -7,6 +7,10 @@
     height:100%;
     overflow: hidden;
 }
+#searchbox{
+    padding-top: 20px;
+    position:absolute;
+}
 
 #friendsList {
     margin-left: 5%;
