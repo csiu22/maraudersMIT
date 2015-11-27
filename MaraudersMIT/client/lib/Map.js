@@ -14,21 +14,21 @@ Map = function(){
                 zoom: 18
             });
 
-      // // limit map to the Boston / Cambridge area
-      // var allowedBounds = new google.maps.LatLngBounds(
-      //     new google.maps.LatLng( 42.345, 42.38),
-      //     new google.maps.LatLng( -71.12, -71.045)
-      // );
-      // var lastValidCenter = that.map.getCenter();
+      // limit map to the Boston / Cambridge area
+      var allowedBounds = new google.maps.LatLngBounds(
+          new google.maps.LatLng(42.338185, -71.100183), //southwest coord of bounds
+          new google.maps.LatLng( 42.372182, -71.045680) // northeast coord of bounds
+      );
+      var lastValidCenter = that.map.getCenter();
 
-      // google.maps.event.addListener(that.map, 'center_changed', function() {
-      //         if (allowedBounds.contains(that.map.getCenter())) {
-      //             // still within valid bounds, so save the last valid position
-      //             lastValidCenter = that.map.getCenter();
-      //         return;
-      //         }
-      //         that.map.panTo(lastValidCenter);
-      // });
+      google.maps.event.addListener(that.map, 'center_changed', function() {
+              if (allowedBounds.contains(that.map.getCenter())) {
+                  // still within valid bounds, so save the last valid position
+                  lastValidCenter = that.map.getCenter();
+              return;
+              }
+              that.map.panTo(lastValidCenter);
+      });
 
     that.displaySelf = function(pos){
         if(!pos) return;
