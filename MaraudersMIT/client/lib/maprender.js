@@ -1,22 +1,29 @@
+/*
+
+Function that creates google map and displays users
+
+*/
+
 renderMap = function (){
   console.log("rendering map");
 
-  buildMap = function() {
-
+  //Geolocation is necessary in order for the user to be able to use this app
     if ("geolocation" in navigator) {
 
+          //Create map centered on Mass Ave
           var map = new google.maps.Map(document.getElementById('map'), {
-            center: {lat: 42.359155, lng: -71.093058}, // 77 Mass Ave
-            zoom: 18
+              center: {lat: 42.359155, lng: -71.093058}, // 77 Mass Ave
+              zoom: 18
           });
 
           if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(function(position) {
-              var pos = {
-                lat: position.coords.latitude,
-                lng: position.coords.longitude
-              };
+              navigator.geolocation.getCurrentPosition(function(position) {
+                var pos = {
+                  lat: position.coords.latitude,
+                  lng: position.coords.longitude
+                };
 
+              //Set center of the map on the user's location
               map.setCenter(pos);
               displayUsers(map, pos);
            }, function() {
@@ -75,5 +82,4 @@ renderMap = function (){
         });
       });
     }
-  }
 }
