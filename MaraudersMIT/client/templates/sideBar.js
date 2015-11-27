@@ -1,7 +1,7 @@
 
 //take user to their location on the map
 var userFocus = function(){
-
+  if(DEBUG) console.log("userFocus method");
   if( maraudersMap) {
     maraudersMap.getUserLocation(maraudersMap.setCenter);
   }
@@ -11,6 +11,10 @@ var userFocus = function(){
   Template.sideBar.events({
     'click #check-in': function () {
       	Overlay.show('checkInOverlay');
+    },
+
+     'click #locate': function () {
+        userFocus();
     },
   });
 

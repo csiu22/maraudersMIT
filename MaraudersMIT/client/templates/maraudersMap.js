@@ -3,9 +3,8 @@ maraudersMap = undefined;
 var wait_for_libraries = function() {
 
 if ( Session.get('richmarkerReady')) { 
-	if(! maraudersMap) {
-		maraudersMap = Map(); 
-	}
+	maraudersMap = Map();
+	maraudersMap.renderMap();
 }
 else setTimeout(wait_for_libraries, 500); 
 

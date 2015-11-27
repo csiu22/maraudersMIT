@@ -9,6 +9,11 @@ Map = function(){
 
     var that = Object.create(Map.prototype);
 
+    that.map = new google.maps.Map(document.getElementById('map'), {
+                center: {lat: 42.359155, lng: -71.093058}, // 77 Mass Ave
+                zoom: 18
+            });
+
     that.displaySelf = function(pos){
         if(!pos) return;
         var gSelfLoc = new google.maps.LatLng(pos.lat, pos.lng);
@@ -100,15 +105,10 @@ Map = function(){
 
       //Geolocation is necessary in order for the user to be able to use this app
       if ("geolocation" in navigator) {
-
-            //Create map centered on Mass Ave
-            var map = new google.maps.Map(document.getElementById('map'), {
-                center: {lat: 42.359155, lng: -71.093058}, // 77 Mass Ave
-                zoom: 18
-            });
+            that.redraw();
 
             var displayUsers = function(pos){
-                map.setCenter(pos);
+                that.map.setCenter(pos);
                 that.displaySelf(pos);
                 that.displayFriends();
 
@@ -116,16 +116,21 @@ Map = function(){
 
             that.getUserLocation(displayUsers);
 
-            return map;
-
       } else {
         /* error when geolocation IS NOT available */
         console.log("geo not available");
-        return null;
       }    
   }
 
-  that.map = that.renderMap();
+  that.redraw = function(){
+     var x = that.map.getZoom();
+     var c = that.map.getCenter();
+     google.maps.event.trigger(that.map, 'resize');
+     that.map.setZoom(x);
+     that.map.setCenter(c);
+  }
+
+ 
 
   Object.freeze(that);
   return that;
