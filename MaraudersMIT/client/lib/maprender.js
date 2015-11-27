@@ -1,88 +1,87 @@
+/*
+
+Function that creates google map and displays users
+
+*/
 renderMap = function (){
   console.log("rendering map");
 
-  buildMap = function() {
-
+  //Geolocation is necessary in order for the user to be able to use this app
     if ("geolocation" in navigator) {
 
+          //Create map centered on Mass Ave
           var map = new google.maps.Map(document.getElementById('map'), {
-            center: {lat: 42.359155, lng: -71.093058}, // 77 Mass Ave
-            zoom: 18
+              center: {lat: 42.359155, lng: -71.093058}, // 77 Mass Ave
+              zoom: 18
           });
 
-          if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(function(position) {
-              var pos = {
-                lat: position.coords.latitude,
-                lng: position.coords.longitude
-              };
-
+          var displayUsers = function(pos){
               map.setCenter(pos);
-              displayUsers(map, pos);
-           }, function() {
-              handleLocationError(true, infoWindow, map.getCenter());
-           });
-         } else {
-            // Browser doesn't support Geolocation
-            handleLocationError(false, infoWindow, map.getCenter());
-         }
+              displaySelf(map, pos);
+              displayFriends(map);
 
-      function handleLocationError(browserHasGeolocation, infoWindow, pos) {
-        infoWindow.setPosition(pos);
-        infoWindow.setContent(browserHasGeolocation ?
-                              'Error: The Geolocation service failed.' :
-                              'Error: Your browser doesn\'t support geolocation.');
-      }
-    } else {
-      /* geolocation IS NOT available */
+          };
+
+          getUserLocation(displayUsers);
+
+   } else {
+      /* error when geolocation IS NOT available */
       console.log("geo not available");
-    }
+    }    
 
 
-// array of {name: friend's name, pic: friend's pic,
-// checkin: {availability: "available" or "busy", status: "hello", duration: 20, loc: {lat: 10, lng: 10}}}
+  /*
+  Function that displays the current user on the map
+  map: a google maps object
+  pos: object that contains latitude and longitude coordinates
+  */
 
-    function displayUsers(map, pos, friends){
-      console.log('displaying users');
+    function displaySelf(map, pos){
+      if(!pos) return;
       var gSelfLoc = new google.maps.LatLng(pos.lat, pos.lng);
       var selfMarker = new RichMarker({
-        map: map,
-        position: gSelfLoc,
-        draggable: false,
-        flat: true,
-        anchor: RichMarkerPosition.MIDDLE,
-        content: '<div class="here"><div><div><img src="'+Meteor.user().profile.picture+'"/></div><div>You are here!</div>'
-      });
-       Meteor.call("getFriendLocs", function(err, data) {
-         if (err) {
-            console.log(err);
-         }
-       var locations = data;;
-       locations.forEach(function(loc) {
-         var image = {
-           url: loc.pic,
-           size: new google.maps.Size(40, 40)
-         };
-         var gLoc = new google.maps.LatLng(loc.checkin.loc.lat, loc.checkin.loc.lng);
-         var marker2 = new RichMarker({
-           map: map,
-           position: gLoc,
-           draggable: false,
-           flat: true,
-           anchor: RichMarkerPosition.MIDDLE,
-           content: '<div class=' + loc.checkin.availability + '><div><div>' + loc.name + '</div><img src="' + loc.pic + '"/></div>' + '<div>' + loc.checkin.text_status + '</div>'          });
-        });
+          map: map,
+          position: gSelfLoc,
+          draggable: false,
+          flat: true,
+          anchor: RichMarkerPosition.MIDDLE,
+          content: '<div class="here"><div><div><img src="'+Meteor.user().profile.picture+'"/></div><div>You are here!</div>'
       });
     }
-  }
 
-  //Make sure that the required libraries are loaded before the map is build
-  var display = function(){
-    if (! Session.get('richmarkerReady') ){
-        setTimeout(display,100);
-    } else {
-      buildMap();
+  /*
+  Function that displays each of the user's friends on the map
+  map: a google maps object
+  */
+
+    function displayFriends(map){
+
+       Meteor.call("getFriendLocs", function(err, data) {
+         if (err && DEBUG) {
+            console.log("error occurred! " + err.toString());
+         }
+
+         var locations = data;
+         
+         if (locations){
+             locations.forEach(function(loc) {
+                   var image = {
+                     url: loc.pic,
+                     size: new google.maps.Size(40, 40)
+                   };
+
+                  var gLoc = new google.maps.LatLng(loc.checkin.loc.lat, loc.checkin.loc.lng);
+                   var friendMarker = new RichMarker({
+                         map: map,
+                         position: gLoc,
+                         draggable: false,
+                         flat: true,
+                         anchor: RichMarkerPosition.MIDDLE,
+                         content: '<div class=' + loc.checkin.availability + '><div><div>' + loc.name + '</div><img src="' + loc.pic + '"/></div>' + '<div>' + loc.checkin.text_status + '</div>'
+                  });
+              });
+        }
+      });
     }
-  }();
 
 }
