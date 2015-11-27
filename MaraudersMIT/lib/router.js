@@ -4,8 +4,8 @@ loginroutes =  ["login", "newuser"];
 
 //Global before hooks
 Router.onBeforeAction(function () {
-    if (Meteor.userId() == null) { this.render("login"); } 
-    else if (!Meteor.user().isVerified) { this.render("newuser"); }           
+    if (!Meteor.userId() && !Meteor.loggingIn()) { this.redirect("login"); this.next();} 
+    else if (Meteor.userId() != null && !Meteor.user().isVerified) { this.redirect("newuser"); this.next();}           
     else {}
 
         this.next();
@@ -15,8 +15,9 @@ Router.onBeforeAction(function () {
 //Route logged in users to the actual app instead of stopping them at login pages
 
 Router.onBeforeAction(function (){
-    if(Meteor.userId() && Meteor.user().isVerified){
-        this.render("maraudersMap");
+    if(Meteor.userId() != null && Meteor.user().isVerified){
+        this.redirect("maraudersMap");
+        this.next();
     }
     this.next();
 

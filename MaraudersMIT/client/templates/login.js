@@ -1,23 +1,14 @@
 if (Meteor.isClient) {
   Meteor.subscribe("users");
+}
 
-  // Accounts.onLogin(function(){
-  //   	  console.log("Is the user verified? " + Meteor.user().isVerified);
- 	//   if(Meteor.user().isVerified){
- 	//   	// If the user is already verified or already logged in, go directly to the map.
- 	//   	if (Meteor.userId()) {
- 	//   		console.log("already logged in");
- 	//   	} else {
- 	//   		console.log("already registered");	
- 	//   	}      		
-	 //  	redirect('maraudersMap');
-	 //  } else{
-  //     		console.log("registering");
-  //   	 	redirect('newuser');
-	 //  }
+Meteor.logout(function(err) {
+  Router.go("login");
+});
 
-  }
-  //);
+Accounts.onLogin(function(err) {
+  Router.go("maraudersMap");
+});
 
 Template.login.events({
 	  "click #login" : function (e, tmpl) {
@@ -35,12 +26,12 @@ Template.login.events({
 			);
 		}, 
 
-	"click #logout" : function (e, tmpl) {
+	"click #login-buttons-logout" : function (e, tmpl) {
 			Meteor.logout(function (err) {
 				if (err) {
 					//errorhandling
 				} else {
-					//show alert?
+					conole.log("logout!");
 				}
 			});
 		}
