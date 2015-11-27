@@ -4,19 +4,16 @@ Object that creates google map and displays users
 
 */
 
+
 Map = function(){
 
-      /*
-      Function that displays the current user on the map
-      map: a google maps object
-      pos: object that contains latitude and longitude coordinates
-      */
+    var that = Object.create(Map.prototype);
 
-      var displaySelf = function(map, pos){
+    that.displaySelf = function(pos){
         if(!pos) return;
         var gSelfLoc = new google.maps.LatLng(pos.lat, pos.lng);
         var selfMarker = new RichMarker({
-            map: map,
+            map: that.map,
             position: gSelfLoc,
             draggable: false,
             flat: true,
@@ -30,7 +27,7 @@ Map = function(){
       map: a google maps object
       */
 
-     var displayFriends = function(map){
+     that.displayFriends = function(){
 
          Meteor.call("getFriendLocs", function(err, data) {
            if (err && DEBUG) {
@@ -48,7 +45,7 @@ Map = function(){
 
                     var gLoc = new google.maps.LatLng(loc.checkin.loc.lat, loc.checkin.loc.lng);
                      var friendMarker = new RichMarker({
-                           map: map,
+                           map: that.map,
                            position: gLoc,
                            draggable: false,
                            flat: true,
@@ -67,7 +64,7 @@ Map = function(){
 
       */
 
-      var getUserLocation = function(successfunc) {
+      that.getUserLocation = function(successfunc) {
 
         function errfunc(err){
             alert( 'Error: The Geolocation service failed.');
@@ -88,7 +85,18 @@ Map = function(){
              
         }
 
-   var renderMap = function (){
+      that.setCenter = function(pos){
+        that.map.setCenter(pos);
+      }
+
+
+         /*
+      Function that displays the current user on the map
+      map: a google maps object
+      pos: object that contains latitude and longitude coordinates
+      */
+
+      that.renderMap = function (){
 
       //Geolocation is necessary in order for the user to be able to use this app
       if ("geolocation" in navigator) {
@@ -101,23 +109,24 @@ Map = function(){
 
             var displayUsers = function(pos){
                 map.setCenter(pos);
-                displaySelf(map, pos);
-                displayFriends(map);
+                that.displaySelf(pos);
+                that.displayFriends();
 
             };
 
-            getUserLocation(displayUsers);
+            that.getUserLocation(displayUsers);
+
+            return map;
 
       } else {
         /* error when geolocation IS NOT available */
         console.log("geo not available");
+        return null;
       }    
   }
 
-  return {
-    renderMap: renderMap,
-    displaySelf: displaySelf,
-    displayFriends: displayFriends,
-    getUserLocation: getUserLocation,
-  }
-}();
+  that.map = that.renderMap();
+
+  Object.freeze(that);
+  return that;
+}

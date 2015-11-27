@@ -6,3 +6,6 @@ Handlebars.registerHelper('activePage', function() {
   return _.include(routeNames, Router.current().route.name) && 'active';
 });
 
+Handlebars.registerHelper('ifRouteIs', function (routeName) {
+      return Router.current().route._path === "/" + routeName;
+});

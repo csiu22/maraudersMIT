@@ -2,19 +2,18 @@
 //take user to their location on the map
 var userFocus = function(){
 
+  if( maraudersMap) {
+    maraudersMap.getUserLocation(maraudersMap.setCenter);
+  }
 
 }
 
   Template.sideBar.events({
     'click #check-in': function () {
-    	userFocus();
       	Overlay.show('checkInOverlay');
     },
-    'click #map-icon': function() {
-    	userFocus();
-    }
   });
-;
+
 
  Template.sideBar.helpers({
     friends: function() {  
