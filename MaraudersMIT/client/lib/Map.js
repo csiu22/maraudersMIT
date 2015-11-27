@@ -16,8 +16,8 @@ Map = function(){
 
       // limit map to the Boston / Cambridge area
       var allowedBounds = new google.maps.LatLngBounds(
-          new google.maps.LatLng(42.338185, -71.100183), //southwest coord of bounds
-          new google.maps.LatLng( 42.372182, -71.045680) // northeast coord of bounds
+          new google.maps.LatLng(42.330825, -71.110483), //southwest coord of bounds
+          new google.maps.LatLng( 42.375860, -71.046968) // northeast coord of bounds
       );
       var lastValidCenter = that.map.getCenter();
 
