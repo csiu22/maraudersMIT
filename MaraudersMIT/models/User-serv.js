@@ -54,15 +54,17 @@ if (Meteor.isServer) {
 
     'getFriendLocs': function(callback) {
       var locations = [];
-      Meteor.user().friends.forEach(function(friendId) {
-        var friend = Meteor.users.findOne({_id: friendId});
-        console.log(friend);
-        if (friend.checkin) {
-          locations.push({name: friend.services.facebook.name, pic: friend.profile.picture,
-                          checkin: friend.checkin});
-        }
-      });
+      if(Meteor.user() && Meteor.user().friends){
+          Meteor.user().friends.forEach(function(friendId) {
+              var friend = Meteor.users.findOne({_id: friendId});
+              console.log(friend);
+              if (friend.checkin) {
+                    locations.push({name: friend.services.facebook.name, pic: friend.profile.picture, checkin: friend.checkin});
+              }
+          });
+      }
       return locations;
     }
+    
   });
 }
