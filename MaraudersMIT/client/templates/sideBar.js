@@ -17,6 +17,7 @@ var userFocus = function(){
         Meteor.call("checkOut", function() {
           console.log("finished checking out");
         });
+        alert("You have successfully checked out.");
     },
 
      'click #locate': function () {
