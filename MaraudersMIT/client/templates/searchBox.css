@@ -1,0 +1,17 @@
+#results-list {
+  margin-left: 10%;
+  padding-left: 10px;
+  padding-right: 10px;
+  width: 80%;
+  font-size: 20px;
+}
+
+#results-list li {
+  list-style-type: none;
+}
+
+#results-list li:hover {
+  background: #110D3B;
+  color: #FFF;
+  cursor: pointer;
+}

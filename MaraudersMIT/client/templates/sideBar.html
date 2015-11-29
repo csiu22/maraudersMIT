@@ -7,28 +7,16 @@
       	</div>
 
       		<!-- Search for Friends  -->
+		{{> searchBox}}
 
-      		<div id="searchbox">
-
-	      			<div id="searchbar">
-		    			<input id="input-searchbar" type="text" placeholder="Search for a Friend">
-		    			<button type="button" class="btn btn-default">
-		    				<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-		    			</button>
-	    			</div>
-	    		
-
-	    	<!-- Results -->
-
-	    		<div id="friendsList">
-		    		Your Marauder friends:
-		    		<ul>
-						{{#each marauderFriends}}
-							<li> {{ this }} </li>
-						{{/each}}
-					</ul>
-				</div>
-
+		<!-- List my Marauder Friends -->
+    		<div id="friendsList">
+    			Your Marauder friends:
+    			<ul>
+				{{#each marauderFriends}}
+					<li> {{ this }} </li>
+				{{/each}}
+			</ul>
 		</div>
 
 

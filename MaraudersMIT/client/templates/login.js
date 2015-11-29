@@ -31,7 +31,7 @@ Template.login.events({
 				if (err) {
 					//errorhandling
 				} else {
-					conole.log("logout!");
+					console.log("logout!");
 				}
 			});
 		}
