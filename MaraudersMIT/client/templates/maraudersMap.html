@@ -1,5 +1,9 @@
 <template name = "maraudersMap">
 	<div id="map"></div>
-	{{> overlay }}
-
+	
+	{{#if isCheckedIn}}
+		{{> friends}}
+	{{ else }}
+		{{> overlay }}
+	{{/ if}}
 </template>

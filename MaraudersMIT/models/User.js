@@ -10,6 +10,10 @@ if (Meteor.isServer) {
       }), duration * MILLISECONDS_IN_MINUTE);
      },
 
+    'checkOut': function() {
+      Meteor.users.update({_id: Meteor.userId()}, {$set: {checkin: null}});
+     },
+
     // Allows user to send a friend request to another user
     'sendFriendRequest': function(friendId) {
       if ((Meteor.user().friends.indexOf(friendId) >= 0) || (Meteor.user().requests.indexOf(friendId) >= 0)) {
@@ -21,6 +25,21 @@ if (Meteor.isServer) {
         Meteor.users.update({_id: friendId}, {$set: {requests: requests}});
         console.log("friend request sent");
       }
+    },
+
+    'cancelFriendRequest': function(friendId) {
+      // if ((Meteor.user().requests.indexOf(friendId) >= 0) || (Meteor.user().requests.indexOf(friendId) >= 0)) {
+      //   console.log("Can't cancel friend request.");
+      // } else {
+        var friend = Meteor.users.findOne({_id: friendId});
+        var requests = friend.requests;
+
+        var index = requests.indexOf(Meteor.userId());
+        requests.splice(index, 1);
+
+        Meteor.users.update({_id: friendId}, {$set: {requests: requests}});
+        console.log("Canceled friend request");
+      // }
     },
 
     // Allows user to accept another user's friend request
@@ -121,7 +140,7 @@ if (Meteor.isServer) {
               if (!doneChecking) {
                 userList.push({name: user.name, id: currentFriend._id, friend: false, request: false, requested: false});
               }
-      
+
           }
       });
   }
@@ -130,20 +149,20 @@ if (Meteor.isServer) {
 
     'getMarauderFriends': function() {
       if (Meteor.user()) {
-        var friendNames = []; 
+        var friendNames = [];
 
         if(Meteor.user() && Meteor.user().friends){
             Meteor.user().friends.forEach(function(friendId) {
               var friend = Meteor.users.findOne({_id: friendId});
               friendNames.push(friend.services.facebook.name);
-            }); 
+            });
             if (friendNames.length === 0) {
               friendNames.push("None");
-            } 
+            }
       }
-        return friendNames; 
+        return friendNames;
       }
     }
-     
+
   });
 }

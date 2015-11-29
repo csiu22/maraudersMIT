@@ -41,9 +41,15 @@
 				<img id="map-icon" class="icon" src="/icons/map.png" data-toggle="tooltip" data-original-title="View Map" alt="View Map" data-placement="top" >
 			</a>
 
-			<a href="{{pathFor route='maraudersMap'}}">
-				<img id="check-in" class="icon" src="/icons/check-in.png" data-toggle="tooltip" data-original-title="Check In" alt="Check In" data-placement="top">
-			</a>
+
+				{{#if isCheckedIn}}
+					<img id="check-out" class="icon" src="/icons/check-out.png" data-toggle="tooltip" data-original-title="Check Out" alt="Check Out" data-placement="top">
+				{{ else }}
+					<a href="{{pathFor route='maraudersMap'}}">
+						<img id="check-in" class="icon" src="/icons/check-in.png" data-toggle="tooltip" data-original-title="Check In" alt="Check In" data-placement="top">
+					</a>
+				{{/ if}}
+
 
 			<a href="{{pathFor route='friends'}}">
 				<img id="friends-icon" class="icon" src="/icons/Friends.png" data-toggle="tooltip" data-original-title="Manage Friends" alt="Manage Friends" data-placement="top">
@@ -53,12 +59,15 @@
 
 			<img id="locate" class="icon" src="/icons/locate.png" data-toggle="tooltip" data-original-title="My Location" alt="View Map" data-placement="top" >
 
-			<img id="check-in" class="icon" src="/icons/check-in.png" data-toggle="tooltip" data-original-title="Check In" alt="Check In" data-placement="top">
+			{{#if isCheckedIn}}
+				<img id="check-out" class="icon" src="/icons/check-out.png" data-toggle="tooltip" data-original-title="Check Out" alt="Check Out" data-placement="top">
+			{{ else }}
+				<img id="check-in" class="icon" src="/icons/check-in.png" data-toggle="tooltip" data-original-title="Check In" alt="Check In" data-placement="top">
+			{{/ if}}
 			
 			<a href="{{pathFor route='friends'}}">
 				<img id="friends-icon" class="icon" src="/icons/Friends.png" data-toggle="tooltip" data-original-title="Manage Friends" alt="Manage Friends" data-placement="top">
 			</a>
-
 
 		{{/ if}}
 

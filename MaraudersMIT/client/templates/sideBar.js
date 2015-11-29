@@ -13,6 +13,13 @@ var userFocus = function(){
       	Overlay.show('checkInOverlay');
     },
 
+    'click #check-out': function () {
+        Meteor.call("checkOut", function() {
+          console.log("finished checking out");
+        });
+        alert("You have successfully checked out.");
+    },
+
      'click #locate': function () {
         userFocus();
     },

@@ -34,6 +34,7 @@ Template.checkInOverlay.events({
       console.log("error can't get location");
     });
   } else {
+    alert("Please make sure you have geolocation enabled");
     // Browser doesn't support Geolocation
     console.log("error browser doesn't support geolocation");
   }   

@@ -18,6 +18,13 @@ Template.friends.events({
     Meteor.call('removeFriend', friendID, function() {
       console.log("done unfriending");
     });
+  },
+
+  "click .friend-cancel-request": function() {
+    var friendID = this.id;
+    Meteor.call('cancelFriendRequest', friendID, function() {
+      console.log("done canceling");
+    });
   }
 
 });
