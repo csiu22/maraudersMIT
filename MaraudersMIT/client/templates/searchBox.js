@@ -107,9 +107,6 @@ var NameTrieNode = function() {
     return that;
 };
 
-
-// friends = ["Melissa Chapman", "Jin Pan"];
-
 Template.searchBox.created = function() {
 	this.resultsList;
 	this.max_friends = 10; // Show a maximum of 10 friends.
@@ -125,49 +122,7 @@ Template.searchBox.created = function() {
                 self.friendNames.set(data);
               }
             });
-
-            console.log("~get~" + self.friendNames.get().length);
-	// var self = this;
-	// self.friends = new ReactiveVar([]);
-
-	// console.log("~~");
-	// this.firstNames.insert("bob");
-	// console.log(this.firstNames.getAllNames());
-	// console.log(this.lastNames);
-	// console.log("~~");
-
-             this.firstNames.insert("Melissa");
-             this.lastNames.insert("Chapman");
-             this.firstNames.insert("Jin");
-             this.lastNames.insert("Pan");
 };
-
-
-var populateTries = function() {
-	// console.log("populating tries");
-
-            // Template.instance().friendNames.get().forEach(function(friend) {
-            //         name = friend.toLowerCase().split(" ");
-            //         firstNames.insert(name[0]);
-            //         lastNames.insert(name[1]);
-            // });
-	// console.log("~~finished populating tries::");
-	// console.log(self.friends.get());
-
-
-	// console.log(firstNames.getAllNames());
-	// console.log(lastNames.getAllNames());
-
-            // console.log("populating tries");
-            // friends.forEach(function(friend) {
-            //         console.log("friend: " + friend);
-            //         name = friend.toLowerCase().split(" ");
-            //         firstNames.insert(name[0]);
-            //         lastNames.insert(name[1]);
-            // });
-
-            // console.log("hmm" + firstNames.getAllNames().length + "  " + lastNames.getAllNames().length);
-}
 
 var clearList = function() {
 	Template.instance().resultsList.innerHTML = '';
@@ -176,8 +131,12 @@ var clearList = function() {
 var matchNames = function(prefix) {
 	matchedFirstNames = Template.instance().firstNames.getMatchedNames(prefix);
 	for (i = 0; i < Template.instance().max_friends && i < matchedFirstNames.length; ++i) {
-	  	  appendName(matchedFirstNames[i]);
+	  	appendName(matchedFirstNames[i]);
 	}
+             matchedLastNames = Template.instance().lastNames.getMatchedNames(prefix);
+             for (i = 0; i < Template.instance().max_friends && i < matchedLastNames.length; ++i) {
+                          appendName(matchedLastNames[i]);
+             }
 };
 
 var appendName=  function(name) {
@@ -189,12 +148,8 @@ var appendName=  function(name) {
 Template.searchBox.events({
 	'keyup input': function(event) {
 		console.log("derp " + event.target.value);
-
-		//TODO: change to check if this number is equal to number of marauder friends
-		if (Template.instance().firstNames.getAllNames().length === 0
-                                        || Template.instance().lastNames.getAllNames().length === 0) {
-			populateTries();
-		}
+                          console.log("Alll first names");
+                          console.log(Template.instance().firstNames.getAllNames());
 
 		if (!Template.instance().resultsList) {
 			Template.instance().resultsList = document.getElementById('results-list');
@@ -204,3 +159,17 @@ Template.searchBox.events({
 		matchNames(event.target.value);
 	}
 });	
+
+Template.searchBox.helpers({
+     insertFriends: function() {
+      friendNames = Template.instance().friendNames.get();
+      console.log("in the insert friends");
+      friendNames.forEach(function(friend) {
+            spaceIndex = friend.indexOf(" ")
+            Template.instance().firstNames.insert(friend.toLowerCase().substring(0,spaceIndex));
+            Template.instance().lastNames.insert(friend.toLowerCase().substring(spaceIndex+1, friend.length));
+            console.log(Template.instance().firstNames.getAllNames());
+            console.log(Template.instance().lastNames.getAllNames());
+      });
+    },
+  });
