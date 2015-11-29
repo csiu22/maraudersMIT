@@ -27,6 +27,21 @@ if (Meteor.isServer) {
       }
     },
 
+    'cancelFriendRequest': function(friendId) {
+      // if ((Meteor.user().requests.indexOf(friendId) >= 0) || (Meteor.user().requests.indexOf(friendId) >= 0)) {
+      //   console.log("Can't cancel friend request.");
+      // } else {
+        var friend = Meteor.users.findOne({_id: friendId});
+        var requests = friend.requests;
+
+        var index = requests.indexOf(Meteor.userId());
+        requests.splice(index, 1);
+
+        Meteor.users.update({_id: friendId}, {$set: {requests: requests}});
+        console.log("Canceled friend request");
+      // }
+    },
+
     // Allows user to accept another user's friend request
     'acceptFriendRequest': function(friendId) {
       var index = Meteor.user().requests.indexOf(friendId);
@@ -125,7 +140,7 @@ if (Meteor.isServer) {
               if (!doneChecking) {
                 userList.push({name: user.name, id: currentFriend._id, friend: false, request: false, requested: false});
               }
-      
+
           }
       });
   }
@@ -134,20 +149,20 @@ if (Meteor.isServer) {
 
     'getMarauderFriends': function() {
       if (Meteor.user()) {
-        var friendNames = []; 
+        var friendNames = [];
 
         if(Meteor.user() && Meteor.user().friends){
             Meteor.user().friends.forEach(function(friendId) {
               var friend = Meteor.users.findOne({_id: friendId});
               friendNames.push(friend.services.facebook.name);
-            }); 
+            });
             if (friendNames.length === 0) {
               friendNames.push("None");
-            } 
+            }
       }
-        return friendNames; 
+        return friendNames;
       }
     }
-     
+
   });
 }
