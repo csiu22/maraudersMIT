@@ -116,16 +116,17 @@ Template.searchBox.created = function() {
              this.firstNames = new NameTrieNode();
              this.lastNames = new NameTrieNode();
              var self = this;
-            // self.friendNames = new ReactiveVar([]);
+            self.friendNames = new ReactiveVar([]);
 
-            // Meteor.call('getMarauderFriends', function(err, data) {
-            //   if (err) {
-            //     console.log(err);
-            //   } else {
-            //     self.friendNames.set(data);
-            //   }
-            // });
+            Meteor.call('getMarauderFriends', function(err, data) {
+              if (err) {
+                console.log(err);
+              } else {
+                self.friendNames.set(data);
+              }
+            });
 
+            console.log("~get~" + self.friendNames.get().length);
 	// var self = this;
 	// self.friends = new ReactiveVar([]);
 
