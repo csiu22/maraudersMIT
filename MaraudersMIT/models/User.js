@@ -4,14 +4,15 @@ if (Meteor.isServer) {
   Meteor.methods({
     // Allows a user to check in to a location with an availability, text status, and a duration.
     'checkIn': function(availability, text_status, duration, location) {
-      Meteor.users.update({_id: Meteor.userId()}, {$set: {checkin: {availability: availability, text_status: text_status, duration: duration, loc: location}}});
-      setTimeout(Meteor.bindEnvironment(function() {
-        Meteor.users.update({_id: Meteor.userId()}, {$set: {checkin: null}});
-      }), duration * MILLISECONDS_IN_MINUTE);
+      var checkin = {availability: availability, text_status: text_status, duration: duration, loc: location};
+      checkIn({checkin: checkin, user_id: Meteor.userId()});
      },
 
+    // Allows a user to check out before the duration of a previous check-in is finished.
     'checkOut': function() {
-      Meteor.users.update({_id: Meteor.userId()}, {$set: {checkin: null}});
+      FutureTasks.remove(Meteor.user().handle);
+      SyncedCron.remove(Meteor.user().handle);
+      checkOut({user_id: Meteor.userId()});
      },
 
     // Allows user to send a friend request to another user

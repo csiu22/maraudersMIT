@@ -1,5 +1,20 @@
 if (Meteor.isServer) {
   Meteor.startup(function () {
+    var doneTasks = []
+    FutureTasks.find().forEach(function(checkin) {
+      if (checkin.fireDate < new Date()) {
+        checkOut(checkin.details);
+        doneTasks.push(checkin._id);
+      } else {
+        addTask(checkin.user_id, checkin.details, checkin.fireDate);
+      }
+    });
+    doneTasks.forEach(function(id) {
+      console.log(id);
+      FutureTasks.remove(id);
+    });
+    SyncedCron.start();
+
     Meteor.publish("users", function() {
       return Meteor.users.find();
     });
@@ -57,6 +72,7 @@ if (Meteor.isServer) {
         user.friends = [];
         user.requests = []
         user.checkin = null;
+        user.handle = null;
         
         user.isVerified = false;
 
