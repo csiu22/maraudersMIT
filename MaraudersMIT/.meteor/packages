@@ -30,3 +30,4 @@ iron:router
 grigio:overlay
 bootstrap
 reactive-var
+percolate:synced-cron

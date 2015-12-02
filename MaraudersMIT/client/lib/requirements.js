@@ -1,5 +1,4 @@
-// Session.set('richmarkerReady', false);
-// Session.set('custommarkerReady', true);
+// Session.set('custommarkerReady', false);
 
 // CustomMarker = null;
 
