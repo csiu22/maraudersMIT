@@ -23,22 +23,19 @@ Template.searchBox.helpers({
 
   Template.searchResults.events({
     'click #centerOnFriend': function (event) {
-       console.log("checkin availability " + event.target.attributes.checkinAvailability.nodeValue);
 
        if (event.target.attributes.checkinAvailability.nodeValue === "invisible") {
-            console.log("your friend is invisible");
+            alert(event.target.attributes.name.nodeValue + " is currently invisible");
       } else {
             var latitude = event.target.attributes.checkinLatitude.nodeValue
             var longitude = event.target.attributes.checkinLongitude.nodeValue
+            var friendPos = new google.maps.LatLng(latitude, longitude);
 
-            console.log("checked in" + latitude + "  " + longitude);
-
-            // var pos = {
-            //         lat: latitude,
-            //         lng: longitude
-            // }
-
-            // maraudersMap.setCenter(pos);
+            if (maraudersMap) {
+                  maraudersMap.setCenter(friendPos);
+            } else {
+                  console.log("error");
+            }
       }
     }
   });
