@@ -2,7 +2,7 @@
 //take user to their location on the map
 var userFocus = function(){
   if(DEBUG) console.log("userFocus method");
-  if( maraudersMap) {
+  if(maraudersMap) {
     maraudersMap.getUserLocation(maraudersMap.setCenter);
   }
 

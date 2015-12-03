@@ -33,13 +33,38 @@ Map = function(){
     that.displaySelf = function(pos){
         if(!pos) return;
         var gSelfLoc = new google.maps.LatLng(pos.lat, pos.lng);
-        var selfMarker = new RichMarker({
-            map: that.map,
-            position: gSelfLoc,
-            draggable: false,
-            flat: true,
-            anchor: RichMarkerPosition.MIDDLE,
-            content: '<div class="here"><div><div><img src="'+Meteor.user().profile.picture+'"/></div><div>You are here!</div>'
+        // var selfMarker = new RichMarker({
+        //     map: that.map,
+        //     position: gSelfLoc,
+        //     draggable: false,
+        //     flat: true,
+        //     anchor: RichMarkerPosition.MIDDLE,
+        //     content: '<div class="here"><div><div><img src="'+Meteor.user().profile.picture+'"/></div><div>You are here!</div>'
+        // });
+
+        var selfMarker = new CustomMarker(
+            gSelfLoc,
+            that.map,
+            {
+              marker_id: '123',
+              img: Meteor.user().profile.picture,
+              name: Meteor.user().profile.name
+            }
+        );
+
+        var contentString =
+          // '<div class="here">' +
+          '<h1 id="firstHeading" class="firstHeading">' + Meteor.user().profile.name + '</h1>'
+          // +
+          // '<h3 class>' + Meteor.user().checkin.duration + ' minutes left</h2>' +
+          // '<div>' + Meteor.user().checkin.text_status + '</div>'
+
+
+
+        var iw = new google.maps.InfoWindow({content: contentString, pixelOffset: new google.maps.Size(5,0)});
+        // iw.open(that.map, selfMarker);
+        google.maps.event.addListener(selfMarker, "click", function() {
+          iw.open(that.map, selfMarker);
         });
       }
 
@@ -56,7 +81,7 @@ Map = function(){
            }
 
            var locations = data;
-           
+
            if (locations){
                locations.forEach(function(loc) {
                      var image = {
@@ -65,13 +90,37 @@ Map = function(){
                      };
 
                     var gLoc = new google.maps.LatLng(loc.checkin.loc.lat, loc.checkin.loc.lng);
-                     var friendMarker = new RichMarker({
-                           map: that.map,
-                           position: gLoc,
-                           draggable: false,
-                           flat: true,
-                           anchor: RichMarkerPosition.MIDDLE,
-                           content: '<div class=' + loc.checkin.availability + '><div><div>' + loc.name + '</div><img src="' + loc.pic + '"/></div>' + '<div>' + loc.checkin.text_status + '</div>'
+                    // var friendMarker = new RichMarker({
+                    //        map: that.map,
+                    //        position: gLoc,
+                    //        draggable: false,
+                    //        flat: true,
+                    //        anchor: RichMarkerPosition.MIDDLE,
+                    //        content: '<div class=' + loc.checkin.availability + '><div><div>' + loc.name + '</div><img src="' + loc.pic + '"/></div>' + '<div>' + loc.checkin.text_status + '</div>'
+                    // });
+
+                    var friendMarker = new CustomMarker(
+                        gLoc,
+                        that.map,
+                        {
+                          marker_id: '123',
+                          img: loc.pic,
+                          name: loc.name,
+                          availability: loc.checkin.availability
+                        }
+                    );
+
+                    var contentStringFriend =
+                      // '<div class=' + loc.checkin.availability + '>' +
+                      '<h1 id="firstHeading" class="firstHeading">' + loc.name + '</h1>' +
+                      '<h3 class>' + loc.checkin.duration + ' minutes left</h2>' +
+                      '<div>' + loc.checkin.text_status + '</div>'
+
+
+
+                    var iwFriend = new google.maps.InfoWindow({content: contentStringFriend, pixelOffset: new google.maps.Size(5,0)});
+                    google.maps.event.addListener(friendMarker, "click", function() {
+                      iwFriend.open(that.map, friendMarker);
                     });
                 });
           }
@@ -103,7 +152,7 @@ Map = function(){
               errfunc();
               return undefined;
             }
-             
+
         }
 
       that.setCenter = function(pos){
@@ -134,7 +183,7 @@ Map = function(){
       } else {
         /* error when geolocation IS NOT available */
         console.log("geo not available");
-      }    
+      }
   }
 
   /*
@@ -149,7 +198,7 @@ Map = function(){
      that.map.setCenter(c);
   }
 
- 
+
 
   Object.freeze(that);
   return that;
