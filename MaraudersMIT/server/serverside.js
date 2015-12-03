@@ -71,7 +71,7 @@ if (Meteor.isServer) {
         }
         user.friends = [];
         user.requests = []
-        user.checkin = null;
+        user.checkin = {availability: "invisible"};
         user.handle = null;
         
         user.isVerified = false;

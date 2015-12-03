@@ -31,3 +31,4 @@ grigio:overlay
 bootstrap
 reactive-var
 percolate:synced-cron
+mizzao:autocomplete

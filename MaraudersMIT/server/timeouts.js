@@ -2,7 +2,7 @@ if (Meteor.isServer) {
   FutureTasks = new Meteor.Collection('future_tasks');
   
   checkOut = function(details) {
-    Meteor.users.update({_id: details.user_id}, {$set: {checkin: null}});
+    Meteor.users.update({_id: details.user_id}, {$set: {checkin: {availability: "invisible"}}});
     Meteor.users.update({_id: details.user_id}, {$set: {handle: null}});
   };
   
