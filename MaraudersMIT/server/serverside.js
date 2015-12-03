@@ -6,7 +6,7 @@ if (Meteor.isServer) {
         checkOut(checkin.details);
         doneTasks.push(checkin._id);
       } else {
-        addTask(checkin.user_id, checkin.details, checkin.fireDate);
+        addTask(checkin._id, checkin.details, checkin.fireDate);
       }
     });
     doneTasks.forEach(function(id) {
