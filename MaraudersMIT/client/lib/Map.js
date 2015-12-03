@@ -31,7 +31,7 @@ Map = function(){
       // });
 
     that.displaySelf = function(pos){
-        if(!pos) return;
+        if(!pos || !Meteor.user()) return;
         var gSelfLoc = new google.maps.LatLng(pos.lat, pos.lng);
         // var selfMarker = new RichMarker({
         //     map: that.map,

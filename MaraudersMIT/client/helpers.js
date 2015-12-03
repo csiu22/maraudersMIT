@@ -11,5 +11,8 @@ Handlebars.registerHelper('ifRouteIs', function (routeName) {
 });
 
 Handlebars.registerHelper('isCheckedIn', function () {
-      return Meteor.user().checkin.availability !== "invisible";
+      if (Meteor.user() && Meteor.user().checkin) {
+        return Meteor.user().checkin.availability !== "invisible";
+      }
+      return false;
 });
