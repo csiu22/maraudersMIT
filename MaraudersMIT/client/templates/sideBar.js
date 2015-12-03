@@ -45,4 +45,4 @@ var userFocus = function(){
   });
 
 //Initialize tooltips
-template.sideBar.rendered = function(){ $('[data-toggle="tooltip"]').tooltip();}
+Template.sideBar.rendered = function(){ $('[data-toggle="tooltip"]').tooltip();}
