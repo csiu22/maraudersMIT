@@ -61,34 +61,55 @@ Map = function(){
         if(!pos || !Meteor.user()) return;
         var gSelfLoc = new google.maps.LatLng(pos.lat, pos.lng);
 
-          // var images = '<div class="image">' +
-          // // '<img src="'+ Meteor.user().profile.picture + '" alt="" />' +
-          // '<a href="#" class="arrow icn left-black-arrow">' +
-          // '<span>&lt;</span></a><a href="#" class="arrow icn right-black-arrow"><span>&gt;</span></a></div>';
+        var display_status = function(checkin_obj) {
+          var status = checkin_obj.availability;
 
-          var marker_html = '<div id="'+ Meteor.userId()+'"><div class="pin">' +
-            '<div class="wrapper">' +
+          if(status != "available" && status != "busy" && status != "invisible"){
+                console.log("status is not valid. status = " + status);
+                return;
+          }
+
+        var marker_html = '<div id="'+ Meteor.userId()+'"><div class="pin">' +
+            '<div id="wrapper" class="wrapper">' +
               '<div class="small">' +
                 '<img src="' + Meteor.user().profile.picture + '" alt="" />' +
               '</div>' +
               '<div class="large">' +
                 '<p style="float: left;"><img src="' + Meteor.user().profile.picture + '" alt="" /></p>' +
-                '<p class="text"><strong>' + Meteor.user().profile.name + '</strong></p>' +
-                // '<div class="boo">' +
+                '<p class="text"><strong>' + Meteor.user().profile.name + '</strong></p>';
+               
+                if(status === "available"){
+                    marker_html +=  '<em>You are available</em>';
 
-                  '<em>You are invisible</em>' +
-                // '</div>' +
-                '<a class="icn close" href="#" title="Close">Close</a>' +
+                }
+                else if (status === "busy"){
+
+                     marker_html +=  '<em>You are busy</em>';
+
+                }
+                else{
+
+                    marker_html +=  '<em>You are invisible</em>';
+                }
+
+                 
+        marker_html += '<a class="icn close" href="#" title="Close">Close</a>' +
               '</div>' +
             '</div>' +
             '<span></span>' +
             '</div></div>';
 
+
+            return marker_html;
+        };
+
+  
+
             var user_marker = new RichMarker({
               position: gSelfLoc,
               flat: true,
               anchor: RichMarkerPosition.BOTTOM,
-              content: marker_html
+              content:  display_status(Meteor.user().checkin),
             });
             user_marker.setMap(that.map);
 
@@ -106,7 +127,7 @@ Map = function(){
               $('#'+Meteor.userId()+' .pin ').removeClass('active').css('z-index', 10);
               $('#'+Meteor.userId()+' .pin').addClass('active').css('z-index', 200);
 
-              $('#'+Meteor.userId()+' .pin .wrapper .large').click(function(){
+              $('#'+Meteor.userId()+' .pin #wrapper .large').click(function(){
                 $('#'+Meteor.userId()+' .pin').removeClass('active');
                 return false;
               });
