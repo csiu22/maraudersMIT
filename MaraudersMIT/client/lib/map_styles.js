@@ -54,35 +54,35 @@ map_styles = [
 				featureType: 'landscape',
 				elementType: 'geometry',
 				stylers: [
-					{ color: '#D5B590' }
+					{ color: '#604125' }
 				]
 			},
 			{
 				featureType: 'poi',
 				elementType: 'labels',
 				stylers: [
-					{ visibility: 'off' }
+					// { visibility: 'off' }
 				]
 			},
 			{
 				featureType: 'poi',
 				elementType: 'labels.icon',
 				stylers: [
-					{ visibility: 'off' }
+					// { visibility: 'off' }
 				]
 			},
 			{
 				featureType: 'poi',
 				elementType: 'geometry.fill',
 				stylers: [
-					{ color: '#604125' }
+					{ color: '#430300' }
 				]
 			},
 			{
 				featureType: 'road',
 				elementType: 'geometry',
 				stylers: [
-					{ color: '#5F5C60' },
+					{ color: '#D5B590' },
 					{ visibility: 'simplified' }
 				]
 			},
@@ -108,7 +108,7 @@ map_styles = [
 			{
 				featureType: 'water',
 				stylers: [
-					{ color: '#430300' }
+					{ color: '' }
 				]
 			},
 			{
