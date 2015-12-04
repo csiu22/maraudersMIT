@@ -86,6 +86,11 @@ if (Meteor.isServer) {
         });
       }
       return locations;
+    },
+
+    // Checks if the id of the given user is the current user's friend
+    'isFriend': function(givenFriendId) {
+      return Meteor.user().friends.indexOf(givenFriendId) !== -1;
     }
   });
 }
