@@ -6,3 +6,412 @@
 	float:left;
 	position:absolute;
 }
+
+/*
+Theme Name: Form
+Theme URI: http://humaan.com.au/
+Description: Theme for Form Website 2013
+Author: Humaan
+Author URI: http://humaan.com.au/
+Version: 1.0
+*/
+
+/*---------------------------------------------- RESET */
+
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td,article,aside,canvas,details,embed,figure,figcaption,footer,header,hgroup,menu,nav,output,ruby,section,summary,time,mark,audio,video{margin:0;padding:0;border:0;font-size:100%;font:inherit;vertical-align:baseline}article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section{display:block}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}table{border-collapse:collapse;border-spacing:0}p,ul,ol{margin:0 0 20px}ul,ol{padding:0 0 0 2.5em}label{cursor:pointer}button{cursor:pointer;border:0;outline:0}input[type="submit"]::-moz-focus-inner,input[type="button"]::-moz-focus-inner{border:0}input[type="submit"]:focus,input[type="button"]:focus{outline:0}
+
+
+/*---------------------------------------------- GLOBAL SETTINGS */
+
+
+html, body{ height: 100%; }
+
+body {
+	background: #fff;
+	font: 14px/21px 'Montserrat', "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif;
+	color: #444;
+	-webkit-font-smoothing: antialiased; /* Fix for webkit rendering */
+	-webkit-text-size-adjust: 100%;
+}
+
+.proxima { font-family: 'proxima-nova', 'Montserrat', "HelveticaNeue", Helvetica, Arial, sans-serif; }
+.monteserrat { font-family: 'Montserrat', "HelveticaNeue", Helvetica, Arial, sans-serif; }
+
+/*---------------------------------------------------- FORMATTING */
+
+h1, h2, h3, h4, h5, h6 { font-weight: 600; text-transform: uppercase; }
+h1 a, h2 a, h3 a, h4 a, h5 a, h6 a { font-weight: inherit; line-height: 1.2em; }
+h1 { font-size: 46px; margin-bottom: 20px;}
+h2 { font-size: 35px; margin-bottom: 20px; }
+h3 { font-size: 18px; margin-bottom: 20px; }
+h4 { font-size: 15px; margin-bottom: 20px; }
+h5 { font-size: 14px; }
+h6 { font-size: 12px; }
+
+p { margin: 0 0 20px 0; font-family: 'proxima-nova', 'Montserrat', "HelveticaNeue", Helvetica, Arial, sans-serif; }
+em { font-style: italic; }
+strong { font-weight: bold; }
+small { font-size: 80%; }
+
+.title { text-transform: uppercase; font-weight: 600; font-family: 'Montserrat'; }
+
+/*	Blockquotes  */
+blockquote, blockquote p { font-size: 17px; line-height: 24px; color: #777; font-style: italic; }
+blockquote { margin: 0 0 20px; padding: 9px 20px 0 19px; border-left: 1px solid #ddd; }
+blockquote cite { display: block; font-size: 12px; color: #555; }
+blockquote cite:before { content: "\2014 \0020"; }
+blockquote cite a, blockquote cite a:visited, blockquote cite a:visited { color: #555; }
+
+hr { border: solid #ddd; border-width: 1px 0 0; clear: both; margin: 10px auto 30px; height: 0; }
+
+a {
+	color: #444444;
+	text-decoration: none;
+	outline: 0;
+	-webkit-transition: color .3s ease-in-out, background-color .3s ease-in-out;
+	-moz-transition: color .3s ease-in-out, background-color .3s ease-in-out;
+	-o-transition: color .3s ease-in-out, background-color .3s ease-in-out;
+	transition: color .3s ease-in-out, background-color .3s ease-in-out;
+}
+a:hover, a:focus { color: #000; }
+p a { line-height: inherit; }
+
+
+/* public map */
+
+.map-wrapper {
+	position: relative;
+}
+
+.map-wrapper .map-btn {
+	text-transform: uppercase;
+	color: #fff;
+	background-color: #4a4d4c;
+	display: inline-block;
+	font-weight: bold;
+	font-size: 13px;
+	padding: 11px 23px 21px 18px;
+	top: 50px;
+	position: absolute;
+	z-index: 2000;
+}
+
+.map-wrapper .map-btn:hover {
+	background-color: #656766;
+}
+
+
+.pin {
+	position: absolute;
+	left: -42px;
+	bottom: 0;
+}
+
+.pin .wrapper {
+	padding: 3px;
+	border-radius: 3px;
+	background-color: #fff;
+	box-shadow: 0 0 5px 1px rgba(34,35,35,0.97);
+	position: relative;
+	z-index: 2;
+}
+
+.pin img {
+	display: block;
+	border-radius: 3px;
+}
+
+.pin .wrapper:after {
+	top: 100%;
+	left: 50%;
+	border: solid transparent;
+	content: " ";
+	height: 0;
+	width: 0;
+	position: absolute;
+	pointer-events: none;
+	border-color: rgba(255, 255, 255, 0);
+	border-top-color: #ffffff;
+	border-width: 5px;
+	margin-left: -5px;
+}
+
+.pin .large {
+	display: none;
+}
+.pin.active .small {
+	display: none;
+}
+.pin.active .large {
+	display: block;
+}
+
+.pin.active {
+	width: 300px;
+	padding: 4px;
+	left: -154px;
+}
+
+.pin.active {
+	width: 300px;
+	padding: 4px;
+}
+
+.pin.active .image {
+	width: 100%;
+	height: 194px;
+	display: block;
+	border-bottom-width: 4px;
+	border-bottom-style: solid;
+	position: relative;
+}
+
+.pin.active .image img {
+	border-radius: 3px 3px 0 0;
+	width: 100%;
+}
+
+.pin.active .image a.arrow {
+	position: absolute;
+	top: 90px;
+	z-index: 200;
+	background-color: rgba(255,255,255,0.8);
+	display: block;
+	width: 32px;
+	height: 27px;
+}
+
+.pin.active .image a.arrow:hover {
+	background-color: rgba(255,255,255,1.0);
+}
+
+
+.pin.active .text { 
+	padding: 20px 12px;
+	text-align: left;
+}
+
+.pin.active .text p {
+	font-size: 13px;
+	line-height: 18px;
+	margin: 0;
+}
+
+.pin.active .text p.artist {
+	text-transform: uppercase;
+	margin: 0;
+}
+
+.pin.active .text p.artist em {
+	text-transform: none;
+}
+
+.pin.active .text p.title {
+	margin: 10px 0 5px; 
+}
+
+.pin.active .text p.description {
+	max-height: 120px;
+	padding-bottom: 10px;
+	overflow-y: scroll;
+	padding-right: 15px;
+}
+
+.pin.active .text p.description::-webkit-scrollbar {
+    -webkit-appearance: none;
+}
+.pin.active .text p.description::-webkit-scrollbar:vertical {
+    width: 11px;
+}
+.pin.active .text p.description::-webkit-scrollbar:horizontal {
+    height: 11px;
+}
+.pin.active .text p.description::-webkit-scrollbar-thumb {
+    border-radius: 8px;
+    border: 2px solid white; /* should match background, can't be transparent */
+    background-color: rgba(0, 0, 0, .5);
+}
+.pin.active .text p.description::-webkit-scrollbar-track { 
+    background-color: #fff; 
+    border-radius: 8px; 
+}
+
+.pin.active a.close {
+	position: absolute;
+	top: -13px;
+	right: -13px;
+	width: 26px;
+	height: 26px;
+	display: block;
+	z-index: 999;
+	text-indent: -9999px;
+}
+
+.map-nav {
+	width: 100%;
+	display: block;
+	position: relative;	
+}
+
+.map-nav .title {
+	background-color: #282828;
+	text-align: center;
+	text-transform: uppercase;
+	color: #b0b0b0;
+	font-size: 13px;
+	padding: 14px 0;
+	
+}
+
+.map-nav ul {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+.map-nav li {
+	float: left;
+	display: block;
+	width: 33.3%;
+	text-align: center;
+	margin: 0;
+}
+
+.map-nav li a {
+	text-transform: uppercase;
+	padding: 23px 0;
+	display: block;
+	font-weight: bold;
+}
+
+/* blobs */
+
+.pin span {
+	border-radius: 50%;
+	height: 7px;
+	width: 14px;
+	position: absolute;
+	bottom: -9px;
+	left: 35px;
+}
+
+.pin.active span {
+		left: 147px;
+		bottom: -5px;
+	}
+
+
+/* colours */
+
+
+
+/*  --------------------------------------------------- CUSTOM CLASSES */
+
+.brace {
+	width: 960px;
+	margin: 0 auto;
+	position: relative;
+}
+
+.hidden { display: none; }
+
+.clear { clear: both; }
+.left { float: left; }
+.right { float: right; }
+
+
+.title.fancy { 
+	/*background: url(images/pixel-111.png) repeat-x center center;*/
+	display: block;
+	text-align: center;
+	padding: 30px 0;
+}
+	.title.fancy span {
+		padding: 0 20px;
+		background-color: #fff;
+		display: inline-block;
+	}
+.title-feature {
+	text-align: center;
+	font-size: 36px;
+}
+
+/* buttons */
+
+.btn {
+	color: #111;
+	font-size: 16px;
+	font-weight: 600;
+	padding: 25px 22px;
+	display: inline-block;
+	border: 1px solid #f3f3f3;
+	line-height: 1em;
+	text-transform: uppercase;
+	-webkit-transition: border-color .3s ease-in-out;
+	-moz-transition: border-color .3s ease-in-out;
+	-o-transition: border-color .3s ease-in-out;
+	transition: border-color .3s ease-in-out;
+}
+	.btn:hover { border-color: #cccccc; }
+
+.btn.box {
+	text-align: center;
+}
+
+.btn.readmore,
+.btn.buy,
+.btn.read {
+	color: #fff;
+	padding: 14px 40px 14px 14px;
+	font-weight: 600;
+	margin-bottom: 35px;
+	font-size: 13px;
+	-webkit-transition: background-color .3s ease-in-out;
+	-moz-transition: background-color .3s ease-in-out;
+	-o-transition: background-color .3s ease-in-out;
+	transition: background-color .3s ease-in-out;
+	border: 0px;
+	/*background-image: url(images/arrow-readmore.png);*/
+	background-repeat: no-repeat;
+	background-position: 90% center;
+}
+
+.white-arrow {
+	background-position: 0 -384px;
+	width: 14px;
+	height: 11px;
+	display: inline-block;
+	margin-left: 10px;
+}
+
+.map-icn {
+	background-position: -64px -320px;
+	width: 22px;
+	height: 22px;
+	display: inline-block;
+	margin-right: 10px;
+	position: relative;
+	top: 7px;
+}
+
+.left-black-arrow {
+	background-position: -58px -377px;
+	width: 14px;
+	height: 11px;
+	left: 0;
+	position: relative;
+	top: 5px;
+}
+
+.right-black-arrow {
+	background-position: -118px -377px;
+	width: 14px;
+	height: 11px;
+	right: 0;
+	position: relative;
+	top: 5px;
+}
+
+	
+
+

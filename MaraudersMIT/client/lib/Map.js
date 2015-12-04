@@ -9,64 +9,112 @@ Map = function(){
 
     var that = Object.create(Map.prototype);
 
-    that.map = new google.maps.Map(document.getElementById('map'), {
-                center: {lat: 42.359155, lng: -71.093058}, // 77 Mass Ave
-                zoom: 18
-            });
+   
+    var massave = new google.maps.LatLng( 42.359155,  -71.093058);
 
-      // // limit map to the Boston / Cambridge area
-      // var allowedBounds = new google.maps.LatLngBounds(
-      //     new google.maps.LatLng(42.330825, -71.110483), //southwest coord of bounds
-      //     new google.maps.LatLng( 42.375860, -71.046968) // northeast coord of bounds
-      // );
-      // var lastValidCenter = that.map.getCenter();
+    var mapOptions = {
+      center: massave,
+      zoom: 15,
+      styles: map_styles,
+      mapTypeControl: false,
+      streetViewControl: false
+    };
+    
+    that.map = new google.maps.Map(document.getElementById('map'), mapOptions);
 
-      // google.maps.event.addListener(that.map, 'center_changed', function() {
-      //         if (allowedBounds.contains(that.map.getCenter())) {
-      //             // still within valid bounds, so save the last valid position
-      //             lastValidCenter = that.map.getCenter();
-      //         return;
-      //         }
-      //         that.map.panTo(lastValidCenter);
-      // });
+
+            /*
+
+            This is all to set the boundaries of the map, please do not touch!
+            
+            */
+
+            // var mapType = new google.maps.StyledMapType(stylez, { name:"Grayscale" });    
+            // that.map.mapTypes.set('gray', mapType);
+            // that.map.setMapTypeId('gray');
+
+
+            //   // limit map to the Boston / Cambridge area
+            //   var allowedBounds = new google.maps.LatLngBounds(
+            //       new google.maps.LatLng(42.330825, -71.110483), //southwest coord of bounds
+            //       new google.maps.LatLng( 42.375860, -71.046968) // northeast coord of bounds
+            //   );
+            //   var lastValidCenter = that.map.getCenter();
+
+            //   google.maps.event.addListener(that.map, 'center_changed', function() {
+            //           if (allowedBounds.contains(that.map.getCenter())) {
+            //               // still within valid bounds, so save the last valid position
+            //               lastValidCenter = that.map.getCenter();
+            //           return;
+            //           }
+            //           that.map.panTo(lastValidCenter);
+            //   });
+
+           /*
+              End of boundary settings
+           */
+
+    
+
 
     that.displaySelf = function(pos){
         if(!pos || !Meteor.user()) return;
         var gSelfLoc = new google.maps.LatLng(pos.lat, pos.lng);
-        // var selfMarker = new RichMarker({
-        //     map: that.map,
-        //     position: gSelfLoc,
-        //     draggable: false,
-        //     flat: true,
-        //     anchor: RichMarkerPosition.MIDDLE,
-        //     content: '<div class="here"><div><div><img src="'+Meteor.user().profile.picture+'"/></div><div>You are here!</div>'
-        // });
 
-        var selfMarker = new CustomMarker(
-            gSelfLoc,
-            that.map,
-            {
-              marker_id: '123',
-              img: Meteor.user().profile.picture,
-              name: Meteor.user().profile.name
-            }
-        );
+          var images = '<div class="image">' +
+          // '<img src="'+ Meteor.user().profile.picture + '" alt="" />' +
+          '<a href="#" class="arrow icn left-black-arrow">' +
+          '<span>&lt;</span></a><a href="#" class="arrow icn right-black-arrow"><span>&gt;</span></a></div>';  
 
-        var contentString =
-          // '<div class="here">' +
-          '<h1 id="firstHeading" class="firstHeading">' + Meteor.user().profile.name + '</h1>'
-          // +
-          // '<h3 class>' + Meteor.user().checkin.duration + ' minutes left</h2>' +
-          // '<div>' + Meteor.user().checkin.text_status + '</div>'
+          var marker_html = '<div class="pin">' +
+            '<div class="wrapper">' +
+              '<div class="small">' +
+                '<img src="' + Meteor.user().profile.picture + '" alt="" />' +
+              '</div>' +
+              '<div class="large">' +
+                images +
+                '<div class="text">' +
+                  '<p class=""><strong> Test </strong> <em>Test</em></p>' +
+                '</div>' +
+                '<a class="icn close" href="#" title="Close">Close</a>' + 
+              '</div>' +
+            '</div>' +
+            '<span></span>' +
+            '</div>';
 
+            var user_marker = new RichMarker({
+              position: gSelfLoc,
+              flat: true,
+              anchor: RichMarkerPosition.BOTTOM,
+              content: marker_html
+            });     
+            user_marker.setMap(that.map);
 
+            google.maps.event.addListener(user_marker, 'click', function() {
+              
+              var modifier = 0.0178;
+              if ($(window).width() < 768) {
+                modifier = 0;
+              }
+              
+              if (!$('.pin').hasClass('active')) {
+                // map.setZoom(14);
+                // var temp_lat = -31.955945 + modifier;
+                // map.panTo(new google.maps.LatLng(temp_lat, 115.856339));
+              }
+              
+              $('.pin').removeClass('active').css('z-index', 10);
+              $(' .pin').addClass('active').css('z-index', 200);
+            
+              $('.large .close').click(function(){
+                $('.pin').removeClass('active');
+                return false;
+              });
+              
+            });
+            
 
-        var iw = new google.maps.InfoWindow({content: contentString, pixelOffset: new google.maps.Size(5,0)});
-        // iw.open(that.map, selfMarker);
-        google.maps.event.addListener(selfMarker, "click", function() {
-          iw.open(that.map, selfMarker);
-        });
-      }
+       }
 
       /*
       Function that displays each of the user's friends on the map
