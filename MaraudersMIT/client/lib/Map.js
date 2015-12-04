@@ -70,7 +70,7 @@ Map = function(){
           }
 
         var marker_html = '<div id="'+ Meteor.userId()+'"><div class="pin">' +
-            '<div id="wrapper" class="wrapper">' +
+            '<div id="wrapper" class="wrapper ' + status + '">' +
               '<div class="small">' +
                 '<img src="' + Meteor.user().profile.picture + '" alt="" />' +
               '</div>' +

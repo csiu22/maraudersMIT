@@ -91,15 +91,15 @@ p a { line-height: inherit; }
 	z-index: 2;
 }
 
-.pin .wrapper .available {
+.pin .wrapper.available {
 	background-color: lime;
 }
 
-.pin .wrapper .busy {
+.pin .wrapper.busy {
 	background-color: red;
 }
 
-.pin .wrapper .invisible {
+.pin .wrapper.invisible {
 	background-color: turquoise;
 }
 
@@ -123,15 +123,15 @@ p a { line-height: inherit; }
 	margin-left: -5px;
 }
 
-.pin .wrapper:after .available{
+.pin .wrapper.available:after {
 	border-top-color: lime;
 }
 
-.pin .wrapper:after .busy{
+.pin .wrapper.busy:after{
 	border-top-color: red;
 }
 
-.pin .wrapper:after .invisible{
+.pin .wrapper.invisible:after{
 	border-top-color: turquoise;
 }
 
