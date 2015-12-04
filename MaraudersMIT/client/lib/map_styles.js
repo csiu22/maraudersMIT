@@ -54,7 +54,7 @@ map_styles = [
 				featureType: 'landscape',
 				elementType: 'geometry',
 				stylers: [
-					{ color: '#604125' }
+					{ color: '#89858B' }
 				]
 			},
 			{
@@ -75,14 +75,15 @@ map_styles = [
 				featureType: 'poi',
 				elementType: 'geometry.fill',
 				stylers: [
-					{ color: '#430300' }
+					{ color: '#604125' }
 				]
 			},
 			{
 				featureType: 'road',
 				elementType: 'geometry',
 				stylers: [
-					{ color: '#D5B590' },
+				// #D5B590
+					{ color: '#430300' },
 					{ visibility: 'simplified' }
 				]
 			},
