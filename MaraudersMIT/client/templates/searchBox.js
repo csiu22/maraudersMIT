@@ -1,7 +1,3 @@
-if (Meteor.isClient) {
-  Meteor.subscribe("users");
-}
-
 Template.searchBox.helpers({
   settings: function() {
     return {
