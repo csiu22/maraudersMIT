@@ -110,7 +110,7 @@ p a { line-height: inherit; }
 .pin .wrapper {
 	padding: 3px;
 	border-radius: 3px;
-	background-color: #fff;
+	background-color: turquoise;
 	box-shadow: 0 0 5px 1px rgba(34,35,35,0.97);
 	position: relative;
 	z-index: 2;
@@ -131,13 +131,14 @@ p a { line-height: inherit; }
 	position: absolute;
 	pointer-events: none;
 	border-color: rgba(255, 255, 255, 0);
-	border-top-color: #ffffff;
+	border-top-color: turquoise;
 	border-width: 5px;
 	margin-left: -5px;
 }
 
 .pin .large {
 	display: none;
+	background-color: #fff;
 }
 .pin.active .small {
 	display: none;
@@ -147,14 +148,14 @@ p a { line-height: inherit; }
 }
 
 .pin.active {
-	width: 300px;
 	padding: 4px;
 	left: -154px;
 }
 
 .pin.active {
-	width: 300px;
+	width: 250px;
 	padding: 4px;
+
 }
 
 .pin.active .image {
@@ -186,28 +187,33 @@ p a { line-height: inherit; }
 }
 
 
-.pin.active .text { 
-	padding: 20px 12px;
-	text-align: left;
+.pin.active .text {
+/*	padding: 20px 12px 15px 20px;*/
+/*	padding-right: 50px;
+	border-left: 50px;*/
+	padding-top: 15px;
+	text-align: center;
+	font-size: x-large;
 }
 
-.pin.active .text p {
-	font-size: 13px;
-	line-height: 18px;
+/*.pin.active .text p {
+	font-size: large;
+	line-height: 100px;
 	margin: 0;
-}
+}*/
 
-.pin.active .text p.artist {
+/*.pin.active .text p.artist {
 	text-transform: uppercase;
 	margin: 0;
-}
+}*/
 
-.pin.active .text p.artist em {
-	text-transform: none;
+.pin.active em {
+	font-size: large;
+
 }
 
 .pin.active .text p.title {
-	margin: 10px 0 5px; 
+	margin: 10px 0 5px;
 }
 
 .pin.active .text p.description {
@@ -231,9 +237,9 @@ p a { line-height: inherit; }
     border: 2px solid white; /* should match background, can't be transparent */
     background-color: rgba(0, 0, 0, .5);
 }
-.pin.active .text p.description::-webkit-scrollbar-track { 
-    background-color: #fff; 
-    border-radius: 8px; 
+.pin.active .text p.description::-webkit-scrollbar-track {
+    background-color: #fff;
+    border-radius: 8px;
 }
 
 .pin.active a.close {
@@ -250,7 +256,7 @@ p a { line-height: inherit; }
 .map-nav {
 	width: 100%;
 	display: block;
-	position: relative;	
+	position: relative;
 }
 
 .map-nav .title {
@@ -260,7 +266,7 @@ p a { line-height: inherit; }
 	color: #b0b0b0;
 	font-size: 13px;
 	padding: 14px 0;
-	
+
 }
 
 .map-nav ul {
@@ -320,7 +326,7 @@ p a { line-height: inherit; }
 .right { float: right; }
 
 
-.title.fancy { 
+.title.fancy {
 	/*background: url(images/pixel-111.png) repeat-x center center;*/
 	display: block;
 	text-align: center;
@@ -412,6 +418,6 @@ p a { line-height: inherit; }
 	top: 5px;
 }
 
-	
+
 
 

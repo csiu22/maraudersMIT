@@ -24,37 +24,37 @@ map_styles = [
 				featureType: 'administrative.country',
 				stylers: [
 					{ visibility: 'off' }
-				]	
+				]
 			},
 			{
 				featureType: 'administrative.land_parcel',
 				stylers: [
 					{ visibility: 'off' }
-				]	
+				]
 			},
 			{
 				featureType: 'administrative.locality',
 				stylers: [
 					{ visibility: 'off' }
-				]	
+				]
 			},
 			{
 				featureType: 'administrative.neighborhood',
 				stylers: [
 					{ visibility: 'off' }
-				]	
+				]
 			},
 			{
 				featureType: 'administrative.province',
 				stylers: [
 					{ visibility: 'off' }
-				]	
+				]
 			},
 			{
 				featureType: 'landscape',
 				elementType: 'geometry',
 				stylers: [
-					{ color: '#ffffff' }
+					{ color: '#D5B590' }
 				]
 			},
 			{
@@ -75,14 +75,14 @@ map_styles = [
 				featureType: 'poi',
 				elementType: 'geometry.fill',
 				stylers: [
-					{ color: '#bbbbbb' }
+					{ color: '#604125' }
 				]
 			},
 			{
 				featureType: 'road',
 				elementType: 'geometry',
 				stylers: [
-					{ color: '#000000' },
+					{ color: '#5F5C60' },
 					{ visibility: 'simplified' }
 				]
 			},
@@ -103,12 +103,12 @@ map_styles = [
 				featureType: 'transit',
 				stylers: [
 					{ visibility: 'off' }
-				]	
+				]
 			},
 			{
 				featureType: 'water',
 				stylers: [
-					{ color: '#000000' }
+					{ color: '#430300' }
 				]
 			},
 			{
@@ -126,4 +126,3 @@ map_styles = [
 				]
 			}
 		];
-		

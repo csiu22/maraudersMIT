@@ -9,7 +9,7 @@ Map = function(){
 
     var that = Object.create(Map.prototype);
 
-   
+
     var massave = new google.maps.LatLng( 42.359155,  -71.093058);
 
     var mapOptions = {
@@ -19,17 +19,17 @@ Map = function(){
       mapTypeControl: false,
       streetViewControl: false
     };
-    
+
     that.map = new google.maps.Map(document.getElementById('map'), mapOptions);
 
 
             /*
 
             This is all to set the boundaries of the map, please do not touch!
-            
+
             */
 
-            // var mapType = new google.maps.StyledMapType(stylez, { name:"Grayscale" });    
+            // var mapType = new google.maps.StyledMapType(stylez, { name:"Grayscale" });
             // that.map.mapTypes.set('gray', mapType);
             // that.map.setMapTypeId('gray');
 
@@ -54,17 +54,17 @@ Map = function(){
               End of boundary settings
            */
 
-    
+
 
 
     that.displaySelf = function(pos){
         if(!pos || !Meteor.user()) return;
         var gSelfLoc = new google.maps.LatLng(pos.lat, pos.lng);
 
-          var images = '<div class="image">' +
-          // '<img src="'+ Meteor.user().profile.picture + '" alt="" />' +
-          '<a href="#" class="arrow icn left-black-arrow">' +
-          '<span>&lt;</span></a><a href="#" class="arrow icn right-black-arrow"><span>&gt;</span></a></div>';  
+          // var images = '<div class="image">' +
+          // // '<img src="'+ Meteor.user().profile.picture + '" alt="" />' +
+          // '<a href="#" class="arrow icn left-black-arrow">' +
+          // '<span>&lt;</span></a><a href="#" class="arrow icn right-black-arrow"><span>&gt;</span></a></div>';
 
           var marker_html = '<div class="pin">' +
             '<div class="wrapper">' +
@@ -72,11 +72,13 @@ Map = function(){
                 '<img src="' + Meteor.user().profile.picture + '" alt="" />' +
               '</div>' +
               '<div class="large">' +
-                images +
-                '<div class="text">' +
-                  '<p class=""><strong> Test </strong> <em>Test</em></p>' +
-                '</div>' +
-                '<a class="icn close" href="#" title="Close">Close</a>' + 
+                '<p style="float: left;"><img src="' + Meteor.user().profile.picture + '" alt="" /></p>' +
+                '<p class="text"><strong>' + Meteor.user().profile.name + '</strong></p>' +
+                // '<div class="boo">' +
+
+                  '<em>You are invisible</em>' +
+                // '</div>' +
+                '<a class="icn close" href="#" title="Close">Close</a>' +
               '</div>' +
             '</div>' +
             '<span></span>' +
@@ -87,32 +89,32 @@ Map = function(){
               flat: true,
               anchor: RichMarkerPosition.BOTTOM,
               content: marker_html
-            });     
+            });
             user_marker.setMap(that.map);
 
             google.maps.event.addListener(user_marker, 'click', function() {
-              
+
               var modifier = 0.0178;
               if ($(window).width() < 768) {
                 modifier = 0;
               }
-              
+
               if (!$('.pin').hasClass('active')) {
                 // map.setZoom(14);
                 // var temp_lat = -31.955945 + modifier;
                 // map.panTo(new google.maps.LatLng(temp_lat, 115.856339));
               }
-              
+
               $('.pin').removeClass('active').css('z-index', 10);
               $(' .pin').addClass('active').css('z-index', 200);
-            
+
               $('.large .close').click(function(){
                 $('.pin').removeClass('active');
                 return false;
               });
-              
+
             });
-            
+
 
        }
 
@@ -138,37 +140,69 @@ Map = function(){
                      };
 
                     var gLoc = new google.maps.LatLng(loc.checkin.loc.lat, loc.checkin.loc.lng);
-                    // var friendMarker = new RichMarker({
-                    //        map: that.map,
-                    //        position: gLoc,
-                    //        draggable: false,
-                    //        flat: true,
-                    //        anchor: RichMarkerPosition.MIDDLE,
-                    //        content: '<div class=' + loc.checkin.availability + '><div><div>' + loc.name + '</div><img src="' + loc.pic + '"/></div>' + '<div>' + loc.checkin.text_status + '</div>'
+
+                    if (loc.checkin.availability == 'busy') {
+                      var marker_html = '<div class="pin">' +
+                        '<div class="wrapper">' +
+                          '<div class="small">' +
+                            '<img src="' + loc.pic + '" alt="" />' +
+                          '</div>' +
+                          '<div class="large">' +
+                            '<p style="float: left;"><img src="' + loc.pic + '" alt="" /></p>' +
+                            '<h3 class="text"><strong>' + loc.name + '</strong></p>' +
+                            // '<div class="boo">' +
+                            '<p>' + loc.checkin.duration + '</p>' +
+                            '<em>' + loc.checkin.text_status + '</em>' +
+                            // '</div>' +
+                            '<a class="icn close" href="#" title="Close">Close</a>' +
+                          '</div>' +
+                        '</div>' +
+                        '<span></span>' +
+                        '</div>';
+                      // $(' .pin').addClass('active').css('z-index', 200);
+                    }
+
+
+
+                    // var user_marker = new RichMarker({
+                    //   position: gSelfLoc,
+                    //   flat: true,
+                    //   anchor: RichMarkerPosition.BOTTOM,
+                    //   content: marker_html
                     // });
-
-                    var friendMarker = new CustomMarker(
-                        gLoc,
-                        that.map,
-                        {
-                          marker_id: '123',
-                          img: loc.pic,
-                          name: loc.name,
-                          availability: loc.checkin.availability
-                        }
-                    );
-
-                    var contentStringFriend =
-                      // '<div class=' + loc.checkin.availability + '>' +
-                      '<h1 id="firstHeading" class="firstHeading">' + loc.name + '</h1>' +
-                      '<h3 class>' + loc.checkin.duration + ' minutes left</h2>' +
-                      '<div>' + loc.checkin.text_status + '</div>'
+                    // user_marker.setMap(that.map);
 
 
+                    var friendMarker = new RichMarker({
+                           map: that.map,
+                           position: gLoc,
+                           draggable: false,
+                           flat: true,
+                           anchor: RichMarkerPosition.BOTTOM,
+                           content: marker_html
+                    });
 
-                    var iwFriend = new google.maps.InfoWindow({content: contentStringFriend, pixelOffset: new google.maps.Size(5,0)});
-                    google.maps.event.addListener(friendMarker, "click", function() {
-                      iwFriend.open(that.map, friendMarker);
+                    google.maps.event.addListener(friendMarker, 'click', function() {
+
+                      var modifier = 0.0178;
+                      if ($(window).width() < 768) {
+                        modifier = 0;
+                      }
+
+                      if (!$('.pin').hasClass('active')) {
+                        // map.setZoom(14);
+                        // var temp_lat = -31.955945 + modifier;
+                        // map.panTo(new google.maps.LatLng(temp_lat, 115.856339));
+                      }
+
+                      $('.pin').removeClass('active').css('z-index', 10);
+                      $(' .pin').addClass('active').css('z-index', 100);
+
+                      $('.large .close').click(function(){
+                        $('.pin').removeClass('active');
+                        return false;
+                      });
+
                     });
                 });
           }

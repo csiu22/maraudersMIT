@@ -1,4 +1,4 @@
-.busy {
+/*.busy {
         background: red;
         border: 2px solid #fff;
         padding: 3px;
@@ -16,12 +16,20 @@
         padding: 3px;
 }
 
+.small {
+  background: turquoise;
+  border-color: turquoise;
+  border: 7px solid turquoise;
+  margin: 0px;
+  padding: 7px;
+}
+
 #marker {
   position: absolute;
   border-style: solid;
   border-width: 5px;
-/*  border-color: yellow;*/
-/*  cursor: pointer;*/
+  border-color: yellow;
+  cursor: pointer;
   width: 100px;
   height: 100px;
 }
@@ -38,4 +46,4 @@
     height: 100%;
     top: 0px;
     position: relative;
-    }
+    }*/
