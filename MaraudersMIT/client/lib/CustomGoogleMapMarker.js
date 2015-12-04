@@ -5,8 +5,8 @@ function CustomMarker(latlng, map, args) {
   this.args = args;
   this.setMap(map);
 
-  this.current_width = 50;
-  this.current_height = 50;
+  this.current_width = 60;
+  this.current_height = 60+(38*60/200);
 }
 
 CustomMarker.prototype = new google.maps.OverlayView();
@@ -40,24 +40,31 @@ CustomMarker.prototype.draw = function() {
       div.style.borderColor = 'turquoise';
     }
 
-    var image_container = document.createElement('div');
+    var image_container = document.createElement('img');
     image_container.className = 'image_container';
+    image_container.src = self.args.image_container;
+    image_container.onerror = function(){
+      // image not found or change src like this as default image:
+
+      console.log("nooo");
+    };
 
     var img = document.createElement('img');
     img.className = "marker_image";
     img.src = self.args.img;
 
-    var name_container = document.createElement('div');
-    name_container.className = 'name_container';
+    // var name_container = document.createElement('div');
+    // name_container.className = 'name_container';
 
-    var text = document.createElement('p');
-    text.innerText = self.args.name;
-    text.className = 'text';
+    // var text = document.createElement('p');
+    // text.innerText = self.args.name;
+    // text.className = 'text';
 
-    div.appendChild(name_container);
-    name_container.appendChild(text);
+    // div.appendChild(name_container);
+    // name_container.appendChild(text);
     div.appendChild(image_container);
-    image_container.appendChild(img);
+    div.appendChild(img);
+    // image_container.appendChild(img);
 
 
     if (typeof(self.args.marker_id) !== 'undefined') {
@@ -88,14 +95,12 @@ CustomMarker.prototype.draw = function() {
     panes.overlayImage.appendChild(div);
   }
 
+  //offsets the marker to be centered
   var point = this.getProjection().fromLatLngToDivPixel(this.latlng);
 
   if (point) {
-    div.style.left = (point.x - 10) + 'px';
-    div.style.top = (point.y - 20) + 'px';
-
-    // div.style.left = (point.x - (self.current_width/2)) + 'px';
-    // div.style.top = (point.y - (self.current_height+25)) + 'px';
+    div.style.left = (point.x - self.current_width/2) + 'px';
+    div.style.top = (point.y - self.current_height) + 'px';
   }
 };
 

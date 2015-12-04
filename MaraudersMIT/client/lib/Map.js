@@ -31,7 +31,7 @@ Map = function(){
       // });
 
     that.displaySelf = function(pos){
-        if(!pos || !Meteor.user()) return;
+        if(!pos) return;
         var gSelfLoc = new google.maps.LatLng(pos.lat, pos.lng);
         // var selfMarker = new RichMarker({
         //     map: that.map,
@@ -42,26 +42,48 @@ Map = function(){
         //     content: '<div class="here"><div><div><img src="'+Meteor.user().profile.picture+'"/></div><div>You are here!</div>'
         // });
 
+        var contentString =
+          // '<div class="here">' +
+          '<h1 id="firstHeading" class="firstHeading">' + Meteor.user().profile.name + ' (You)</h1>' +
+          '<div>You are currently invisible</div>';
+          // +
+          // '<h3 class>' + Meteor.user().checkin.duration + ' minutes left</h2>' +
+          // '<div>' + Meteor.user().checkin.text_status + '</div>'
+
+        var avl_border = "/icons/invisible.png"
+        if (Meteor.user().checkin == null || Meteor.user().checkin.availability == 'invisible') {
+          avl_border = "/icons/invisible.png";
+        } else if (Meteor.user().checkin.availability == 'available') {
+          avl_border = "/icons/available2.png";
+          contentString = '<h1 id="firstHeading" class="firstHeading">' + Meteor.user().profile.name + ' (You)</h1>' +
+                          // '<h3 class>' + Meteor.user().checkin.duration + ' minutes left</h2>' +
+                          '<div>' + Meteor.user().checkin.text_status + '</div>';
+        } else if (Meteor.user().checkin.availability == 'busy'){
+          avl_border = "/icons/busy2.png";
+          contentString = '<h1 id="firstHeading" class="firstHeading">' + Meteor.user().profile.name + ' (You)</h1>' +
+                          // '<h3 class>' + Meteor.user().checkin.duration + ' minutes left</h2>' +
+                          '<div>' + Meteor.user().checkin.text_status + '</div>';
+        }
+
+
+
         var selfMarker = new CustomMarker(
             gSelfLoc,
             that.map,
             {
               marker_id: '123',
               img: Meteor.user().profile.picture,
-              name: Meteor.user().profile.name
+              name: Meteor.user().profile.name,
+              image_container: avl_border
             }
         );
 
-        var contentString =
-          // '<div class="here">' +
-          '<h1 id="firstHeading" class="firstHeading">' + Meteor.user().profile.name + '</h1>'
-          // +
-          // '<h3 class>' + Meteor.user().checkin.duration + ' minutes left</h2>' +
-          // '<div>' + Meteor.user().checkin.text_status + '</div>'
 
 
 
-        var iw = new google.maps.InfoWindow({content: contentString, pixelOffset: new google.maps.Size(5,0)});
+
+
+        var iw = new google.maps.InfoWindow({content: contentString, pixelOffset: new google.maps.Size(0,-60)});
         // iw.open(that.map, selfMarker);
         google.maps.event.addListener(selfMarker, "click", function() {
           iw.open(that.map, selfMarker);
