@@ -77,7 +77,7 @@ Map = function(){
               '<div class="large">' +
                 '<p style="float: left;"><img src="' + Meteor.user().profile.picture + '" alt="" /></p>' +
                 '<p class="text"><strong>' + Meteor.user().profile.name + '</strong></p>';
-               
+
                 if(status === "available"){
                     marker_html +=  '<em>You are available</em>';
 
@@ -92,7 +92,7 @@ Map = function(){
                     marker_html +=  '<em>You are invisible</em>';
                 }
 
-                 
+
         marker_html += '<a class="icn close" href="#" title="Close">Close</a>' +
               '</div>' +
             '</div>' +
@@ -103,7 +103,7 @@ Map = function(){
             return marker_html;
         };
 
-  
+
 
             var user_marker = new RichMarker({
               position: gSelfLoc,
@@ -121,7 +121,7 @@ Map = function(){
               }
 
               if (!$('#'+Meteor.userId()).hasClass('active')) {
-   
+
               }
 
               $('#'+Meteor.userId()+' .pin ').removeClass('active').css('z-index', 10);
@@ -164,14 +164,14 @@ Map = function(){
                       var marker_html = '<div id="'+ friend.id+'"><div class="pin">' +
                         '<div class="wrapper">' +
                           '<div class="small">' +
-                            '<img src="' + loc.pic + '" alt="" />' +
+                            '<img src="' + friend.pic + '" alt="" />' +
                           '</div>' +
                           '<div class="large">' +
-                            '<p style="float: left;"><img src="' + loc.pic + '" alt="" /></p>' +
-                            '<h3 class="text"><strong>' + loc.name + '</strong></p>' +
+                            '<p style="float: left;"><img src="' + friend.pic + '" alt="" /></p>' +
+                            '<h3 class="text"><strong>' + friend.name + '</strong></p>' +
                             // '<div class="boo">' +
-                            '<p>' + loc.checkin.duration + '</p>' +
-                            '<em>' + loc.checkin.text_status + '</em>' +
+                            '<p>' + friend.checkin.duration + '</p>' +
+                            '<em>' + friend.checkin.text_status + '</em>' +
                             // '</div>' +
                             '<a class="icn close" href="#" title="Close">Close</a>' +
                           '</div>' +
@@ -198,7 +198,7 @@ Map = function(){
 
 
                if (!$('#'+friend.id).hasClass('active')) {
-   
+
               }
 
               $('#'+friend.id+' .pin ').removeClass('active').css('z-index', 10);
