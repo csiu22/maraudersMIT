@@ -66,7 +66,7 @@ Map = function(){
           // '<a href="#" class="arrow icn left-black-arrow">' +
           // '<span>&lt;</span></a><a href="#" class="arrow icn right-black-arrow"><span>&gt;</span></a></div>';
 
-          var marker_html = '<div class="pin">' +
+          var marker_html = '<div id="'+ Meteor.userId()+'"><div class="pin">' +
             '<div class="wrapper">' +
               '<div class="small">' +
                 '<img src="' + Meteor.user().profile.picture + '" alt="" />' +
@@ -82,7 +82,7 @@ Map = function(){
               '</div>' +
             '</div>' +
             '<span></span>' +
-            '</div>';
+            '</div></div>';
 
             var user_marker = new RichMarker({
               position: gSelfLoc,
@@ -99,17 +99,15 @@ Map = function(){
                 modifier = 0;
               }
 
-              if (!$('.pin').hasClass('active')) {
-                // map.setZoom(14);
-                // var temp_lat = -31.955945 + modifier;
-                // map.panTo(new google.maps.LatLng(temp_lat, 115.856339));
+              if (!$('#'+Meteor.userId()).hasClass('active')) {
+   
               }
 
-              $('.pin').removeClass('active').css('z-index', 10);
-              $(' .pin').addClass('active').css('z-index', 200);
+              $('#'+Meteor.userId()+' .pin ').removeClass('active').css('z-index', 10);
+              $('#'+Meteor.userId()+' .pin').addClass('active').css('z-index', 200);
 
-              $('.large .close').click(function(){
-                $('.pin').removeClass('active');
+              $('#'+Meteor.userId()+' .pin .wrapper .large').click(function(){
+                $('#'+Meteor.userId()+' .pin').removeClass('active');
                 return false;
               });
 
@@ -130,19 +128,19 @@ Map = function(){
               console.log("error occurred! " + err.toString());
            }
 
-           var locations = data;
+           var friends = data;
 
-           if (locations){
-               locations.forEach(function(loc) {
+           if (friends){
+               friends.forEach(function(friend) {
                      var image = {
-                       url: loc.pic,
+                       url: friend.pic,
                        size: new google.maps.Size(40, 40)
                      };
 
-                    var gLoc = new google.maps.LatLng(loc.checkin.loc.lat, loc.checkin.loc.lng);
+                    var gLoc = new google.maps.LatLng(friend.checkin.loc.lat, friend.checkin.loc.lng);
 
-                    if (loc.checkin.availability == 'busy') {
-                      var marker_html = '<div class="pin">' +
+                    if (friend.checkin.availability == 'busy') {
+                      var marker_html = '<div id="'+ friend.id+'"><div class="pin">' +
                         '<div class="wrapper">' +
                           '<div class="small">' +
                             '<img src="' + loc.pic + '" alt="" />' +
@@ -158,20 +156,8 @@ Map = function(){
                           '</div>' +
                         '</div>' +
                         '<span></span>' +
-                        '</div>';
-                      // $(' .pin').addClass('active').css('z-index', 200);
+                        '</div></div>';
                     }
-
-
-
-                    // var user_marker = new RichMarker({
-                    //   position: gSelfLoc,
-                    //   flat: true,
-                    //   anchor: RichMarkerPosition.BOTTOM,
-                    //   content: marker_html
-                    // });
-                    // user_marker.setMap(that.map);
-
 
                     var friendMarker = new RichMarker({
                            map: that.map,
@@ -189,25 +175,24 @@ Map = function(){
                         modifier = 0;
                       }
 
-                      if (!$('.pin').hasClass('active')) {
-                        // map.setZoom(14);
-                        // var temp_lat = -31.955945 + modifier;
-                        // map.panTo(new google.maps.LatLng(temp_lat, 115.856339));
-                      }
 
-                      $('.pin').removeClass('active').css('z-index', 10);
-                      $(' .pin').addClass('active').css('z-index', 100);
+               if (!$('#'+friend.id).hasClass('active')) {
+   
+              }
 
-                      $('.large .close').click(function(){
-                        $('.pin').removeClass('active');
-                        return false;
-                      });
+              $('#'+friend.id+' .pin ').removeClass('active').css('z-index', 10);
+              $('#'+friend.id+' .pin').addClass('active').css('z-index', 200);
 
-                    });
-                });
-          }
+              $('#'+friend.id+' .pin .wrapper .large').click(function(){
+                $('#'+friend.id+' .pin').removeClass('active');
+                return false;
+              });
+
+            });
         });
       }
+    });
+  };
 
 
       /*
