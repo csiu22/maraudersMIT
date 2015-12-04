@@ -1,5 +1,3 @@
-// StandardLegends = new Mongo.Collection(null);
-
 if (Meteor.isClient) {
   Meteor.subscribe("users");
 }
@@ -10,9 +8,9 @@ Template.searchBox.helpers({
       limit: 10,
       rules: [
         {
-          // token: '',
           collection: Meteor.users,
           field: 'services.facebook.name',
+          options:"", //Only match beginning of first or last name
           matchAll: true,
           template: Template.searchResults
         }
@@ -22,20 +20,29 @@ Template.searchBox.helpers({
 });
 
   Template.searchResults.events({
-    'click #centerOnFriend': function (event) {
+    'click #clickOnFriend': function (event) {
 
-       if (event.target.attributes.checkinAvailability.nodeValue === "invisible") {
-            alert(event.target.attributes.name.nodeValue + " is currently invisible");
-      } else {
-            var latitude = event.target.attributes.checkinLatitude.nodeValue
-            var longitude = event.target.attributes.checkinLongitude.nodeValue
-            var friendPos = new google.maps.LatLng(latitude, longitude);
+       Meteor.call("isFriend",  event.target.attributes.friendId.nodeValue, function(err, data) {
+             if (data) {
+                    // Is a friend.
+                    if (event.target.attributes.checkinAvailability.nodeValue === "invisible") {
+                          alert(event.target.attributes.name.nodeValue + " is currently invisible");
+                    } else {
+                          var latitude = event.target.attributes.checkinLatitude.nodeValue
+                          var longitude = event.target.attributes.checkinLongitude.nodeValue
+                          var friendPos = new google.maps.LatLng(latitude, longitude);
 
-            if (maraudersMap) {
-                  maraudersMap.setCenter(friendPos);
-            } else {
-                  console.log("error");
-            }
-      }
+                          if (maraudersMap) {
+                                maraudersMap.setCenter(friendPos);
+                          } else {
+                                console.log("error");
+                          }
+                    }
+             } else {
+                    // Is not a friend.
+                    alert("You are not friends with this person yet");
+             }
+       });
+
     }
   });

@@ -1,14 +1,3 @@
-<!-- <template name = "searchBox" >
-	{{insertFriends}}
-	<div id="searchbar">
-		<input type="text" name="friend-name" placeholder="Search for a Friend">
-		<ul id="results-list"></ul>
-		<button type="button" class="btn btn-default">
-			<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-		</button>
-	</div>
-</template> -->
-
 <template name="searchBox">
     <div class="well">
         {{> inputAutocomplete settings=settings id="legend" class="form-control" name="legend" placeholder="Search for a friend" }}
@@ -16,8 +5,7 @@
 </template>
 
 <template name="searchResults">
-
-	<div id="centerOnFriend" name = {{services.facebook.name}} checkinAvailability = {{checkin.availability}} checkinLatitude = {{checkin.loc.lat}} checkinLongitude = {{checkin.loc.lng}}>
+	<div id="clickOnFriend" friendId = {{_id}} name = {{services.facebook.name}} checkinAvailability = {{checkin.availability}} checkinLatitude = {{checkin.loc.lat}} checkinLongitude = {{checkin.loc.lng}}>
 		    {{services.facebook.name}}
 	</div>
 </template>
