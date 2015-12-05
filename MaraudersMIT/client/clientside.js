@@ -10,5 +10,4 @@ if (Meteor.isClient) {
       // Meteor.subscribe("access_token");
 	});
 
-Meteor.subscribe('users');
 }

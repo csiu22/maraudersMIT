@@ -8,7 +8,8 @@ Object that creates google map and displays users
 Map = function(){
 
     var that = Object.create(Map.prototype);
-    var markers = []
+    var markers = [];
+    var self_marker;
 
     var mapOptions = {
       center: new google.maps.LatLng( 42.359155,  -71.093058), // 77 Mass Ave
@@ -89,7 +90,7 @@ Map = function(){
                       '</div>' +
                       '<span></span>' +
                       '</div></div>';
-      console.log(marker_html);
+      if(DEBUG) { console.log(marker_html); }
       return marker_html;
     };
 
@@ -101,14 +102,10 @@ Map = function(){
           modifier = 0;
         }
 
-        // if (!$('#'+Meteor.userId()).hasClass('active')) {
-
-        // }
-
         $('#'+userID+' .pin ').removeClass('active').css('z-index', 10);
         $('#'+userID+' .pin').addClass('active').css('z-index', 300);
 
-        $('#'+userID+' .pin #wrapper .large').click(function(){
+        $('#'+userID+' .pin .wrapper .large').click(function(){
           $('#'+userID+' .pin').removeClass('active');
           return false;
         });
@@ -120,8 +117,8 @@ Map = function(){
 
     that.renderSelf = function(){
 
-      if (Meteor.userId in markers){
-          markers[Meteor.userId].setMap(null);
+      if (self_marker){
+          self_marker.setMap(null);
       }
 
         if(!Meteor.user()) return;
@@ -132,7 +129,7 @@ Map = function(){
         } 
 
         var drawSelf = function(pos){
-            markers[Meteor.userId] = new RichMarker({
+            self_marker = new RichMarker({
               map: that.map,
               position: new google.maps.LatLng(pos.lat, pos.lng),
               draggable: false,
@@ -141,7 +138,7 @@ Map = function(){
               content:  display_status(Meteor.user(), Meteor.userId(), Meteor.user().profile.name, Meteor.user().profile.picture),
             });
 
-            addUserListeners(markers[Meteor.userId], Meteor.userId());
+            addUserListeners(self_marker, Meteor.userId());
 
       }
 
@@ -180,6 +177,7 @@ Map = function(){
       }
 
        markers[friend.id] = new RichMarker({
+                   user_id: friend.id,
                    map: that.map,
                    position: new google.maps.LatLng(friend.checkin.loc.lat, friend.checkin.loc.lng),
                    draggable: false,
@@ -231,17 +229,14 @@ Map = function(){
         that.renderFriends();
     }
 
-    /*
-    Currently doesn't work, not sure why :(
-    */
 
-    that.redraw = function(){
-       var x = that.map.getZoom();
-       var c = that.map.getCenter();
-       google.maps.event.trigger(that.map, 'resize');
-       that.map.setZoom(x);
-       that.map.setCenter(c);
-    }
+
+    // that.refresh = function(){
+    //   that.renderSelf();
+    //   markers.forEach(function(marker){
+    //       that.renderUser(marker.user_id);
+    //   })
+    // }
 
   Object.freeze(that);
   return that;
