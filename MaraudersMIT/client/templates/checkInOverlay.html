@@ -2,19 +2,23 @@
 	<h2>{{title}}</h2>
 
 	<div id ="CheckInBox">
-		<div id="check-in-info">
 		<form class="check-in-info">
-			I am ~~<input type="text" name="status" maxlength="140" placeholder="up to no good" />
+			I am <input type="text" name="status" maxlength="140" placeholder="up to no good" />
 			<br>
 			for <input type="number" min="0" pattern="\d+" name="duration" value="90"/> mins
-			and
-			<span style="color:green"> <input type="radio" name="state" value="available" checked="checked">Available</span>
 			<br>
-			<input type="radio" name="state" value="busy"><span style="color:red">Busy</span>
+			and
+			<br>
+			<span style="color:green">
+				<input type="radio" name="state" value="available" checked="checked">Available
+			</span>
+			<br>
+			<span style="color:red">
+				<input type="radio" name="state" value="busy">Busy
+			</span>
 			<br>
 
 	                	<button class="submit">Submit</button>
-	                </form>
-		</div>
+	             </form>
 	</div>
 </template>
