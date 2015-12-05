@@ -98,9 +98,9 @@ p a { line-height: inherit; }
 	background-color: red;
 }
 
-.pin .wrapper.invisible {
+/*.pin .wrapper.invisible {
 	background-color: turquoise;
-}
+}*/
 
 .pin img {
 	display: block;
