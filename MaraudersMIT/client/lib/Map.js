@@ -231,12 +231,12 @@ Map = function(){
 
 
 
-    // that.refresh = function(){
-    //   that.renderSelf();
-    //   markers.forEach(function(marker){
-    //       that.renderUser(marker.user_id);
-    //   })
-    // }
+    that.refresh = function(){
+      that.renderSelf();
+      markers.forEach(function(marker){
+          that.renderUser(marker.user_id);
+      })
+    }
 
   Object.freeze(that);
   return that;
