@@ -127,8 +127,13 @@
 }
 
 .pin.active em {
-	font-size: large;
+/*	font-size: large;*/
+	text-indent: 50px;
 
+}
+
+.pin.active .duration {
+	font-size: large;
 }
 
 .pin.active a.close {
