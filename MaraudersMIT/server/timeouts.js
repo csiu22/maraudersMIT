@@ -1,11 +1,11 @@
 if (Meteor.isServer) {
   FutureTasks = new Meteor.Collection('future_tasks');
-  
+
   checkOut = function(details) {
-    Meteor.users.update({_id: details.user_id}, {$set: {checkin: {availability: "invisible"}}});
+    Meteor.users.update({_id: details.user_id}, {$set: {checkin: {availability: "unavailable"}}});
     Meteor.users.update({_id: details.user_id}, {$set: {handle: null}});
   };
-  
+
   addTask = function(id, details, fireDate) {
     Meteor.users.update({_id: details.user_id}, {$set: {checkin: details.checkin}});
     Meteor.users.update({_id: details.user_id}, {$set: {handle: id}});
@@ -14,7 +14,7 @@ if (Meteor.isServer) {
       schedule: function(parser) {
         return parser.recur().on(fireDate).fullDate();
       },
-  
+
       job: function() {
         checkOut(details);
         FutureTasks.remove(id);
@@ -23,7 +23,7 @@ if (Meteor.isServer) {
       }
     });
   };
-  
+
   checkIn = function(details) {
     var fireDate = new Date();
     fireDate.setMinutes(fireDate.getMinutes() + parseInt(details.checkin.duration));

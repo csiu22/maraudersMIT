@@ -80,7 +80,7 @@ if (Meteor.isServer) {
       if(Meteor.user() && Meteor.user().friends){
           Meteor.user().friends.forEach(function(friendId) {
           var friend = Meteor.users.findOne({_id: friendId});
-          if (friend.checkin.availability !== "invisible") {
+          if (friend.checkin.availability !== "unavailable") {
                 locations.push({id:friendId, name: friend.services.facebook.name, pic: friend.profile.picture, checkin: friend.checkin});
           }
         });

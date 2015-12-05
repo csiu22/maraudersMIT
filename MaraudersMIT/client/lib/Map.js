@@ -72,11 +72,10 @@ Map = function(){
               '<p style="float: left;"><img src="' + userPic + '" alt="" /></p>' +
               '<p class="text"><strong>' + userName + '</strong></p>';
 
-      if (status === "invisible") {
+      if (status === "unavailable") {
          marker_html +=  '<em>' + fragment +' invisible</em>';
       } else {
         marker_html += '<p class="duration">' + Number(((user.checkin.end_time - Date.now()) / 60000).toFixed(0)) + '</p>';
-        console.log((user.checkin.end_time - Date.now()) / 60000 );
         marker_html += '<em>' + user.checkin.text_status + '</em>';
       }
 

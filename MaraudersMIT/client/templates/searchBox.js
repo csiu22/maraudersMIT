@@ -21,8 +21,8 @@ Template.searchBox.helpers({
        Meteor.call("isFriend",  event.target.attributes.friendId.nodeValue, function(err, data) {
              if (data) {
                     // Is a friend.
-                    if (event.target.attributes.checkinAvailability.nodeValue === "invisible") {
-                          alert(event.target.attributes.name.nodeValue + " is currently invisible");
+                    if (event.target.attributes.checkinAvailability.nodeValue === "unavailable") {
+                          alert(event.target.attributes.name.nodeValue + " is currently unavailable");
                     } else {
                           var latitude = event.target.attributes.checkinLatitude.nodeValue
                           var longitude = event.target.attributes.checkinLongitude.nodeValue

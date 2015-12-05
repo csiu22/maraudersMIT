@@ -30,8 +30,8 @@
 	background-color: red;
 }
 
-.pin .wrapper.invisible {
-	background-color: gray;
+.pin .wrapper.unavailable {
+	background-color: turquoise;
 }
 
 .pin img {
@@ -62,8 +62,8 @@
 	border-top-color: red;
 }
 
-.pin .wrapper.invisible:after{
-	border-top-color: gray;
+.pin .wrapper.unavailable:after{
+	border-top-color: turquoise;
 }
 
 .pin .large {
