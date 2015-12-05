@@ -15,3 +15,8 @@
   color: #FFF;
   cursor: pointer;
 }
+
+.well {
+  background: #FAEBD7;
+  border-color: #FAEBD7;
+}
