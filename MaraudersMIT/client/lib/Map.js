@@ -8,6 +8,7 @@ Object that creates google map and displays users
 Map = function(){
 
     var that = Object.create(Map.prototype);
+    var markers = []
 
     var mapOptions = {
       center: new google.maps.LatLng( 42.359155,  -71.093058), // 77 Mass Ave
@@ -118,6 +119,11 @@ Map = function(){
 
 
     that.renderSelf = function(){
+
+      if (Meteor.userId in markers){
+          markers[Meteor.userId].setMap(null);
+      }
+
         if(!Meteor.user()) return;
         if (! "geolocation" in navigator) {
           /* error when geolocation IS NOT available */
@@ -125,14 +131,8 @@ Map = function(){
           return;
         } 
 
-        var displaySelf = function(pos){
-              that.map.setCenter(pos);
-              that.drawSelf(pos);
-          };
-
-        function drawSelf(pos){
-
-            var user_marker = new RichMarker({
+        var drawSelf = function(pos){
+            markers[Meteor.userId] = new RichMarker({
               map: that.map,
               position: new google.maps.LatLng(pos.lat, pos.lng),
               draggable: false,
@@ -141,9 +141,14 @@ Map = function(){
               content:  display_status(Meteor.user(), Meteor.userId(), Meteor.user().profile.name, Meteor.user().profile.picture),
             });
 
-            addUserListeners(user_marker, Meteor.userId());
+            addUserListeners(markers[Meteor.userId], Meteor.userId());
 
       }
+
+       var displaySelf = function(pos){
+              that.map.setCenter(pos);
+              drawSelf(pos);
+          };
 
        that.getUserLocation(displaySelf);
 
@@ -162,15 +167,19 @@ Map = function(){
         if (data){
           data.forEach(function(friend) {
  
-              that.renderFriend(friend);
+              that.renderUser(friend);
 
           });
         }
       });
     };
 
-    that.renderFriend= function(friend){
-       var friendMarker = new RichMarker({
+    that.renderUser= function(friend){
+      if (friend.id in markers){
+          markers[friend.id].setMap(null);
+      }
+
+       markers[friend.id] = new RichMarker({
                    map: that.map,
                    position: new google.maps.LatLng(friend.checkin.loc.lat, friend.checkin.loc.lng),
                    draggable: false,
@@ -179,7 +188,7 @@ Map = function(){
                    content: display_status(friend, friend.id, friend.name, friend.pic)
             });
 
-            addUserListeners(friendMarker, friend.id);
+            addUserListeners(markers[friend.id], friend.id);
     }
 
     /*
@@ -218,7 +227,7 @@ Map = function(){
     */
 
     that.renderMap = function () {
-        that.renderSelf;
+        that.renderSelf();
         that.renderFriends();
     }
 

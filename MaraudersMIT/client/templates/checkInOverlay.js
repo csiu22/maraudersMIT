@@ -28,6 +28,7 @@ Template.checkInOverlay.events({
       console.log(pos);
       Meteor.call("checkIn", availability, status, duration, pos, function() {
         console.log("done submitting");
+        maraudersMap.renderSelf();
       });
     //  checkIn(availability, status, duration, pos);
     }, function() {
