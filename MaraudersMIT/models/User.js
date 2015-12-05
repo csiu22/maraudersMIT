@@ -3,8 +3,8 @@ MILLISECONDS_IN_MINUTE = 60000;
 if (Meteor.isServer) {
   Meteor.methods({
     // Allows a user to check in to a location with an availability, text status, and a duration.
-    'checkIn': function(availability, text_status, duration, location) {
-      var checkin = {availability: availability, text_status: text_status, duration: duration, loc: location};
+    'checkIn': function(end_time, availability, text_status, duration, location) {
+      var checkin = {end_time: end_time, availability: availability, text_status: text_status, duration: duration, loc: location};
       checkIn({checkin: checkin, user_id: Meteor.userId()});
      },
 

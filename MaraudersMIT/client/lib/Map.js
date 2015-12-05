@@ -72,17 +72,12 @@ Map = function(){
               '<p style="float: left;"><img src="' + userPic + '" alt="" /></p>' +
               '<p class="text"><strong>' + userName + '</strong></p>';
 
-      if (status === "available") {
-
-        marker_html +=  '<em>' + fragment +' available</em>';
-      }
-      else if (status === "busy") {
-
-         marker_html +=  '<em>' + fragment +' busy</em>';
-
-      }
-      else {
+      if (status === "invisible") {
          marker_html +=  '<em>' + fragment +' invisible</em>';
+      } else {
+        marker_html += '<p class="duration">' + Number(((user.checkin.end_time - Date.now()) / 60000).toFixed(0)) + '</p>';
+        console.log((user.checkin.end_time - Date.now()) / 60000 );
+        marker_html += '<em>' + user.checkin.text_status + '</em>';
       }
 
       marker_html += '<a class="icn close" href="#" title="Close">Close</a>' +
@@ -126,7 +121,7 @@ Map = function(){
           /* error when geolocation IS NOT available */
           console.log("geo not available");
           return;
-        } 
+        }
 
         var drawSelf = function(pos){
           var marker = new RichMarker({
@@ -165,7 +160,7 @@ Map = function(){
 
         if (data){
           data.forEach(function(friend) {
- 
+
               that.renderUser(friend);
 
           });
