@@ -14,10 +14,18 @@
         background: turquoise;
         border: 2px solid #fff;
         padding: 3px;
-}*/
+}
 
 h1 {
   font-family: 'Josefin Sans', sans-serif;
+}
+
+.small {
+  background: turquoise;
+  border-color: turquoise;
+  border: 7px solid turquoise;
+  margin: 0px;
+  padding: 7px;
 }
 
 #marker {
@@ -45,3 +53,4 @@ h1 {
     position: absolute;
     z-index: 5;
     }
+*/

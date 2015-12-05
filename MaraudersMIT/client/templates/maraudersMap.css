@@ -6,3 +6,222 @@
 	float:left;
 	position:absolute;
 }
+
+/*
+Theme Name: Form
+Theme URI: http://humaan.com.au/
+Description: Theme for Form Website 2013
+Author: Humaan
+Author URI: http://humaan.com.au/
+Version: 1.0
+*/
+
+/*---------------------------------------------- RESET */
+
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td,article,aside,canvas,details,embed,figure,figcaption,footer,header,hgroup,menu,nav,output,ruby,section,summary,time,mark,audio,video{margin:0;padding:0;border:0;font-size:100%;font:inherit;vertical-align:baseline}article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section{display:block}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}table{border-collapse:collapse;border-spacing:0}p,ul,ol{margin:0 0 20px}ul,ol{padding:0 0 0 2.5em}label{cursor:pointer}button{cursor:pointer;border:0;outline:0}input[type="submit"]::-moz-focus-inner,input[type="button"]::-moz-focus-inner{border:0}input[type="submit"]:focus,input[type="button"]:focus{outline:0}
+
+
+/*---------------------------------------------- GLOBAL SETTINGS */
+
+
+html, body{ height: 100%; }
+
+body {
+	font: 14px/21px 'Montserrat', "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif;
+	color: #444;
+/*	-webkit-font-smoothing: antialiased;
+	-webkit-text-size-adjust: 100%;*/
+}
+
+.proxima { font-family: 'proxima-nova', 'Montserrat', "HelveticaNeue", Helvetica, Arial, sans-serif; }
+.monteserrat { font-family: 'Montserrat', "HelveticaNeue", Helvetica, Arial, sans-serif; }
+
+/*---------------------------------------------------- FORMATTING */
+
+/*h1, h2, h3, h4, h5, h6 { font-weight: 600; text-transform: uppercase; }
+h1 a, h2 a, h3 a, h4 a, h5 a, h6 a { font-weight: inherit; line-height: 1.2em; }
+h1 { font-size: 46px; margin-bottom: 20px;}
+h2 { font-size: 35px; margin-bottom: 20px; }
+h3 { font-size: 18px; margin-bottom: 20px; }
+h4 { font-size: 15px; margin-bottom: 20px; }
+h5 { font-size: 14px; }
+h6 { font-size: 12px; }*/
+
+/*p { margin: 0 0 20px 0; font-family: 'proxima-nova', 'Montserrat', "HelveticaNeue", Helvetica, Arial, sans-serif; }
+em { font-style: italic; }
+strong { font-weight: bold; }
+small { font-size: 80%; }*/
+
+.title { text-transform: uppercase; font-weight: 600; font-family: 'Montserrat'; }
+
+/*	Blockquotes  */
+blockquote, blockquote p { font-size: 17px; line-height: 24px; color: #777; font-style: italic; }
+blockquote { margin: 0 0 20px; padding: 9px 20px 0 19px; border-left: 1px solid #ddd; }
+blockquote cite { display: block; font-size: 12px; color: #555; }
+blockquote cite:before { content: "\2014 \0020"; }
+blockquote cite a, blockquote cite a:visited, blockquote cite a:visited { color: #555; }
+
+hr { border: solid #ddd; border-width: 1px 0 0; clear: both; margin: 10px auto 30px; height: 0; }
+
+a {
+	color: #444444;
+	text-decoration: none;
+	outline: 0;
+	-webkit-transition: color .3s ease-in-out, background-color .3s ease-in-out;
+	-moz-transition: color .3s ease-in-out, background-color .3s ease-in-out;
+	-o-transition: color .3s ease-in-out, background-color .3s ease-in-out;
+	transition: color .3s ease-in-out, background-color .3s ease-in-out;
+}
+a:hover, a:focus { color: #000; }
+p a { line-height: inherit; }
+
+.pin {
+	position: absolute;
+	left: -42px;
+	bottom: 0;
+}
+
+.pin .wrapper {
+	padding: 3px;
+	border-radius: 3px;
+	background-color: turquoise;
+	box-shadow: 0 0 5px 1px rgba(34,35,35,0.97);
+	position: relative;
+	z-index: 2;
+}
+
+.pin .wrapper.available {
+	background-color: lime;
+}
+
+.pin .wrapper.busy {
+	background-color: red;
+}
+
+.pin .wrapper.invisible {
+	background-color: turquoise;
+}
+
+.pin img {
+	display: block;
+	border-radius: 3px;
+}
+
+.pin .wrapper:after {
+	top: 100%;
+	left: 50%;
+	border: solid transparent;
+	content: " ";
+	height: 0;
+	width: 0;
+	position: absolute;
+	pointer-events: none;
+	border-color: rgba(255, 255, 255, 0);
+	border-top-color: turquoise;
+	border-width: 5px;
+	margin-left: -5px;
+}
+
+.pin .wrapper.available:after {
+	border-top-color: lime;
+}
+
+.pin .wrapper.busy:after{
+	border-top-color: red;
+}
+
+.pin .wrapper.invisible:after{
+	border-top-color: turquoise;
+}
+
+.pin .large {
+	display: none;
+	background-color: #fff;
+}
+.pin.active .small {
+	display: none;
+}
+.pin.active .large {
+	display: block;
+}
+
+.pin.active {
+	padding: 4px;
+	left: -154px;
+}
+
+.pin.active {
+	width: 250px;
+	padding: 4px;
+
+}
+
+.pin.active .image {
+	width: 100%;
+	height: 194px;
+	display: block;
+	border-bottom-width: 4px;
+	border-bottom-style: solid;
+	position: relative;
+}
+
+.pin.active .image img {
+	border-radius: 3px 3px 0 0;
+	width: 100%;
+}
+
+.pin.active .image a.arrow {
+	position: absolute;
+	top: 90px;
+	z-index: 200;
+	background-color: rgba(255,255,255,0.8);
+	display: block;
+	width: 32px;
+	height: 27px;
+}
+
+.pin.active .image a.arrow:hover {
+	background-color: rgba(255,255,255,1.0);
+}
+
+
+.pin.active .text {
+/*	padding: 20px 12px 15px 20px;*/
+/*	padding-right: 50px;
+	border-left: 50px;*/
+	padding-top: 15px;
+	text-align: center;
+	font-size: x-large;
+}
+
+.pin.active em {
+	font-size: large;
+
+}
+
+.pin.active a.close {
+	position: absolute;
+	top: -13px;
+	right: -13px;
+	width: 26px;
+	height: 26px;
+	display: block;
+	z-index: 999;
+	text-indent: -9999px;
+}
+
+/* blobs */
+
+.pin span {
+	border-radius: 50%;
+	height: 7px;
+	width: 14px;
+	position: absolute;
+	bottom: -9px;
+	left: 35px;
+}
+
+.pin.active span {
+		left: 147px;
+		bottom: -5px;
+	}

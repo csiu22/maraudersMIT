@@ -1,10 +1,8 @@
 maraudersMap = undefined;
-CustomMarker = null;
 
 var wait_for_libraries = function() {
 
-if ( Session.get('custommarkerReady')) {
-  CustomMarker = makeCustomMarker();
+if ( Session.get('richmarkerReady')) {
 	maraudersMap = Map();
 	maraudersMap.renderMap();
 }
