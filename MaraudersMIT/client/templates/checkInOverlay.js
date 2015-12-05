@@ -1,5 +1,5 @@
 Template.checkInOverlay.events({
-"submit .check-in-info": function () {      
+"submit .check-in-info": function () {
 	// Prevent default browser form submit
 	event.preventDefault();
 
@@ -7,9 +7,9 @@ Template.checkInOverlay.events({
 
 	// Default status is "up to no good".
 	if (!status || !status.length ) {
-		status = "up to no good." 
-	} 
-	
+		status = "up to no good."
+	}
+
 	console.log ("you are " + status);
 
 	var duration = event.target.duration.value;
@@ -18,7 +18,9 @@ Template.checkInOverlay.events({
 	var availability = event.target.state.value;
 	console.log("and your availability is: " + availability);
 
-         
+  var time = Date.now();
+  var end_time = time + duration*(60000);
+
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(function(position) {
       var pos = {
@@ -26,7 +28,7 @@ Template.checkInOverlay.events({
         lng: position.coords.longitude
       };
       console.log(pos);
-      Meteor.call("checkIn", availability, status, duration, pos, function() {
+      Meteor.call("checkIn", end_time, availability, status, duration, pos, function() {
         console.log("done submitting");
         maraudersMap.renderSelf();
       });
@@ -38,7 +40,7 @@ Template.checkInOverlay.events({
     alert("Please make sure you have geolocation enabled");
     // Browser doesn't support Geolocation
     console.log("error browser doesn't support geolocation");
-  }   
+  }
 
  	Overlay.hide();
 }
