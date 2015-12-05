@@ -8,6 +8,7 @@
 			{{ #each facebookFriends }}
 				<br>
 				{{ this.name }}
+        <img src= {{this.pic}} alt="" />
         {{ #if this.friend }}
         <button class="friend-remove">Remove Friend</button>
         {{ else }}

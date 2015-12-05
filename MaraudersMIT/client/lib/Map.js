@@ -9,30 +9,58 @@ Map = function(){
 
     var that = Object.create(Map.prototype);
 
-    that.map = new google.maps.Map(document.getElementById('map'), {
-                center: {lat: 42.359155, lng: -71.093058}, // 77 Mass Ave
-                zoom: 18
-            });
 
-      // // limit map to the Boston / Cambridge area
-      // var allowedBounds = new google.maps.LatLngBounds(
-      //     new google.maps.LatLng(42.330825, -71.110483), //southwest coord of bounds
-      //     new google.maps.LatLng( 42.375860, -71.046968) // northeast coord of bounds
-      // );
-      // var lastValidCenter = that.map.getCenter();
+    var massave = new google.maps.LatLng( 42.359155,  -71.093058);
 
-      // google.maps.event.addListener(that.map, 'center_changed', function() {
-      //         if (allowedBounds.contains(that.map.getCenter())) {
-      //             // still within valid bounds, so save the last valid position
-      //             lastValidCenter = that.map.getCenter();
-      //         return;
-      //         }
-      //         that.map.panTo(lastValidCenter);
-      // });
+    var mapOptions = {
+      center: massave,
+      zoom: 15,
+      styles: map_styles,
+      mapTypeControl: false,
+      streetViewControl: false
+    };
+
+    that.map = new google.maps.Map(document.getElementById('map'), mapOptions);
+
+
+            /*
+
+            This is all to set the boundaries of the map, please do not touch!
+
+            */
+
+            // var mapType = new google.maps.StyledMapType(stylez, { name:"Grayscale" });
+            // that.map.mapTypes.set('gray', mapType);
+            // that.map.setMapTypeId('gray');
+
+
+            //   // limit map to the Boston / Cambridge area
+            //   var allowedBounds = new google.maps.LatLngBounds(
+            //       new google.maps.LatLng(42.330825, -71.110483), //southwest coord of bounds
+            //       new google.maps.LatLng( 42.375860, -71.046968) // northeast coord of bounds
+            //   );
+            //   var lastValidCenter = that.map.getCenter();
+
+            //   google.maps.event.addListener(that.map, 'center_changed', function() {
+            //           if (allowedBounds.contains(that.map.getCenter())) {
+            //               // still within valid bounds, so save the last valid position
+            //               lastValidCenter = that.map.getCenter();
+            //           return;
+            //           }
+            //           that.map.panTo(lastValidCenter);
+            //   });
+
+           /*
+              End of boundary settings
+           */
+
+
+
 
     that.displaySelf = function(pos){
-        if(!pos || !Meteor.user()) return;
+        if(!pos) return;
         var gSelfLoc = new google.maps.LatLng(pos.lat, pos.lng);
+<<<<<<< HEAD
         // var selfMarker = new RichMarker({
         //     map: that.map,
         //     position: gSelfLoc,
@@ -42,31 +70,130 @@ Map = function(){
         //     content: '<div class="here"><div><div><img src="'+Meteor.user().profile.picture+'"/></div><div>You are here!</div>'
         // });
 
+        var contentString =
+          // '<div class="here">' +
+          '<h1 id="firstHeading" class="firstHeading">' + Meteor.user().profile.name + ' (You)</h1>' +
+          '<div>You are currently invisible</div>';
+          // +
+          // '<h3 class>' + Meteor.user().checkin.duration + ' minutes left</h2>' +
+          // '<div>' + Meteor.user().checkin.text_status + '</div>'
+
+        var avl_border = "/icons/invisible.png"
+        if (Meteor.user().checkin == null || Meteor.user().checkin.availability == 'invisible') {
+          avl_border = "/icons/invisible.png";
+        } else if (Meteor.user().checkin.availability == 'available') {
+          avl_border = "/icons/available2.png";
+          contentString = '<h1 id="firstHeading" class="firstHeading">' + Meteor.user().profile.name + ' (You)</h1>' +
+                          // '<h3 class>' + Meteor.user().checkin.duration + ' minutes left</h2>' +
+                          '<div>' + Meteor.user().checkin.text_status + '</div>';
+        } else if (Meteor.user().checkin.availability == 'busy'){
+          avl_border = "/icons/busy2.png";
+          contentString = '<h1 id="firstHeading" class="firstHeading">' + Meteor.user().profile.name + ' (You)</h1>' +
+                          // '<h3 class>' + Meteor.user().checkin.duration + ' minutes left</h2>' +
+                          '<div>' + Meteor.user().checkin.text_status + '</div>';
+        }
+
+
+
         var selfMarker = new CustomMarker(
             gSelfLoc,
             that.map,
             {
               marker_id: '123',
               img: Meteor.user().profile.picture,
-              name: Meteor.user().profile.name
+              name: Meteor.user().profile.name,
+              image_container: avl_border
             }
         );
 
-        var contentString =
-          // '<div class="here">' +
-          '<h1 id="firstHeading" class="firstHeading">' + Meteor.user().profile.name + '</h1>'
-          // +
-          // '<h3 class>' + Meteor.user().checkin.duration + ' minutes left</h2>' +
-          // '<div>' + Meteor.user().checkin.text_status + '</div>'
+=======
+
+        var display_status = function(checkin_obj) {
+          var status = checkin_obj.availability;
+>>>>>>> caitlins_branch
+
+          if(status != "available" && status != "busy" && status != "invisible"){
+                console.log("status is not valid. status = " + status);
+                return;
+          }
+
+        var marker_html = '<div id="'+ Meteor.userId()+'"><div class="pin">' +
+            '<div id="wrapper" class="wrapper ' + status + '">' +
+              '<div class="small">' +
+                '<img src="' + Meteor.user().profile.picture + '" alt="" />' +
+              '</div>' +
+              '<div class="large">' +
+                '<p style="float: left;"><img src="' + Meteor.user().profile.picture + '" alt="" /></p>' +
+                '<p class="text"><strong>' + Meteor.user().profile.name + '</strong></p>';
+
+                if(status === "available"){
+                    marker_html +=  '<em>You are available</em>';
+
+                }
+                else if (status === "busy"){
+
+                     marker_html +=  '<em>You are busy</em>';
+
+                }
+                else{
+
+                    marker_html +=  '<em>You are invisible</em>';
+                }
 
 
+        marker_html += '<a class="icn close" href="#" title="Close">Close</a>' +
+              '</div>' +
+            '</div>' +
+            '<span></span>' +
+            '</div></div>';
 
-        var iw = new google.maps.InfoWindow({content: contentString, pixelOffset: new google.maps.Size(5,0)});
+
+<<<<<<< HEAD
+
+        var iw = new google.maps.InfoWindow({content: contentString, pixelOffset: new google.maps.Size(0,-60)});
         // iw.open(that.map, selfMarker);
         google.maps.event.addListener(selfMarker, "click", function() {
           iw.open(that.map, selfMarker);
         });
       }
+=======
+            return marker_html;
+        };
+
+
+
+            var user_marker = new RichMarker({
+              position: gSelfLoc,
+              flat: true,
+              anchor: RichMarkerPosition.BOTTOM,
+              content:  display_status(Meteor.user().checkin),
+            });
+            user_marker.setMap(that.map);
+
+            google.maps.event.addListener(user_marker, 'click', function() {
+
+              var modifier = 0.0178;
+              if ($(window).width() < 768) {
+                modifier = 0;
+              }
+
+              if (!$('#'+Meteor.userId()).hasClass('active')) {
+
+              }
+
+              $('#'+Meteor.userId()+' .pin ').removeClass('active').css('z-index', 10);
+              $('#'+Meteor.userId()+' .pin').addClass('active').css('z-index', 200);
+
+              $('#'+Meteor.userId()+' .pin #wrapper .large').click(function(){
+                $('#'+Meteor.userId()+' .pin').removeClass('active');
+                return false;
+              });
+
+            });
+
+
+       }
+>>>>>>> caitlins_branch
 
       /*
       Function that displays each of the user's friends on the map
@@ -80,52 +207,71 @@ Map = function(){
               console.log("error occurred! " + err.toString());
            }
 
-           var locations = data;
+           var friends = data;
 
-           if (locations){
-               locations.forEach(function(loc) {
+           if (friends){
+               friends.forEach(function(friend) {
                      var image = {
-                       url: loc.pic,
+                       url: friend.pic,
                        size: new google.maps.Size(40, 40)
                      };
 
-                    var gLoc = new google.maps.LatLng(loc.checkin.loc.lat, loc.checkin.loc.lng);
-                    // var friendMarker = new RichMarker({
-                    //        map: that.map,
-                    //        position: gLoc,
-                    //        draggable: false,
-                    //        flat: true,
-                    //        anchor: RichMarkerPosition.MIDDLE,
-                    //        content: '<div class=' + loc.checkin.availability + '><div><div>' + loc.name + '</div><img src="' + loc.pic + '"/></div>' + '<div>' + loc.checkin.text_status + '</div>'
-                    // });
+                    var gLoc = new google.maps.LatLng(friend.checkin.loc.lat, friend.checkin.loc.lng);
 
-                    var friendMarker = new CustomMarker(
-                        gLoc,
-                        that.map,
-                        {
-                          marker_id: '123',
-                          img: loc.pic,
-                          name: loc.name,
-                          availability: loc.checkin.availability
-                        }
-                    );
+                    if (friend.checkin.availability == 'busy') {
+                      var marker_html = '<div id="'+ friend.id+'"><div class="pin">' +
+                        '<div class="wrapper">' +
+                          '<div class="small">' +
+                            '<img src="' + friend.pic + '" alt="" />' +
+                          '</div>' +
+                          '<div class="large">' +
+                            '<p style="float: left;"><img src="' + friend.pic + '" alt="" /></p>' +
+                            '<h3 class="text"><strong>' + friend.name + '</strong></p>' +
+                            // '<div class="boo">' +
+                            '<p>' + friend.checkin.duration + '</p>' +
+                            '<em>' + friend.checkin.text_status + '</em>' +
+                            // '</div>' +
+                            '<a class="icn close" href="#" title="Close">Close</a>' +
+                          '</div>' +
+                        '</div>' +
+                        '<span></span>' +
+                        '</div></div>';
+                    }
 
-                    var contentStringFriend =
-                      // '<div class=' + loc.checkin.availability + '>' +
-                      '<h1 id="firstHeading" class="firstHeading">' + loc.name + '</h1>' +
-                      '<h3 class>' + loc.checkin.duration + ' minutes left</h2>' +
-                      '<div>' + loc.checkin.text_status + '</div>'
-
-
-
-                    var iwFriend = new google.maps.InfoWindow({content: contentStringFriend, pixelOffset: new google.maps.Size(5,0)});
-                    google.maps.event.addListener(friendMarker, "click", function() {
-                      iwFriend.open(that.map, friendMarker);
+                    var friendMarker = new RichMarker({
+                           map: that.map,
+                           position: gLoc,
+                           draggable: false,
+                           flat: true,
+                           anchor: RichMarkerPosition.BOTTOM,
+                           content: marker_html
                     });
-                });
-          }
+
+                    google.maps.event.addListener(friendMarker, 'click', function() {
+
+                      var modifier = 0.0178;
+                      if ($(window).width() < 768) {
+                        modifier = 0;
+                      }
+
+
+               if (!$('#'+friend.id).hasClass('active')) {
+
+              }
+
+              $('#'+friend.id+' .pin ').removeClass('active').css('z-index', 10);
+              $('#'+friend.id+' .pin').addClass('active').css('z-index', 200);
+
+              $('#'+friend.id+' .pin .wrapper .large').click(function(){
+                $('#'+friend.id+' .pin').removeClass('active');
+                return false;
+              });
+
+            });
         });
       }
+    });
+  };
 
 
       /*
