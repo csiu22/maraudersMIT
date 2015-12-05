@@ -2,25 +2,17 @@
 	<h2>{{title}}</h2>
 
 	<div id ="CheckInBox">
-		<form class="check-in-info">
-			<label> I am ~~</label>
+		<div id="check-in-info">
+			I am ~~<input type="text" name="status" maxlength="140" placeholder="up to no good" />
 			<br>
-			<input type="text" name="status" maxlength="140" placeholder="up to no good" /> <label> . </label>
+			for <input type="number" min="0" pattern="\d+" name="duration" value="90"/> mins
+			and
+			<span style="color:green"> <input type="radio" name="state" value="available" checked="checked">Available</span>
 			<br>
-			<label> for </label>
-			<br>
-			<!-- Keeping this in case we want to increment by half hour -->
-<!-- 			<input type="number" min="0" pattern="\d+" name="duration" value="1" step ="0.5"/> -->
-			<input type="number" min="0" pattern="\d+" name="duration" value="90"/>
-			<br>
-			<label> mins </label>
-			<br>
-
-			<input type="radio" name="state" value="available" checked="checked">Available
-			<input type="radio" name="state" value="busy"> Busy
+			<input type="radio" name="state" value="busy"><span style="color:red">Busy</span>
 			<br>
 
 	                	<button class="submit">Submit</button>
-		</form>
+		</div>
 	</div>
 </template>
