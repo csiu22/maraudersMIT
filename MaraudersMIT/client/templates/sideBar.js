@@ -39,7 +39,7 @@ var userFocus = function(){
             friendNames.push("None");
           }   
         }   
-        return friendNames;
+        return friendNames.sort();
       } 
     },
   });
