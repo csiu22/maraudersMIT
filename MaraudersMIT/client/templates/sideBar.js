@@ -11,13 +11,13 @@ var userFocus = function(){
   Template.sideBar.events({
     'click #check-in': function () {
       	Overlay.show('checkInOverlay');
-        
     },
 
     'click #check-out': function () {
         Meteor.call("checkOut", function() {
-          console.log("finished checking out");
+          if(DEBUG) {console.log("finished checking out");}
           maraudersMap.renderSelf();
+         if(timer) {clearInterval(timer);}
         });
         
         alert("You have successfully checked out.");

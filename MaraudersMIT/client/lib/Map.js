@@ -8,8 +8,8 @@ Object that creates google map and displays users
 Map = function(){
 
     var that = Object.create(Map.prototype);
-    var markers = [];
-    var self_marker;
+    that.markers = [];
+    that.self_marker = null;
 
     var mapOptions = {
       center: new google.maps.LatLng( 42.359155,  -71.093058), // 77 Mass Ave
@@ -111,8 +111,8 @@ Map = function(){
 
     that.renderSelf = function(){
 
-      if (self_marker){
-          self_marker.setMap(null);
+      if (that.self_marker){
+          that.self_marker.setMap(null);
       }
 
         if(!Meteor.user()) return;
@@ -123,7 +123,7 @@ Map = function(){
         }
 
         var drawSelf = function(pos){
-            self_marker = new RichMarker({
+          var marker = new RichMarker({
               map: that.map,
               position: new google.maps.LatLng(pos.lat, pos.lng),
               draggable: false,
@@ -132,7 +132,9 @@ Map = function(){
               content:  display_status(Meteor.user(), Meteor.userId(), Meteor.user().profile.name, Meteor.user().profile.picture),
             });
 
-            addUserListeners(self_marker, Meteor.userId());
+            console.log(marker);
+            addUserListeners(marker, Meteor.userId());
+            that.self_marker = marker;
 
       }
 
@@ -227,11 +229,11 @@ Map = function(){
 
     that.refresh = function(){
       that.renderSelf();
-      markers.forEach(function(marker){
+      that.markers.forEach(function(marker){
           that.renderUser(marker.user_id);
       })
     }
 
-  Object.freeze(that);
+  // Object.freeze(that);
   return that;
 }
