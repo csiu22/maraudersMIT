@@ -70,13 +70,13 @@ Map = function(){
             '</div>' +
             '<div class="large">' +
               '<p style="float: left;"><img src="' + userPic + '" alt="" /></p>' +
-              '<h1 class="text"><strong>' + userName + '</strong></p>';
+              '<h1 class="text"><strong>' + userName + '</strong></h1>';
 
       if (status === "unavailable") {
          marker_html += '<em>' + fragment +' invisible</em>';
       } else {
-        marker_html += '<h2 class="duration">' + Number(((user.checkin.end_time - Date.now()) / 60000).toFixed(0)) + ' minutes left</p>';
-        marker_html += '<em>' + user.checkin.text_status + '</em>';
+        marker_html += '<p style="clear: both;" class="duration">' + Number(((user.checkin.end_time - Date.now()) / 60000).toFixed(0)) + ' minutes left</p>';
+        marker_html += '<p class="status">' + user.checkin.text_status + '</p>';
       }
 
       marker_html += '<a class="icn close" href="#" title="Close">Close</a>' +
