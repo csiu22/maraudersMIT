@@ -18,7 +18,7 @@ var userFocus = function(){
           maraudersMap.renderSelf();
          if(timer) {clearInterval(timer);}
         });
-        
+
         alert("You have successfully checked out.");
     },
 
@@ -31,18 +31,18 @@ var userFocus = function(){
  Template.sideBar.helpers({
     marauderFriends: function() {
       if (Meteor.user()) {
-        var friendNames = []; 
+        var friendNames = [];
         if(Meteor.user() && Meteor.user().friends){
           Meteor.user().friends.forEach(function(friendId) {
             var friend = Meteor.users.findOne({_id: friendId});
-            friendNames.push(friend.services.facebook.name);
-          }); 
+            friendNames.push(friend);
+          });
           if (friendNames.length === 0) {
             friendNames.push("None");
-          }   
-        }   
+          }
+        }
         return friendNames.sort();
-      } 
+      }
     },
   });
 

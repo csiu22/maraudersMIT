@@ -104,7 +104,7 @@
     z-index: 2;
     width: 100%;
     border: 5px solid;
-    background-image: url("/backgrounds/background.png");
+/*    background-image: url("/backgrounds/background.png");*/
 }
 
 .friend .icon.available {
