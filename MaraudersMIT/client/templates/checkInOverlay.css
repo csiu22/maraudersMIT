@@ -1,5 +1,5 @@
 #CheckInBox{
-    width: 60%;
+    width: 45%;
     height: 60%;
     background-color: #D2B48C;
 
@@ -10,6 +10,7 @@
     right: 0;
 
     margin: auto;
+    font-family: 'Roboto Slab', serif;
 }
 
 .check-in-info {
@@ -41,13 +42,14 @@
 
 input[type=text] {
     position:relative;
-    height:13%;
+    height:12%;
     width:100%;
+    font-family: 'Roboto Slab', serif;
 }
 
 input[type=number] {
     position:relative;
-    height:13%;
+    height:12%;
     width:100%;
 }
 
