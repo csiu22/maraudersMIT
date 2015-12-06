@@ -84,7 +84,6 @@ Map = function(){
                       '</div>' +
                       '<span></span>' +
                       '</div></div>';
-      if(DEBUG) { console.log(marker_html); }
       return marker_html;
     };
 
@@ -109,8 +108,9 @@ Map = function(){
     }
 
 
-    that.renderSelf = function(){
+    that.renderSelf = function(pos){
 
+      console.log(that.self_marker);
       if (that.self_marker){
           that.self_marker.setMap(null);
       }
@@ -132,18 +132,17 @@ Map = function(){
               content:  display_status(Meteor.user(), Meteor.userId(), Meteor.user().profile.name, Meteor.user().profile.picture),
             });
 
-            console.log(marker);
             addUserListeners(marker, Meteor.userId());
             that.self_marker = marker;
 
       }
 
        var displaySelf = function(pos){
-              that.map.setCenter(pos);
               drawSelf(pos);
           };
 
-       that.getUserLocation(displaySelf);
+       if (pos) { displaySelf(pos); }
+       else { that.getUserLocation(displaySelf); }
 
     }
 
@@ -221,7 +220,10 @@ Map = function(){
     */
 
     that.renderMap = function () {
-        that.renderSelf();
+        that.getUserLocation(function(pos){
+          that.map.setCenter(pos);
+          that.renderSelf(pos);
+        })
         that.renderFriends();
     }
 
