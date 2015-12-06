@@ -104,16 +104,10 @@ Map = function(){
         });
       });
 
-
     }
 
 
-    that.renderSelf = function(pos){
-
-      console.log(that.self_marker);
-      if (that.self_marker){
-          that.self_marker.setMap(null);
-      }
+    that.renderSelf = function(pos){  
 
         if(!Meteor.user()) return;
         if (! "geolocation" in navigator) {
@@ -123,26 +117,34 @@ Map = function(){
         }
 
         var drawSelf = function(pos){
-          var marker = new RichMarker({
-              map: that.map,
-              position: new google.maps.LatLng(pos.lat, pos.lng),
-              draggable: false,
-              flat: true,
-              anchor: RichMarkerPosition.BOTTOM,
-              content:  display_status(Meteor.user(), Meteor.userId(), Meteor.user().profile.name, Meteor.user().profile.picture),
-            });
 
-            addUserListeners(marker, Meteor.userId());
-            that.self_marker = marker;
+          var createMarker = function(){
+              var marker = new RichMarker({
+                  map: that.map,
+                  position: new google.maps.LatLng(pos.lat, pos.lng),
+                  draggable: false,
+                  flat: true,
+                  anchor: RichMarkerPosition.BOTTOM,
+                  content:  display_status(Meteor.user(), Meteor.userId(), Meteor.user().profile.name, Meteor.user().profile.picture),
+                });
+
+                addUserListeners(marker, Meteor.userId());
+                that.self_marker = marker;
+
+          }
+
+          if (that.self_marker){
+            that.self_marker.setMap(null);
+            createMarker();
+          }
+          else{
+            createMarker();
+          }
 
       }
 
-       var displaySelf = function(pos){
-              drawSelf(pos);
-          };
-
-       if (pos) { displaySelf(pos); }
-       else { that.getUserLocation(displaySelf); }
+       if (pos) { drawSelf(pos); }
+       else { that.getUserLocation(drawSelf); }
 
     }
 
@@ -233,7 +235,7 @@ Map = function(){
       that.renderSelf();
       that.markers.forEach(function(marker){
           that.renderUser(marker.user_id);
-      })
+      });
     }
 
   // Object.freeze(that);
