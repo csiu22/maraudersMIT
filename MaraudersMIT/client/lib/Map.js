@@ -48,13 +48,13 @@ Map = function(){
             {
               marker_id: '123',
               img: Meteor.user().profile.picture,
-              name: Meteor.user().profile.name
+              name: Meteor.user().name
             }
         );
 
         var contentString =
           // '<div class="here">' +
-          '<h1 id="firstHeading" class="firstHeading">' + Meteor.user().profile.name + '</h1>'
+          '<h1 id="firstHeading" class="firstHeading">' + Meteor.user().name + '</h1>'
           // +
           // '<h3 class>' + Meteor.user().checkin.duration + ' minutes left</h2>' +
           // '<div>' + Meteor.user().checkin.text_status + '</div>'

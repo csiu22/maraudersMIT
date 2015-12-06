@@ -10,12 +10,9 @@ Template.newuser.events({
 
 		if (domain === "@mit.edu") {
       if (Meteor.user()) {
-	  		Meteor.users.update(Meteor.userId(),{
-	      			$set:{isVerified: true}
-	     	  	});
-	    	
-	        		console.log("verified!");
-	    		redirect('maraudersMap');
+	  		Meteor.users.update(Meteor.userId(), {$set: {isVerified: true}});
+	     	console.log("verified!");
+	    	redirect('maraudersMap');
       }
 		} else {
 			console.log("You don't even go here");

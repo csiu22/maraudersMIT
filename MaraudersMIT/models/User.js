@@ -4,14 +4,14 @@ if (Meteor.isServer) {
   Meteor.methods({
     // Allows a user to check in to a location with an availability, text status, and a duration.
     'checkIn': function(availability, text_status, duration, location) {
-      var checkin = {availability: availability, text_status: text_status, duration: duration, loc: location};
-      checkIn({checkin: checkin, user_id: Meteor.userId()});
+      var checkin = {availability: availability, text_status: text_status, duration: duration, loc: location, user_id: Meteor.userId()};
+      checkIn(checkin);
      },
 
     // Allows a user to check out before the duration of a previous check-in is finished.
     'checkOut': function() {
-      FutureTasks.remove(Meteor.user().handle);
-      SyncedCron.remove(Meteor.user().handle);
+      FutureTasks.remove(Meteor.user().checkin.handle);
+      SyncedCron.remove(Meteor.user().checkin.handle);
       checkOut({user_id: Meteor.userId()});
      },
 
@@ -81,7 +81,7 @@ if (Meteor.isServer) {
           Meteor.user().friends.forEach(function(friendId) {
           var friend = Meteor.users.findOne({_id: friendId});
           if (friend.checkin.availability !== "invisible") {
-                locations.push({name: friend.services.facebook.name, pic: friend.profile.picture, checkin: friend.checkin});
+                locations.push({name: friend.services.facebook.name, pic: friend.picture, checkin: friend.checkin});
           }
         });
       }

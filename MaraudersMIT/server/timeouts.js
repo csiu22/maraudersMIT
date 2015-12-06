@@ -3,12 +3,11 @@ if (Meteor.isServer) {
   
   checkOut = function(details) {
     Meteor.users.update({_id: details.user_id}, {$set: {checkin: {availability: "invisible"}}});
-    Meteor.users.update({_id: details.user_id}, {$set: {handle: null}});
   };
   
   addTask = function(id, details, fireDate) {
-    Meteor.users.update({_id: details.user_id}, {$set: {checkin: details.checkin}});
-    Meteor.users.update({_id: details.user_id}, {$set: {handle: id}});
+    var checkin = {availability: details.availability, text_status: details.text_status, duration: details.duration, loc: details.loc, handle: id}
+    Meteor.users.update({_id: details.user_id}, {$set: {checkin: checkin}});
     SyncedCron.add({
       name: id,
       schedule: function(parser) {
@@ -26,7 +25,7 @@ if (Meteor.isServer) {
   
   checkIn = function(details) {
     var fireDate = new Date();
-    fireDate.setMinutes(fireDate.getMinutes() + parseInt(details.checkin.duration));
+    fireDate.setMinutes(fireDate.getMinutes() + parseInt(details.duration));
     var thisId = FutureTasks.insert({details, fireDate});
     addTask(thisId, details, fireDate);
     return true;

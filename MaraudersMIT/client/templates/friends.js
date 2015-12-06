@@ -40,8 +40,8 @@ if (Meteor.isClient) {
     // requested: (boolean) Whether the friend has sent a friend request to the current user.
     facebookFriends: function() {
       var userList = []; 
-      if( Meteor.user() && Meteor.user().profile.facebookfriends) {
-        Meteor.user().profile.facebookfriends.forEach(function(user) {
+      if( Meteor.user() && Meteor.user().facebookfriends) {
+        Meteor.user().facebookfriends.forEach(function(user) {
           var doneChecking = false;
           var currentFriend = Meteor.users.findOne({"services.facebook.id": user.id});
           // If the current is in our database and is a verified user
