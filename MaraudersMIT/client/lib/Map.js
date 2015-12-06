@@ -9,7 +9,6 @@ Map = function(){
 
     var that = Object.create(Map.prototype);
     that.markers = {};
-    that.self_marker = null;
 
     var mapOptions = {
       center: new google.maps.LatLng( 42.359155,  -71.093058), // 77 Mass Ave
@@ -129,12 +128,12 @@ Map = function(){
                 });
 
                 addUserListeners(marker, Meteor.userId());
-                that.self_marker = marker;
+                that.markers[Meteor.userId()] = marker;
 
           }
 
-          if (that.self_marker){
-            that.self_marker.setMap(null);
+          if (that.markers[Meteor.userId()]){
+            that.markers[Meteor.userId()].setMap(null);
             createMarker();
           }
           else{
