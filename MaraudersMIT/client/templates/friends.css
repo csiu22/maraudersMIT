@@ -1,0 +1,19 @@
+.friends_title {
+  padding-top: 20px;
+  font-family: 'Metal Mania', cursive;
+  text-align: center;
+  font-size: 75px;
+
+}
+
+.friends_name {
+  padding-top: 15px;
+  font-family: 'Roboto Slab', serif;
+  font-size: 20px;
+  text-indent: 10px;
+}
+
+.friends_button {
+  padding-top: 12px;
+  text-indent: 50px;
+}

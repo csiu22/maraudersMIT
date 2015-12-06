@@ -1,14 +1,19 @@
 <template name="friends">
+  <head>
+    <link href='https://fonts.googleapis.com/css?family=Metal+Mania' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Roboto+Slab' rel='stylesheet' type='text/css'>
+  </head>
 	<div id="friendsPage">
 		<h2>
-			Your (Facebook + Marauders) friends
+			<div class="friends_title">Friends</div>
 		</h2>
 
 		<ul>
 			{{ #each facebookFriends }}
 				<br>
-				{{ this.name }}
-        <img src= {{this.pic}} alt="" />
+        <img style="float: left;" class="picture" src= {{this.pic}} alt="" />
+        <!-- <div class="name"> {{ this.name }} </div> -->
+        <p style="float: left;" class="friends_name"> {{ this.name }} </p> <div class="friends_button">
         {{ #if this.friend }}
         <button class="friend-remove">Remove Friend</button>
         {{ else }}
@@ -21,7 +26,7 @@
           {{ else }}
           <button class="friend-request">Add Friend</button>
           {{/if}}
-        {{/if}}
+        {{/if}} </div><div style="clear: both;"></div>
 			{{/each}}
 		</ul>
 
