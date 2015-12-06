@@ -17,11 +17,20 @@
 		<!-- List my Marauder Friends -->
     		<div id="friendsList">
     			Your Marauder friends:
-    			<ul>
+    			<div class="scrollable">
+    			<ul class="list-unstyled ">
 				{{#each marauderFriends}}
-					<li> {{ this }} </li>
+					<li> <div class="friend">
+						<div class="icon {{this.status}}"> 
+
+							<img style="float: left;" src={{this.pic}} alt="" />
+							<span><p> {{ this.name }} </p> </span>
+
+						</div>
+					</div></li>
 				{{/each}}
 			</ul>
+			</div>
 		</div>
 
 
