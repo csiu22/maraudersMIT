@@ -72,7 +72,7 @@ Map = function(){
               '<h1 class="text"><strong>' + userName + '</strong></h1>';
 
       if (status === "unavailable") {
-         marker_html += '<em>' + fragment +' invisible</em>';
+         marker_html += '<p style="clear: both;" class="status">' + fragment +' invisible</p>';
       } else {
         marker_html += '<p style="clear: both;" class="duration">' + Number(((user.checkin.end_time - Date.now()) / 60000).toFixed(0)) + ' minutes left</p>';
         marker_html += '<p class="status">' + user.checkin.text_status + '</p>';
