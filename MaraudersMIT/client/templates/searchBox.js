@@ -19,8 +19,9 @@ Template.searchBox.helpers({
     'click #clickOnFriend': function (event) {
 
       if (maraudersMap) {
-      if (MaraudersMap[event.target.attributes.friendId.nodeValue]){
-          maraudersMap.setCenter(MaraudersMap[event.target.attributes.friendId.nodeValue].position);
+        console.log(event.target.attributes.friendId.nodeValue);
+      if (maraudersMap.markers[event.target.attributes.friendId.nodeValue]){
+          maraudersMap.setCenter(maraudersMap.markers[event.target.attributes.friendId.nodeValue].position);
           }
           else{
             console.log("error -- marker does not exist");
@@ -29,28 +30,6 @@ Template.searchBox.helpers({
       else{
           console.log("error -- map is not available");
       }
-
-       // Meteor.call("isFriend",  event.target.attributes.friendId.nodeValue, function(err, data) {
-       //       if (data) {
-       //              // Is a friend.
-       //              if (event.target.attributes.checkinAvailability.nodeValue === "unavailable") {
-       //                    alert(event.target.attributes.name.nodeValue + " is currently unavailable");
-       //              } else {
-       //                    var latitude = event.target.attributes.checkinLatitude.nodeValue
-       //                    var longitude = event.target.attributes.checkinLongitude.nodeValue
-       //                    var friendPos = new google.maps.LatLng(latitude, longitude);
-
-       //                    if (maraudersMap) {
-       //                          maraudersMap.setCenter(friendPos);
-       //                    } else {
-       //                          console.log("error");
-       //                    }
-       //              }
-       //       } else {
-       //              // Is not a friend.
-       //              alert("You are not friends with this person yet");
-       //       }
-       // });
 
     }
   });

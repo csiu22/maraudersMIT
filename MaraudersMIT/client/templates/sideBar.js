@@ -25,6 +25,21 @@ var userFocus = function(){
      'click #locate': function () {
         userFocus();
     },
+    'click #clickOnFriend': function (event) {
+
+      if (maraudersMap) {
+        console.log(event.target.attributes.friendId.nodeValue);
+      if (maraudersMap.markers[event.target.attributes.friendId.nodeValue]){
+          maraudersMap.setCenter(maraudersMap.markers[event.target.attributes.friendId.nodeValue].position);
+          }
+          else{
+            console.log("error -- marker does not exist");
+          }
+      }
+      else{
+          console.log("error -- map is not available");
+      }
+    }
   });
 
 
