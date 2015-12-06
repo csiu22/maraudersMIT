@@ -1,24 +1,32 @@
 <template name="checkInOverlay">
+  <head>
+    <link href='https://fonts.googleapis.com/css?family=Metal+Mania' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Roboto+Slab' rel='stylesheet' type='text/css'>
+  </head>
+
 	<h2>{{title}}</h2>
 
 	<div id ="CheckInBox">
 		<form class="check-in-info">
-			I am <input type="text" name="status" maxlength="140" placeholder="up to no good" />
+			Status: <input type="text" name="status" maxlength="140" placeholder="I am up to no good" />
 			<br>
-			for <input type="number" min="0" pattern="\d+" name="duration" value="90"/> mins
 			<br>
-			and
+			Duration (minutes): <input type="number" min="0" pattern="\d+" name="duration" value="90"/>
 			<br>
-			<span style="color:green">
-				<input type="radio" name="state" value="available" checked="checked">Available
-			</span>
 			<br>
-			<span style="color:red">
-				<input type="radio" name="state" value="busy">Busy
-			</span>
+			Availability:
 			<br>
 
-	                	<button class="submit">Submit</button>
-	             </form>
+				<input type="radio" name="state" value="available" checked="checked">
+				<label for="available" style="color:green">Available</label>
+
+				<input type="radio" name="state" value="busy">
+				<label for="busy" style="color:red">Busy</label>
+			<br>
+			<br>
+			<br>
+			<br>
+	  	<input type="submit" class="btn btn-default" value="Check In">
+	  </form>
 	</div>
 </template>

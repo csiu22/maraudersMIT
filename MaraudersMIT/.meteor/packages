@@ -32,3 +32,4 @@ percolate:synced-cron
 mizzao:autocomplete
 sanjo:jasmine
 velocity:html-reporter
+meteorhacks:fast-render

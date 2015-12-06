@@ -1,5 +1,5 @@
 #CheckInBox{
-    width: 60%;
+    width: 45%;
     height: 60%;
     background-color: #D2B48C;
 
@@ -10,6 +10,7 @@
     right: 0;
 
     margin: auto;
+    font-family: 'Roboto Slab', serif;
 }
 
 .check-in-info {
@@ -18,7 +19,7 @@
     vertical-align: middle;
     margin: auto;
     position: absolute;
-    
+
     top:0;
     bottom: 0;
     left: 0;
@@ -30,7 +31,7 @@
     left: 50%;
     height: 70%;
     margin-right: -50%;
-    transform: translate(-50%, -50%)    
+    transform: translate(-50%, -50%)
 }
 
 /*.check-in-info input {
@@ -41,13 +42,14 @@
 
 input[type=text] {
     position:relative;
-    height:13%;
+    height:12%;
     width:100%;
+    font-family: 'Roboto Slab', serif;
 }
 
 input[type=number] {
     position:relative;
-    height:13%;
+    height:12%;
     width:100%;
 }
 
@@ -73,3 +75,15 @@ width: 220px !important;
 font-size: 14px !important;
 
 }*/
+label {
+    float: left;
+    clear: none;
+    display: block;
+    padding: 0 3em 0 4px;
+}
+
+input[type=radio], input.radio {
+    float: left;
+    clear: none;
+    margin: 2px 4px 0 0;
+}
