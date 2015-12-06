@@ -8,7 +8,7 @@ Object that creates google map and displays users
 Map = function(){
 
     var that = Object.create(Map.prototype);
-    that.markers = [];
+    that.markers = {};
     that.self_marker = null;
 
     var mapOptions = {
@@ -104,16 +104,10 @@ Map = function(){
         });
       });
 
-
     }
 
 
-    that.renderSelf = function(pos){
-
-      console.log(that.self_marker);
-      if (that.self_marker){
-          that.self_marker.setMap(null);
-      }
+    that.renderSelf = function(pos){  
 
         if(!Meteor.user()) return;
         if (! "geolocation" in navigator) {
@@ -123,26 +117,34 @@ Map = function(){
         }
 
         var drawSelf = function(pos){
-          var marker = new RichMarker({
-              map: that.map,
-              position: new google.maps.LatLng(pos.lat, pos.lng),
-              draggable: false,
-              flat: true,
-              anchor: RichMarkerPosition.BOTTOM,
-              content:  display_status(Meteor.user(), Meteor.userId(), Meteor.user().profile.name, Meteor.user().profile.picture),
-            });
 
-            addUserListeners(marker, Meteor.userId());
-            that.self_marker = marker;
+          var createMarker = function(){
+              var marker = new RichMarker({
+                  map: that.map,
+                  position: new google.maps.LatLng(pos.lat, pos.lng),
+                  draggable: false,
+                  flat: true,
+                  anchor: RichMarkerPosition.BOTTOM,
+                  content:  display_status(Meteor.user(), Meteor.userId(), Meteor.user().profile.name, Meteor.user().profile.picture),
+                });
+
+                addUserListeners(marker, Meteor.userId());
+                that.self_marker = marker;
+
+          }
+
+          if (that.self_marker){
+            that.self_marker.setMap(null);
+            createMarker();
+          }
+          else{
+            createMarker();
+          }
 
       }
 
-       var displaySelf = function(pos){
-              drawSelf(pos);
-          };
-
-       if (pos) { displaySelf(pos); }
-       else { that.getUserLocation(displaySelf); }
+       if (pos) { drawSelf(pos); }
+       else { that.getUserLocation(drawSelf); }
 
     }
 
@@ -158,30 +160,36 @@ Map = function(){
 
         if (data){
           data.forEach(function(friend) {
-
               that.renderUser(friend);
-
           });
         }
       });
     };
 
     that.renderUser= function(friend){
-      if (friend.id in markers){
-          markers[friend.id].setMap(null);
-      }
 
-       markers[friend.id] = new RichMarker({
-                   user_id: friend.id,
-                   map: that.map,
-                   position: new google.maps.LatLng(friend.checkin.loc.lat, friend.checkin.loc.lng),
-                   draggable: false,
-                   flat: true,
-                   anchor: RichMarkerPosition.BOTTOM,
-                   content: display_status(friend, friend.id, friend.name, friend.pic)
-            });
+        var createMarker = function() {
+            var marker = new RichMarker({
+                       user_id: friend.id,
+                       map: that.map,
+                       position: new google.maps.LatLng(friend.checkin.loc.lat, friend.checkin.loc.lng),
+                       draggable: false,
+                       flat: true,
+                       anchor: RichMarkerPosition.BOTTOM,
+                       content: display_status(friend, friend.id, friend.name, friend.pic)
+                });
+              addUserListeners(marker, friend.id);
+              return marker;
+        }
 
-            addUserListeners(markers[friend.id], friend.id);
+        if(that.markers[friend.id]) { 
+            that.markers[friend.id].setMap(null); 
+            that.markers[friend.id] = createMarker(friend);
+        }
+        else{
+            that.markers[friend.id] = createMarker(friend);
+        }
+
     }
 
     /*
@@ -231,11 +239,9 @@ Map = function(){
 
     that.refresh = function(){
       that.renderSelf();
-      that.markers.forEach(function(marker){
-          that.renderUser(marker.user_id);
-      })
+      that.renderFriends();
     }
 
-  // Object.freeze(that);
+  Object.freeze(that);
   return that;
 }
