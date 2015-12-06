@@ -3,7 +3,7 @@ FriendsService = {
     Meteor.call('acceptFriendRequest', friendId, function() {
       console.log("done accepting");
     });
-  }, 
+  },
   sendFriendRequest: function(friendId) {
     Meteor.call('sendFriendRequest', friendId, function() {
       console.log("done requesting");
@@ -83,28 +83,28 @@ FriendsService = {
 
 if (Meteor.isClient) {
   Template.friends.events({
-    "click .friend-accept": function() {
+    "click #friend-accept": function() {
       var friendId = this.id;
       FriendsService.acceptFriendRequest(friendId);
     },
 
-    "click .friend-request": function() {
+    "click #friend-request": function() {
       var friendId = this.id;
       FriendsService.sendFriendRequest(friendId);
     },
 
-    "click .friend-remove": function() {
+    "click #friend-remove": function() {
       var friendId = this.id;
       FriendsService.removeFriend(friendId);
     },
 
-    "click .friend-cancel-request": function() {
+    "click #friend-cancel-request": function() {
       var friendId = this.id;
       FriendsService.cancelFriendRequest(friendId);
     }
   });
 
-  Template.friends.helpers({ 
+  Template.friends.helpers({
     facebookFriends: function() {
       return FriendsService.getFacebookFriends();
     }
