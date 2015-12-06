@@ -12,7 +12,7 @@ Handlebars.registerHelper('ifRouteIs', function (routeName) {
 
 Handlebars.registerHelper('isCheckedIn', function () {
       if (Meteor.user() && Meteor.user().checkin) {
-        return Meteor.user().checkin.availability !== "unavailable";
+        return Meteor.user().checkin.availability !== "invisible";
       }
       return false;
 });
