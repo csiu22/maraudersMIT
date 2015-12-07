@@ -1,5 +1,5 @@
 maraudersMap = undefined;
-var timer;
+timer = null;
 
 var wait_for_libraries = function() {
 

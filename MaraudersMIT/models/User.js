@@ -4,14 +4,19 @@ if (Meteor.isServer) {
   Meteor.methods({
     // Allows a user to check in to a location with an availability, text status, and a duration.
     'checkIn': function(end_time, availability, text_status, duration, location) {
-      var checkin = {end_time: end_time, availability: availability, text_status: text_status, duration: duration, loc: location};
-      checkIn({checkin: checkin, user_id: Meteor.userId()});
+      console.log(end_time);
+      console.log(availability);
+      console.log(text_status);
+      console.log(duration);
+      console.log(location);
+      var checkin = {end_time: end_time, availability: availability, text_status: text_status, duration: duration, loc: location, user_id: Meteor.userId()};
+      checkIn(checkin);
      },
 
     // Allows a user to check out before the duration of a previous check-in is finished.
     'checkOut': function() {
-      FutureTasks.remove(Meteor.user().handle);
-      SyncedCron.remove(Meteor.user().handle);
+      FutureTasks.remove(Meteor.user().checkin.handle);
+      SyncedCron.remove(Meteor.user().checkin.handle);
       checkOut({user_id: Meteor.userId()});
      },
 

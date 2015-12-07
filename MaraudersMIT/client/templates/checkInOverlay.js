@@ -37,6 +37,7 @@ Template.checkInOverlay.events({
         lng: position.coords.longitude
       };
 
+      console.log(end_time);
       CheckInService.checkInUser(end_time, availability, status, duration, pos);
     }, function() {
       console.log("error can't get location");
@@ -46,7 +47,6 @@ Template.checkInOverlay.events({
     alert("Please make sure you have geolocation enabled");
     console.log("error browser doesn't support geolocation");
   }
-  CheckInService.setUserStatus(event);
  	Overlay.hide();
 }
 });
