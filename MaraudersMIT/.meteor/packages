@@ -30,6 +30,7 @@ grigio:overlay
 bootstrap
 percolate:synced-cron
 mizzao:autocomplete
+aldeed:collection2
 sanjo:jasmine
 velocity:html-reporter
 meteorhacks:fast-render
