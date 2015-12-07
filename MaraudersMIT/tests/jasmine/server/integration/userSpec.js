@@ -1,140 +1,146 @@
-// beforeEach(function () {
-//   //truthy id
-//   // Meteor.user() = function(){return {_id : "1"}};
-// });
-
-describe("Tests for the User model", function() {
-  it("help", function() {
-    spyOn(Meteor.users, 'update');
-
-//     //Call checkIn Meteor Method
-    Meteor.call('checkIn');
-
-//     //Verify if Workouts.insert was called
-    expect(Meteor.users.update).toHaveBeenCalled();
-  });
+// var fakeUser;
+beforeEach(function() {
+  fakeUser = {
+    "_id": 'myId',
+    "friends": [
+      "friend1",
+      "friend2"
+    ],
+    "requests": [
+      "requestedFriend1"
+    ]
+  };
 });
 
+describe("Tests for the User model", function() {
+  it("verifies that the checkIn function is called", function() {
+    spyOn(Meteor.users, 'update');
 
-//   // var Meteor.user();
-//   beforeEach(function () {
-//     // fakeUser = {
-//     //   _id: '123',
-//     //   friends: ["abc", "def"]
-//     // };
-//     // fakeFriend = {
-//     //   _id: '567',
-//     //   friends: ["abc", "def"]
-//     // };
+    //Call checkIn Meteor Method
+    Meteor.call('checkIn');
+    expect(Meteor.users.update).toHaveBeenCalled();
+  });
 
-//     //truthy id
-//     Meteor.user() = function(){return {_id : "1"}};
-//   });
+  it("verifies that the checkOut function is called", function() {
+    // var thisContext = {userId: 1};
+    var user = {
+      "_id": '123',
+      "checkin" : {
+        "end_time" : 1449433286186,
+        "availability" : "available",
+        "text_status" : "hello world",
+        "duration" : 90,
+        "loc" : {
+          "lat" : 42.357301899999996,
+          "lng" : -71.0936892
+        }
+      } 
+    };
+    spyOn(Meteor, 'user').and.returnValue(user);
+    spyOn(Meteor.users, 'update');
 
-//   describe('testing User model', function () {
-//     it("should call to User.insert",function(){
-//     //Setup a spy to watch for calls to Workouts.insert
-//     spyOn("Meteor.users", update);
+    // //Call checkOut Meteor Method
+    Meteor.call('checkOut');
+    expect(Meteor.users.update).toHaveBeenCalled();
+  });
 
-//     //Call checkIn Meteor Method
-//     Meteor.call('checkIn');
+  it("verifies that the sendFriendRequest function is called", function() {
+    spyOn(Meteor, 'user').and.returnValue(fakeUser);
+    // Finds and updates the friend.
+    var friend = {
+      "_id": '123',
+      "friends": ['def'],
+      "requests": []
+    };
 
-//     //Verify if Workouts.insert was called
-//     expect("Meteor.users.update").toHaveBeenCalled();
-//     });
-//   });
+    spyOn(Meteor.users, 'findOne').and.returnValue(friend);
+    spyOn(Meteor.users, 'update');
 
+    //Call sendFriendRequest Meteor Method
+    Meteor.call('sendFriendRequest');
+    expect(Meteor.users.findOne).toHaveBeenCalled();
+    expect(Meteor.users.update).toHaveBeenCalled();
+  });
 
-//     //  // Allows a user to check in to a location with an availability, text status, and a duration.
-//     // 'checkIn': function(end_time, availability, text_status, duration, location) {
-//     //   var checkin = {end_time: end_time, availability: availability, text_status: text_status, duration: duration, loc: location};
-//     //   checkIn({checkin: checkin, user_id: Meteor.userId()});
-//     //  },
+  it("verifies that the cancelFriendRequest function is called", function() {
+    spyOn(Meteor, 'user').and.returnValue(fakeUser);
+    // Finds and updates the friend.
+    var friend = {
+      "_id": '123',
+      "friends": ['def'],
+      "requests": ['myId']
+    };
 
-//     // // Allows a user to check out before the duration of a previous check-in is finished.
-//     // 'checkOut': function() {
-//     //   FutureTasks.remove(Meteor.user().handle);
-//     //   SyncedCron.remove(Meteor.user().handle);
-//     //   checkOut({user_id: Meteor.userId()});
-//     //  },
+    spyOn(Meteor.users, 'findOne').and.returnValue(friend);
+    spyOn(Meteor.users, 'update');
 
-//     // // Allows user to send a friend request to another user
-//     // 'sendFriendRequest': function(friendId) {
-//     //   if ((Meteor.user().friends.indexOf(friendId) >= 0) || (Meteor.user().requests.indexOf(friendId) >= 0)) {
-//     //     console.log("Invalid friend request. Already friends or already requested");
-//     //   } else {
-//     //     var friend = Meteor.users.findOne({_id: friendId});
-//     //     var requests = friend.requests;
-//     //     requests.push(Meteor.userId());
-//     //     Meteor.users.update({_id: friendId}, {$set: {requests: requests}});
-//     //     console.log("friend request sent");
-//     //   }
-//     // },
+    //Call cancelFriendRequest Meteor Method
+    Meteor.call('cancelFriendRequest');
+    expect(Meteor.users.findOne).toHaveBeenCalled();
+    expect(Meteor.users.update).toHaveBeenCalled();
+  });
 
-//     // 'cancelFriendRequest': function(friendId) {
-//     //   // if ((Meteor.user().requests.indexOf(friendId) >= 0) || (Meteor.user().requests.indexOf(friendId) >= 0)) {
-//     //   //   console.log("Can't cancel friend request.");
-//     //   // } else {
-//     //     var friend = Meteor.users.findOne({_id: friendId});
-//     //     var requests = friend.requests;
+  it("verifies that the acceptFriendRequest function is called", function() {
+    spyOn(Meteor, 'user').and.returnValue(fakeUser);
+    // Finds and updates the friend.
+    var friend = {
+      "_id": '123',
+      "friends": ['def'],
+    };
 
-//     //     var index = requests.indexOf(Meteor.userId());
-//     //     requests.splice(index, 1);
+    spyOn(Meteor.users, 'update');
 
-//     //     Meteor.users.update({_id: friendId}, {$set: {requests: requests}});
-//     //     console.log("Canceled friend request");
-//     //   // }
-//     // },
+    //Call acceptFriendRequest Meteor Method
+    Meteor.call('acceptFriendRequest');
+    expect(Meteor.users.update).toHaveBeenCalled();
+  });
 
-//     // // Allows user to accept another user's friend request
-//     // 'acceptFriendRequest': function(friendId) {
-//     //   var index = Meteor.user().requests.indexOf(friendId);
-//     //   var requests = Meteor.user().requests;
-//     //   requests.splice(index, 1);
+  it("verifies that the removeFriend function is called", function() {
+    spyOn(Meteor, 'user').and.returnValue(fakeUser);
+    // Finds and updates the friend.
+    var friend = {
+      "_id": '123',
+      "friends": ['def'],
+    };
 
-//     //   var friends = Meteor.user().friends;
-//     //   friends.push(friendId);
-//     //   Meteor.users.update({_id: Meteor.userId()}, {$set: {friends: friends, requests: requests}});
+    spyOn(Meteor.users, 'findOne').and.returnValue(friend);
+    spyOn(Meteor.users, 'update');
 
-//     //   Meteor.users.update({_id: friendId}, {$push: {friends: Meteor.userId()}});
-//     //   console.log("accepted friend request");
-//     // },
+    //Call removeFriend Meteor Method
+    Meteor.call('removeFriend');
+    expect(Meteor.users.findOne).toHaveBeenCalled();
+    expect(Meteor.users.update).toHaveBeenCalled();
+  });
 
-//     // // Allows user to remove another user from their friends
-//     // 'removeFriend': function(friendId) {
-//     //   var index = Meteor.user().friends.indexOf(friendId);
-//     //   var friends = Meteor.user().friends;
-//     //   friends.splice(index, 1);
+  it("verifies that the getFriendLocs function is called", function() {
+    spyOn(Meteor, 'user').and.returnValue(fakeUser);
+    // Finds and updates the friend.
+    var friend = {
+      "_id" : "friendId",
+      "services" : {
+        "facebook" : {
+          "name" : "Ben Bitdiddle",
+        },
+      },
+      "profile" : {
+        "picture" : "linkToFacebookProfilePicture"
+      },
+      "checkin" : {
+        "end_time" : 1449463702756,
+        "availability" : "busy",
+        "text_status" : "Hello World",
+        "duration" : "90",
+        "loc" : {
+          "lat" : 42.3572628,
+          "lng" : -71.0939738
+        }
+      }
+    }
 
-//     //   var deleted = Meteor.users.findOne({_id: friendId});
-//     //   var deletedFriends = deleted.friends;
-//     //   var otherindex = deletedFriends.indexOf(Meteor.userId());
-//     //   deletedFriends.splice(otherindex, 1);
+    spyOn(Meteor.users, 'findOne').and.returnValue(friend);
 
-//     //   Meteor.users.update({_id: Meteor.userId()}, {$set: {friends: friends}});
-//     //   Meteor.users.update({_id: friendId}, {$set: {friends: deletedFriends}});
-
-//     //   console.log("friend removed");
-//     // },
-
-//     // // Allows a user to get all of their friends' checkins to be displayed on the map
-//     // 'getFriendLocs': function() {
-//     //   var locations = [];
-//     //   if(Meteor.user() && Meteor.user().friends){
-//     //       Meteor.user().friends.forEach(function(friendId) {
-//     //       var friend = Meteor.users.findOne({_id: friendId});
-//     //       if (friend.checkin.availability !== "unavailable") {
-//     //             locations.push({id:friendId, name: friend.services.facebook.name, pic: friend.profile.picture, checkin: friend.checkin});
-//     //       }
-//     //     });
-//     //   }
-//     //   return locations;
-//     // },
-
-//     // // Checks if the id of the given user is the current user's friend
-//     // 'isFriend': function(givenFriendId) {
-//     //   return Meteor.user().friends.indexOf(givenFriendId) !== -1;
-//     // }
-//   // });
-// // });
-
+    //Call getFriendLocs Meteor Method
+    Meteor.call('getFriendLocs');
+    expect(Meteor.users.findOne).toHaveBeenCalled();
+  });
+});
