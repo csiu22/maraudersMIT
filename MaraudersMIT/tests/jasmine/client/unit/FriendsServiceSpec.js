@@ -38,6 +38,7 @@ describe('FriendsService', function () {
 		FriendsService.sendFriendRequest(fakes.fakeUser._id);
 		expect(fakes.fakeUser.requests.length).toBe(1);
 		expect(fakes.fakeFriend.requests.length).toBe(0);
+  	});
   });
 
   describe('acceptFriendRequest', function () {
@@ -75,6 +76,6 @@ describe('FriendsService', function () {
 
     	});
   });
+
 });
-  
-});
+
