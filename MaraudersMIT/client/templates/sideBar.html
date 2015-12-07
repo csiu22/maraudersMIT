@@ -20,7 +20,7 @@
     			<div class="scrollable">
     			<ul class="list-unstyled ">
 				{{#each marauderFriends}}
-					<li> <div id="clickonFriend" class="friend">
+					<li> <div id="clickonFriend" friendId = {{_id}} class="friend">
 						<div class="box {{this.checkin.availability}}">
 
 							<img style="float: left;" src={{this.profile.picture}} alt="" />
