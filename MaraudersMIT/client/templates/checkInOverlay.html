@@ -7,26 +7,29 @@
 	<h2>{{title}}</h2>
 
 	<div id ="CheckInBox">
+		<div class = "" >
 		<form class="check-in-info">
-			Status: <input type="text" name="status" maxlength="140" placeholder="I am up to no good" />
-			<br>
-			<br>
-			Duration (minutes): <input type="number" min="0" pattern="\d+" name="duration" value="90"/>
-			<br>
-			<br>
-			Availability:
-			<br>
+			<p> Status: </p> 
+			<input type="text" name="status" maxlength="140" placeholder="I am up to no good" />
+	
+			<p> Duration (minutes): </p> 
+			<input type="number" min="0" pattern="\d+" name="duration" value="90"/>
 
+			<p> Availability: </p>
+		
+			<div class="availability">
+			<div class = "submission">
 				<input type="radio" name="state" value="available" checked="checked">
-				<label for="available" style="color:green">Available</label>
+				<label for="available" style="color:green"> Available</label>
 
 				<input type="radio" name="state" value="busy">
 				<label for="busy" style="color:red">Busy</label>
-			<br>
-			<br>
-			<br>
-			<br>
-	  	<input type="submit" class="btn btn-default" value="Check In">
-	  </form>
+
+			</div>
+				<input type="submit" class="btn btn-primary" value="Check In">
+			</div>
+
+		  </form>
+		</div>
 	</div>
 </template>
