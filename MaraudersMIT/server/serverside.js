@@ -1,5 +1,5 @@
 if (Meteor.isServer) {
-  Meteor.startup(function () {
+    Meteor.startup(function () {
     var doneTasks = []
     FutureTasks.find().forEach(function(checkin) {
       if (checkin.fireDate < new Date()) {
@@ -14,14 +14,6 @@ if (Meteor.isServer) {
     });
     SyncedCron.start();
 
-    Meteor.publish("users", function() {
-      return Meteor.users.find();
-    });
-    Meteor.users.allow({
-      update: function(userId, doc) {
-        return true;
-      }
-    });
     Accounts.loginServiceConfiguration.remove({
       service: "facebook"
     });
@@ -110,8 +102,28 @@ if (Meteor.isServer) {
     // });
 
   });
+   
+  // Publishes all information about your Marauder friends. 
+  Meteor.publish("all-friends", function() {
+    if (this.userId) {
+      var friends = Meteor.users.findOne({"_id": this.userId}).friends;
+      friends.push(this.userId);
+      return Meteor.users.find({"_id": {$in: friends}});
+    }
+  });
 
-
+  // Publishes only facebook profile, basic profile information, and friend requests about 
+  // Facebook friends who are not your Marauder friends. DOES NOT PUBLISH LOCATION.
+  Meteor.publish("facebook-friends", function() {
+    if (this.userId) {
+      var facebookFriends = Meteor.users.findOne({"_id": this.userId}).facebookfriends;
+      var fbFriendIds = [];
+      facebookFriends.forEach(function(friend) {
+        fbFriendIds.push(friend.id);
+      });
+      return Meteor.users.find({"services.facebook.id": {$in: fbFriendIds}}, {fields: {"profile": 1, "services.facebook": 1, "requests": 1}}); 
+    }
+  });
 }
 
 

@@ -1,5 +1,6 @@
 if (Meteor.isClient) {
-  Meteor.subscribe("users");
+  Meteor.subscribe("all-friends");
+  Meteor.subscribe("facebook-friends");
 }
 
 Meteor.logout(function(err) {

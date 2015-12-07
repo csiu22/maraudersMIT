@@ -8,7 +8,7 @@ Object that creates google map and displays users
 Map = function(){
 
     var that = Object.create(Map.prototype);
-    that.markers = {};
+    var markers = {};
 
     var mapOptions = {
       center: new google.maps.LatLng( 42.359155,  -71.093058), // 77 Mass Ave
@@ -20,37 +20,6 @@ Map = function(){
 
     that.map = new google.maps.Map(document.getElementById('map'), mapOptions);
 
-
-            /*
-
-            This is all to set the boundaries of the map, please do not touch!
-
-            */
-
-            // var mapType = new google.maps.StyledMapType(stylez, { name:"Grayscale" });
-            // that.map.mapTypes.set('gray', mapType);
-            // that.map.setMapTypeId('gray');
-
-
-            //   // limit map to the Boston / Cambridge area
-            //   var allowedBounds = new google.maps.LatLngBounds(
-            //       new google.maps.LatLng(42.330825, -71.110483), //southwest coord of bounds
-            //       new google.maps.LatLng( 42.375860, -71.046968) // northeast coord of bounds
-            //   );
-            //   var lastValidCenter = that.map.getCenter();
-
-            //   google.maps.event.addListener(that.map, 'center_changed', function() {
-            //           if (allowedBounds.contains(that.map.getCenter())) {
-            //               // still within valid bounds, so save the last valid position
-            //               lastValidCenter = that.map.getCenter();
-            //           return;
-            //           }
-            //           that.map.panTo(lastValidCenter);
-            //   });
-
-           /*
-              End of boundary settings
-           */
 
     var display_status = function(user, userId, userName, userPic) {
       var status = user.checkin.availability;
@@ -71,18 +40,18 @@ Map = function(){
               '<p style="float: left;"><img src="' + userPic + '" alt="" /></p>' +
               '<h1 class="text"><strong>' + userName + '</strong></h1>';
 
-      if (status === "unavailable") {
-         marker_html += '<p style="clear: both;" class="status">' + fragment +' invisible</p>';
-      } else {
-        marker_html += '<p style="clear: both;" class="duration">' + Number(((user.checkin.end_time - Date.now()) / 60000).toFixed(0)) + ' minutes left</p>';
-        marker_html += '<p class="status">' + user.checkin.text_status + '</p>';
-      }
+              if (status === "unavailable") {
+                 marker_html += '<p style="clear: both;" class="status">' + fragment +' invisible</p>';
+              } else {
+                marker_html += '<p style="clear: both;" class="duration">' + Number(((user.checkin.end_time - Date.now()) / 60000).toFixed(0)) + ' minutes left</p>';
+                marker_html += '<p class="status">' + user.checkin.text_status + '</p>';
+              }
 
-      marker_html += '<a class="icn close" href="#" title="Close">Close</a>' +
-                      '</div>' +
-                      '</div>' +
-                      '<span></span>' +
-                      '</div></div>';
+              marker_html += '<a class="icn close" href="#" title="Close">Close</a>' +
+                              '</div>' +
+                              '</div>' +
+                              '<span></span>' +
+                              '</div></div>';
       return marker_html;
     };
 
@@ -128,12 +97,12 @@ Map = function(){
                 });
 
                 addUserListeners(marker, Meteor.userId());
-                that.markers[Meteor.userId()] = marker;
+                markers[Meteor.userId()] = marker;
 
           }
 
-          if (that.markers[Meteor.userId()]){
-            that.markers[Meteor.userId()].setMap(null);
+          if (markers[Meteor.userId()]){
+            markers[Meteor.userId()].setMap(null);
             createMarker();
           }
           else{
@@ -149,22 +118,27 @@ Map = function(){
 
     /*
     Function that displays each of the user's friends on the map
-    map: a google maps object
-    */
-    that.renderFriends = function(){
-      Meteor.call("getFriendLocs", function(err, data) {
-        if (err && DEBUG) {
-          console.log("error occurred! " + err.toString());
-        }
 
-        console.log(data); 
-        if (data){
-          data.forEach(function(friend) {
-              that.renderUser(friend);
-          });
-        }
-      });
-    };
+    */
+
+    that.renderFriends = function(){
+        Meteor.call("getFriendLocs", function(err, data) {
+          if (err && DEBUG) {
+            console.log("error occurred! " + err.toString());
+          }
+
+          if (data){
+            data.forEach(function(friend) {
+                that.renderUser(friend);
+                  });
+             }
+        });
+      };
+
+
+    /*
+      Renders a marker which displays a friend
+    */  
 
     that.renderUser= function(friend){
 
@@ -182,12 +156,12 @@ Map = function(){
               return marker;
         }
 
-        if(that.markers[friend.id]) { 
-            that.markers[friend.id].setMap(null); 
-            that.markers[friend.id] = createMarker(friend);
+        if(markers[friend.id]) { 
+            markers[friend.id].setMap(null); 
+            markers[friend.id] = createMarker(friend);
         }
         else{
-            that.markers[friend.id] = createMarker(friend);
+            markers[friend.id] = createMarker(friend);
         }
 
     }
@@ -222,9 +196,7 @@ Map = function(){
 
 
     /*
-    Function that displays the current user on the map
-    map: a google maps object
-    pos: object that contains latitude and longitude coordinates
+    Function that is used to intialize the map
     */
 
     that.renderMap = function () {
@@ -236,6 +208,10 @@ Map = function(){
     }
 
 
+    /*
+    Function that will be called 1x per minute to update the duration and status of all of the 
+    friends that are displayed.
+    */
 
     that.refresh = function(){
       that.renderSelf();

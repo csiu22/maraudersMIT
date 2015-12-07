@@ -16,3 +16,7 @@ Handlebars.registerHelper('isCheckedIn', function () {
       }
       return false;
 });
+
+Handlebars.registerHelper("isEmpty", function (array) {
+    return (array === undefined || array.length == 0);
+});
