@@ -16,7 +16,12 @@
   cursor: pointer;
 }
 
-.well {
-  background: #FAEBD7;
-  border-color: #FAEBD7;
+/*.well {
+  background: #985321;
+  border-color: #985321;
+}*/
+
+#legend {
+  background: lightgray;
+  color: #430300;
 }
