@@ -6,7 +6,7 @@ if (Meteor.isServer) {
   };
 
   addTask = function(id, details, fireDate) {
-    var checkin = {availability: details.availability, text_status: details.text_status, duration: details.duration, loc: details.loc, handle: id}
+    var checkin = {end_time: details.end_time, availability: details.availability, text_status: details.text_status, duration: details.duration, loc: details.loc, handle: id}
     Meteor.users.update({_id: details.user_id}, {$set: {checkin: checkin}});
     SyncedCron.add({
       name: id,

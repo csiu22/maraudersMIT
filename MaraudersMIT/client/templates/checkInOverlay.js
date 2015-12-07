@@ -37,6 +37,7 @@ Template.checkInOverlay.events({
         lng: position.coords.longitude
       };
 
+      console.log(end_time);
       CheckInService.checkInUser(end_time, availability, status, duration, pos);
     }, function() {
       console.log("error can't get location");
