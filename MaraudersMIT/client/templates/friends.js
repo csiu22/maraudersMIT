@@ -32,7 +32,6 @@ FriendsService = {
    */
   getFacebookFriends: function() {
     var userList = [];
-    console.log(Meteor.user());
     if( Meteor.user() && Meteor.user().facebookfriends) {
  
       Meteor.user().facebookfriends.forEach(function(user) {
