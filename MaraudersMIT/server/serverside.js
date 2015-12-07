@@ -10,7 +10,6 @@ if (Meteor.isServer) {
       }
     });
     doneTasks.forEach(function(id) {
-      console.log(id);
       FutureTasks.remove(id);
     });
     SyncedCron.start();
@@ -41,43 +40,33 @@ if (Meteor.isServer) {
 
 
     Accounts.onCreateUser(function(options, user) {
-        if (options.profile) {
-	          console.log('creating new user');
-            options.profile.picture = getFbPicture(user.services.facebook.accessToken);
-      	    options.profile.facebookfriends = getFbFriends(user.services.facebook.accessToken);
+      if (options.profile) {
+        console.log("creating new user");
+        user.facebookfriends = getFbFriends(user.services.facebook.accessToken);
 
-            var name = user.services.facebook.name;;
-            var fbID = user.services.facebook.id;
-            // Iterate through all FB friends that use app
-            options.profile.facebookfriends.forEach(function(friendFB) {
-                console.log("updating with new friend");
-                var isAlreadyFBFriend = false;
-                var friend = Meteor.users.findOne({"services.facebook.id": friendFB.id});
-                // For each friend, check to see if you are listed as a FB friend
-                if (friend) {
-                  friend.profile.facebookfriends.forEach(function(tempFriend) {
-                    if (tempFriend.id === fbID) {
-                      isAlreadyFBFriend = true;
-                    }
-                  });
-                  // If not, add yourself
-                  if (!isAlreadyFBFriend) {
-                    Meteor.users.update({"services.facebook.id": friendFB.id}, {$push: {"profile.facebookfriends": {name: name, id: fbID}}});
-                  }
-                }
+        var name = user.services.facebook.name;;
+        var fbID = user.services.facebook.id;
+        var fbPic = getFbPicture(user.services.facebook.accessToken);
+        user.profile = {name: name, picture: fbPic};
+
+        user.facebookfriends.forEach(function(friendFB) {
+          var isAlreadyFBFriend = false;
+          var friend = Meteor.users.findOne({"services.facebook.id": friendFB.id});
+          // For each friend, check to see if you are listed as a FB friend
+          if (friend) {
+            friend.facebookfriends.forEach(function(tempFriend) {
+              if (tempFriend.id === fbID) {
+                isAlreadyFBFriend = true;
+              }
             });
-
-            user.profile = options.profile;
-        }
-        user.friends = [];
-        user.requests = []
-        user.checkin = {availability: "unavailable"};
-        user.handle = null;
-
-        user.isVerified = false;
-
-
-        return user;
+            // If not, add yourself
+            if (!isAlreadyFBFriend) {
+              Meteor.users.update({"services.facebook.id": friendFB.id}, {$push: {"facebookfriends": {name: name, id: fbID}}});
+            }
+          } 
+        });
+      }
+      return user;
     });
 
     var getFbPicture = function(accessToken) {

@@ -46,7 +46,6 @@ Template.checkInOverlay.events({
     alert("Please make sure you have geolocation enabled");
     console.log("error browser doesn't support geolocation");
   }
-  CheckInService.setUserStatus(event);
  	Overlay.hide();
 }
 });

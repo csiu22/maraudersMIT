@@ -157,6 +157,7 @@ Map = function(){
           console.log("error occurred! " + err.toString());
         }
 
+        console.log(data); 
         if (data){
           data.forEach(function(friend) {
               that.renderUser(friend);
