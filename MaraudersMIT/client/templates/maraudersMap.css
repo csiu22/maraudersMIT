@@ -75,6 +75,7 @@
 	display: none;
 }
 .pin.active .large {
+	z-index: 999;
 	display: block;
 }
 
