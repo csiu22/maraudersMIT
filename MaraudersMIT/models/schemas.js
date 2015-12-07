@@ -24,10 +24,6 @@ if (Meteor.isServer) {
       blackbox: true,
       optional: true
     },
-    "isVerified": {
-      type: Boolean,
-      defaultValue: false
-    },
     "facebookfriends.$.name": {
       type: String
     },
