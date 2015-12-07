@@ -9,7 +9,6 @@ Map = function(){
 
     var that = Object.create(Map.prototype);
     that.markers = {};
-    that.self_marker = null;
 
     var mapOptions = {
       center: new google.maps.LatLng( 42.359155,  -71.093058), // 77 Mass Ave
@@ -73,7 +72,7 @@ Map = function(){
               '<h1 class="text"><strong>' + userName + '</strong></h1>';
 
       if (status === "unavailable") {
-         marker_html += '<em>' + fragment +' invisible</em>';
+         marker_html += '<p style="clear: both;" class="status">' + fragment +' invisible</p>';
       } else {
         marker_html += '<p style="clear: both;" class="duration">' + Number(((user.checkin.end_time - Date.now()) / 60000).toFixed(0)) + ' minutes left</p>';
         marker_html += '<p class="status">' + user.checkin.text_status + '</p>';
@@ -129,12 +128,12 @@ Map = function(){
                 });
 
                 addUserListeners(marker, Meteor.userId());
-                that.self_marker = marker;
+                that.markers[Meteor.userId()] = marker;
 
           }
 
-          if (that.self_marker){
-            that.self_marker.setMap(null);
+          if (that.markers[Meteor.userId()]){
+            that.markers[Meteor.userId()].setMap(null);
             createMarker();
           }
           else{

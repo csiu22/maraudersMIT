@@ -18,31 +18,53 @@ var userFocus = function(){
           maraudersMap.renderSelf();
          if(timer) {clearInterval(timer);}
         });
-        
+
         alert("You have successfully checked out.");
     },
 
      'click #locate': function () {
         userFocus();
     },
+    'click #clickOnFriend': function (event) {
+
+      if (maraudersMap) {
+        console.log(event.target.attributes.friendId.nodeValue);
+      if (maraudersMap.markers[event.target.attributes.friendId.nodeValue]){
+          maraudersMap.setCenter(maraudersMap.markers[event.target.attributes.friendId.nodeValue].position);
+          }
+          else{
+            console.log("error -- marker does not exist");
+          }
+      }
+      else{
+          console.log("error -- map is not available");
+      }
+    }
   });
 
 
  Template.sideBar.helpers({
     marauderFriends: function() {
+
+      var sortFriends = function(a, b){
+          if (a.checkin.availability === b.checkin.availability) {return 0;}
+          else if (a.checkin.availability < b.checkin.availability) {return -1;}
+          else {return 1;}
+        }
+
       if (Meteor.user()) {
-        var friendNames = []; 
+        var friendNames = [];
         if(Meteor.user() && Meteor.user().friends){
           Meteor.user().friends.forEach(function(friendId) {
             var friend = Meteor.users.findOne({_id: friendId});
-            friendNames.push(friend.services.facebook.name);
-          }); 
+            friendNames.push(friend);
+          });
           if (friendNames.length === 0) {
             friendNames.push("None");
-          }   
-        }   
-        return friendNames.sort();
-      } 
+          }
+        }
+        return friendNames.sort(sortFriends);
+      }
     },
   });
 
