@@ -8,7 +8,7 @@ Object that creates google map and displays users
 Map = function(){
 
     var that = Object.create(Map.prototype);
-    var markers = {};
+    that.markers = {};
 
     var mapOptions = {
       center: new google.maps.LatLng( 42.359155,  -71.093058), // 77 Mass Ave
@@ -97,12 +97,12 @@ Map = function(){
                 });
 
                 addUserListeners(marker, Meteor.userId());
-                markers[Meteor.userId()] = marker;
+                that.markers[Meteor.userId()] = marker;
 
           }
 
-          if (markers[Meteor.userId()]){
-            markers[Meteor.userId()].setMap(null);
+          if (that.markers[Meteor.userId()]){
+            that.markers[Meteor.userId()].setMap(null);
             createMarker();
           }
           else{
@@ -130,7 +130,7 @@ Map = function(){
           if (data){
             data.forEach(function(friend) {
                 that.renderUser(friend);
-                  });
+                });
              }
         });
       };
@@ -156,12 +156,12 @@ Map = function(){
               return marker;
         }
 
-        if(markers[friend.id]) { 
-            markers[friend.id].setMap(null); 
-            markers[friend.id] = createMarker(friend);
+        if(that.markers[friend.id]) { 
+            that.markers[friend.id].setMap(null); 
+            that.markers[friend.id] = createMarker(friend);
         }
         else{
-            markers[friend.id] = createMarker(friend);
+            that.markers[friend.id] = createMarker(friend);
         }
 
     }
