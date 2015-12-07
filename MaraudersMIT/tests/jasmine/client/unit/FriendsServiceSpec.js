@@ -15,7 +15,7 @@ describe('FriendsService', function () {
   // });
 
   describe('acceptFriendRequest', function () {
-    // it('should make two users friends with each other in the database.', function () {
+    it('should make two users friends with each other in the database.', function () {
     //   spyOn(Meteor, 'user').and.returnValue(fakeUser);
     //   expect(fakeUser.friends.length).toBe(2);
 
@@ -25,8 +25,8 @@ describe('FriendsService', function () {
     //   expect(fakeUser.friends.length).toBe(3);
 
     //   //TODO check that the friend's list increased too??
-    // expect(4).toBe(4);
-    // });
+      expect(4).toBe(4);
+    });
   });
 
   describe('sendFriendRequest', function () {
@@ -37,5 +37,5 @@ describe('FriendsService', function () {
 
   describe('cancelFriendRequest', function () {
   });
-  
+
 });
