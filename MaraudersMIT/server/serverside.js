@@ -18,7 +18,7 @@ if (Meteor.isServer) {
       service: "facebook"
     });
 
-    //localhost:2001
+
     Accounts.loginServiceConfiguration.insert({
       service: "facebook",
       // Localhost
@@ -33,7 +33,7 @@ if (Meteor.isServer) {
 
     Accounts.onCreateUser(function(options, user) {
       if (options.profile) {
-        console.log("creating new user");
+   
         user.facebookfriends = getFbFriends(user.services.facebook.accessToken);
 
         var name = user.services.facebook.name;;
@@ -71,10 +71,9 @@ if (Meteor.isServer) {
               });
         if (result.error) {
         console.log("error in serverside.js/getFbPicture");
-            console.log(result.error);
+        console.log(result.error);
         };
-	console.log('result');
-	console.log(result);
+
         return result.data.picture.data.url;
     };
 
