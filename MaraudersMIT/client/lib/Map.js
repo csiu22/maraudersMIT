@@ -8,197 +8,240 @@ Object that creates google map and displays users
 Map = function(){
 
     var that = Object.create(Map.prototype);
+    that.markers = {};
+    that.self_marker = null;
 
-    that.map = new google.maps.Map(document.getElementById('map'), {
-                center: {lat: 42.359155, lng: -71.093058}, // 77 Mass Ave
-                zoom: 18
-            });
+    var mapOptions = {
+      center: new google.maps.LatLng( 42.359155,  -71.093058), // 77 Mass Ave
+      zoom: 15,
+      styles: map_styles,
+      mapTypeControl: false,
+      streetViewControl: false
+    };
 
-      // // limit map to the Boston / Cambridge area
-      // var allowedBounds = new google.maps.LatLngBounds(
-      //     new google.maps.LatLng(42.330825, -71.110483), //southwest coord of bounds
-      //     new google.maps.LatLng( 42.375860, -71.046968) // northeast coord of bounds
-      // );
-      // var lastValidCenter = that.map.getCenter();
-
-      // google.maps.event.addListener(that.map, 'center_changed', function() {
-      //         if (allowedBounds.contains(that.map.getCenter())) {
-      //             // still within valid bounds, so save the last valid position
-      //             lastValidCenter = that.map.getCenter();
-      //         return;
-      //         }
-      //         that.map.panTo(lastValidCenter);
-      // });
-
-    that.displaySelf = function(pos){
-        if(!pos || !Meteor.user()) return;
-        var gSelfLoc = new google.maps.LatLng(pos.lat, pos.lng);
-        // var selfMarker = new RichMarker({
-        //     map: that.map,
-        //     position: gSelfLoc,
-        //     draggable: false,
-        //     flat: true,
-        //     anchor: RichMarkerPosition.MIDDLE,
-        //     content: '<div class="here"><div><div><img src="'+Meteor.user().profile.picture+'"/></div><div>You are here!</div>'
-        // });
-
-        var selfMarker = new CustomMarker(
-            gSelfLoc,
-            that.map,
-            {
-              marker_id: '123',
-              img: Meteor.user().profile.picture,
-              name: Meteor.user().name
-            }
-        );
-
-        var contentString =
-          // '<div class="here">' +
-          '<h1 id="firstHeading" class="firstHeading">' + Meteor.user().name + '</h1>'
-          // +
-          // '<h3 class>' + Meteor.user().checkin.duration + ' minutes left</h2>' +
-          // '<div>' + Meteor.user().checkin.text_status + '</div>'
+    that.map = new google.maps.Map(document.getElementById('map'), mapOptions);
 
 
+            /*
 
-        var iw = new google.maps.InfoWindow({content: contentString, pixelOffset: new google.maps.Size(5,0)});
-        // iw.open(that.map, selfMarker);
-        google.maps.event.addListener(selfMarker, "click", function() {
-          iw.open(that.map, selfMarker);
-        });
+            This is all to set the boundaries of the map, please do not touch!
+
+            */
+
+            // var mapType = new google.maps.StyledMapType(stylez, { name:"Grayscale" });
+            // that.map.mapTypes.set('gray', mapType);
+            // that.map.setMapTypeId('gray');
+
+
+            //   // limit map to the Boston / Cambridge area
+            //   var allowedBounds = new google.maps.LatLngBounds(
+            //       new google.maps.LatLng(42.330825, -71.110483), //southwest coord of bounds
+            //       new google.maps.LatLng( 42.375860, -71.046968) // northeast coord of bounds
+            //   );
+            //   var lastValidCenter = that.map.getCenter();
+
+            //   google.maps.event.addListener(that.map, 'center_changed', function() {
+            //           if (allowedBounds.contains(that.map.getCenter())) {
+            //               // still within valid bounds, so save the last valid position
+            //               lastValidCenter = that.map.getCenter();
+            //           return;
+            //           }
+            //           that.map.panTo(lastValidCenter);
+            //   });
+
+           /*
+              End of boundary settings
+           */
+
+    var display_status = function(user, userId, userName, userPic) {
+      var status = user.checkin.availability;
+      var isUser = (userId === Meteor.userId() ? true : false);
+      if (isUser){
+          var fragment = "You are";
+      }
+      else{
+          var fragment = userName + " is"
       }
 
-      /*
-      Function that displays each of the user's friends on the map
-      map: a google maps object
-      */
+      var marker_html = '<div id="'+ userId +'"><div class="pin">' +
+          '<div class="wrapper ' + status + '">' +
+            '<div class="small">' +
+              '<img src="' + userPic + '" alt="" />' +
+            '</div>' +
+            '<div class="large">' +
+              '<p style="float: left;"><img src="' + userPic + '" alt="" /></p>' +
+              '<h1 class="text"><strong>' + userName + '</strong></h1>';
 
-     that.displayFriends = function(){
-
-         Meteor.call("getFriendLocs", function(err, data) {
-           if (err && DEBUG) {
-              console.log("error occurred! " + err.toString());
-           }
-
-           var locations = data;
-
-           if (locations){
-               locations.forEach(function(loc) {
-                     var image = {
-                       url: loc.pic,
-                       size: new google.maps.Size(40, 40)
-                     };
-
-                    var gLoc = new google.maps.LatLng(loc.checkin.loc.lat, loc.checkin.loc.lng);
-                    // var friendMarker = new RichMarker({
-                    //        map: that.map,
-                    //        position: gLoc,
-                    //        draggable: false,
-                    //        flat: true,
-                    //        anchor: RichMarkerPosition.MIDDLE,
-                    //        content: '<div class=' + loc.checkin.availability + '><div><div>' + loc.name + '</div><img src="' + loc.pic + '"/></div>' + '<div>' + loc.checkin.text_status + '</div>'
-                    // });
-
-                    var friendMarker = new CustomMarker(
-                        gLoc,
-                        that.map,
-                        {
-                          marker_id: '123',
-                          img: loc.pic,
-                          name: loc.name,
-                          availability: loc.checkin.availability
-                        }
-                    );
-
-                    var contentStringFriend =
-                      // '<div class=' + loc.checkin.availability + '>' +
-                      '<h1 id="firstHeading" class="firstHeading">' + loc.name + '</h1>' +
-                      '<h3 class>' + loc.checkin.duration + ' minutes left</h2>' +
-                      '<div>' + loc.checkin.text_status + '</div>'
-
-
-
-                    var iwFriend = new google.maps.InfoWindow({content: contentStringFriend, pixelOffset: new google.maps.Size(5,0)});
-                    google.maps.event.addListener(friendMarker, "click", function() {
-                      iwFriend.open(that.map, friendMarker);
-                    });
-                });
-          }
-        });
+      if (status === "unavailable") {
+         marker_html += '<em>' + fragment +' invisible</em>';
+      } else {
+        marker_html += '<p style="clear: both;" class="duration">' + Number(((user.checkin.end_time - Date.now()) / 60000).toFixed(0)) + ' minutes left</p>';
+        marker_html += '<p class="status">' + user.checkin.text_status + '</p>';
       }
 
+      marker_html += '<a class="icn close" href="#" title="Close">Close</a>' +
+                      '</div>' +
+                      '</div>' +
+                      '<span></span>' +
+                      '</div></div>';
+      return marker_html;
+    };
 
-      /*
 
-      Function that returns the location of the current user, if it is available
-
-      */
-
-      that.getUserLocation = function(successfunc) {
-
-        function errfunc(err){
-            alert( 'Error: The Geolocation service failed.');
-         }
-
-         if (navigator.geolocation) {
-              navigator.geolocation.getCurrentPosition(function(position){
-                var pos = {
-                      lat: position.coords.latitude,
-                      lng: position.coords.longitude
-                  }
-                successfunc(pos);
-              }, errfunc);
-          } else {
-              errfunc();
-              return undefined;
-            }
-
+    var addUserListeners = function(marker, userID){
+        google.maps.event.addListener(marker, 'click', function() {
+        var modifier = 0.0178;
+        if ($(window).width() < 768) {
+          modifier = 0;
         }
 
-      that.setCenter = function(pos){
-        that.map.setCenter(pos);
+        $('#'+userID+' .pin ').removeClass('active').css('z-index', 10);
+        $('#'+userID+' .pin').addClass('active').css('z-index', 300);
+
+        $('#'+userID+' .pin .wrapper .large').click(function(){
+          $('#'+userID+' .pin').removeClass('active');
+          return false;
+        });
+      });
+
+    }
+
+
+    that.renderSelf = function(pos){  
+
+        if(!Meteor.user()) return;
+        if (! "geolocation" in navigator) {
+          /* error when geolocation IS NOT available */
+          console.log("geo not available");
+          return;
+        }
+
+        var drawSelf = function(pos){
+
+          var createMarker = function(){
+              var marker = new RichMarker({
+                  map: that.map,
+                  position: new google.maps.LatLng(pos.lat, pos.lng),
+                  draggable: false,
+                  flat: true,
+                  anchor: RichMarkerPosition.BOTTOM,
+                  content:  display_status(Meteor.user(), Meteor.userId(), Meteor.user().profile.name, Meteor.user().profile.picture),
+                });
+
+                addUserListeners(marker, Meteor.userId());
+                that.self_marker = marker;
+
+          }
+
+          if (that.self_marker){
+            that.self_marker.setMap(null);
+            createMarker();
+          }
+          else{
+            createMarker();
+          }
+
       }
 
+       if (pos) { drawSelf(pos); }
+       else { that.getUserLocation(drawSelf); }
 
-         /*
-      Function that displays the current user on the map
-      map: a google maps object
-      pos: object that contains latitude and longitude coordinates
-      */
+    }
 
-      that.renderMap = function (){
+    /*
+    Function that displays each of the user's friends on the map
+    map: a google maps object
+    */
+    that.renderFriends = function(){
+      Meteor.call("getFriendLocs", function(err, data) {
+        if (err && DEBUG) {
+          console.log("error occurred! " + err.toString());
+        }
 
-      //Geolocation is necessary in order for the user to be able to use this app
-      if ("geolocation" in navigator) {
+        console.log(data); 
+        if (data){
+          data.forEach(function(friend) {
+              that.renderUser(friend);
+          });
+        }
+      });
+    };
 
-            var displayUsers = function(pos){
-                that.map.setCenter(pos);
-                that.displaySelf(pos);
-                that.displayFriends();
+    that.renderUser= function(friend){
 
-            };
+        var createMarker = function() {
+            var marker = new RichMarker({
+                       user_id: friend.id,
+                       map: that.map,
+                       position: new google.maps.LatLng(friend.checkin.loc.lat, friend.checkin.loc.lng),
+                       draggable: false,
+                       flat: true,
+                       anchor: RichMarkerPosition.BOTTOM,
+                       content: display_status(friend, friend.id, friend.name, friend.pic)
+                });
+              addUserListeners(marker, friend.id);
+              return marker;
+        }
 
-            that.getUserLocation(displayUsers);
+        if(that.markers[friend.id]) { 
+            that.markers[friend.id].setMap(null); 
+            that.markers[friend.id] = createMarker(friend);
+        }
+        else{
+            that.markers[friend.id] = createMarker(friend);
+        }
 
-      } else {
-        /* error when geolocation IS NOT available */
-        console.log("geo not available");
-      }
-  }
+    }
 
-  /*
-  Currently doesn't work, not sure why :(
+    /*
+    Function that returns the location of the current user, if it is available
     */
 
-  that.redraw = function(){
-     var x = that.map.getZoom();
-     var c = that.map.getCenter();
-     google.maps.event.trigger(that.map, 'resize');
-     that.map.setZoom(x);
-     that.map.setCenter(c);
-  }
+    that.getUserLocation = function(successfunc) {
+
+      function errfunc(err){
+        alert( 'Error: The Geolocation service failed.');
+      }
+
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(position){
+          var pos = {
+            lat: position.coords.latitude,
+            lng: position.coords.longitude
+          }
+          successfunc(pos);
+        }, errfunc);
+      } else {
+        errfunc();
+        return undefined;
+      }
+    }
+
+    that.setCenter = function(pos){
+      that.map.setCenter(pos);
+    }
 
 
+    /*
+    Function that displays the current user on the map
+    map: a google maps object
+    pos: object that contains latitude and longitude coordinates
+    */
+
+    that.renderMap = function () {
+        that.getUserLocation(function(pos){
+          that.map.setCenter(pos);
+          that.renderSelf(pos);
+        })
+        that.renderFriends();
+    }
+
+
+
+    that.refresh = function(){
+      that.renderSelf();
+      that.renderFriends();
+    }
 
   Object.freeze(that);
   return that;

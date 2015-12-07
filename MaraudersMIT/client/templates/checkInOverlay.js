@@ -1,44 +1,51 @@
+CheckInService = {
+  /**
+   * Set user-inputted status, availability, duration, and location.
+   */
+  checkInUser: function (end_time, availability, status, duration, pos) {
+    Meteor.call("checkIn", end_time, availability, status, duration, pos, function() {
+      console.log("done submitting");
+      maraudersMap.renderSelf();
+      if(!timer) {timer = setInterval(maraudersMap.refresh, 60000);}
+    });
+
+    
+  }
+};
+
 Template.checkInOverlay.events({
-"submit .check-in-info": function () {      
+"submit .check-in-info": function () {
 	// Prevent default browser form submit
 	event.preventDefault();
 
-	var status = event.target.status.value.trim();
+  var status = event.target.status.value.trim();
+  // Default status is "up to no good".
+  if (!status || !status.length ) {
+    status = "up to no good."
+  }
 
-	// Default status is "up to no good".
-	if (!status || !status.length ) {
-		status = "up to no good." 
-	} 
-	
-	console.log ("you are " + status);
+  var duration = event.target.duration.value;
+  var availability = event.target.state.value;
 
-	var duration = event.target.duration.value;
-	console.log("for the next " + duration + " minutes");
+  var time = Date.now();
+  var end_time = time + duration*(60000);
 
-	var availability = event.target.state.value;
-	console.log("and your availability is: " + availability);
-
-         
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(function(position) {
       var pos = {
         lat: position.coords.latitude,
         lng: position.coords.longitude
       };
-      console.log(pos);
-      Meteor.call("checkIn", availability, status, duration, pos, function() {
-        console.log("done submitting");
-      });
-    //  checkIn(availability, status, duration, pos);
+
+      CheckInService.checkInUser(end_time, availability, status, duration, pos);
     }, function() {
       console.log("error can't get location");
     });
   } else {
-    alert("Please make sure you have geolocation enabled");
     // Browser doesn't support Geolocation
+    alert("Please make sure you have geolocation enabled");
     console.log("error browser doesn't support geolocation");
-  }   
-
+  }
  	Overlay.hide();
 }
 });

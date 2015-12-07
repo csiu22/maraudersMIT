@@ -2,6 +2,15 @@
 
 loginroutes =  ["login", "newuser"];
 
+Router.configure({
+  waitOn: function() {
+    return [
+      Meteor.subscribe('users')
+    ]
+  }
+});
+
+
 //Global before hooks
 Router.onBeforeAction(function () {
     if (!Meteor.user() && !Meteor.loggingIn()) { this.redirect("login"); this.next();} 
@@ -27,28 +36,33 @@ Router.onBeforeAction(function (){
 Router.route('login', {
         path: '/login',
         template: 'login',
+        fastRender: true,
     }); 
 
 Router.route('newuser', {
     path: '/register',
     template: 'newuser',
+    fastRender: true
 });
 
 Router.route('checkIn', {
         path: '/checkIn',
         template: 'checkIn',
         layoutTemplate: 'mainTemplate',
+        fastRender: true
  });
 
 Router.route('maraudersMap', {
         path: '/',
         template: 'maraudersMap',
         layoutTemplate: 'mainTemplate',
+        fastRender: true
  });
 
 Router.route('friends', {
         path: '/friends',
         template: 'friends',
-        layoutTemplate: 'mainTemplate'
+        layoutTemplate: 'mainTemplate',
+        fastRender: true
   });
 

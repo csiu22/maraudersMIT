@@ -1,26 +1,32 @@
 <template name="checkInOverlay">
+  <head>
+    <link href='https://fonts.googleapis.com/css?family=Metal+Mania' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Roboto+Slab' rel='stylesheet' type='text/css'>
+  </head>
+
 	<h2>{{title}}</h2>
 
 	<div id ="CheckInBox">
 		<form class="check-in-info">
-			<label> I am ~~</label>
+			Status: <input type="text" name="status" maxlength="140" placeholder="I am up to no good" />
 			<br>
-			<input type="text" name="status" maxlength="140" placeholder="up to no good" /> <label> . </label>
 			<br>
-			<label> for </label>
+			Duration (minutes): <input type="number" min="0" pattern="\d+" name="duration" value="90"/>
 			<br>
-			<!-- Keeping this in case we want to increment by half hour -->
-<!-- 			<input type="number" min="0" pattern="\d+" name="duration" value="1" step ="0.5"/> -->
-			<input type="number" min="0" pattern="\d+" name="duration" value="90"/>
 			<br>
-			<label> mins </label>
+			Availability:
 			<br>
 
-			<input type="radio" name="state" value="available" checked="checked">Available
-			<input type="radio" name="state" value="busy"> Busy
-			<br>
+				<input type="radio" name="state" value="available" checked="checked">
+				<label for="available" style="color:green">Available</label>
 
-	                	<button class="submit">Submit</button>
-		</form>
+				<input type="radio" name="state" value="busy">
+				<label for="busy" style="color:red">Busy</label>
+			<br>
+			<br>
+			<br>
+			<br>
+	  	<input type="submit" class="btn btn-default" value="Check In">
+	  </form>
 	</div>
 </template>

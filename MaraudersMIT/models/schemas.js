@@ -20,7 +20,7 @@ if (Meteor.isServer) {
     },
     "checkin": {
       type: Object,
-      defaultValue: {availability: "invisible"},
+      defaultValue: {availability: "unavailable"},
       blackbox: true,
       optional: true
     },

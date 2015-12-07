@@ -1,7 +1,6 @@
 
 //take user to their location on the map
 var userFocus = function(){
-  if(DEBUG) console.log("userFocus method");
   if(maraudersMap) {
     maraudersMap.getUserLocation(maraudersMap.setCenter);
   }
@@ -15,8 +14,11 @@ var userFocus = function(){
 
     'click #check-out': function () {
         Meteor.call("checkOut", function() {
-          console.log("finished checking out");
+          if(DEBUG) {console.log("finished checking out");}
+          maraudersMap.renderSelf();
+         if(timer) {clearInterval(timer);}
         });
+        
         alert("You have successfully checked out.");
     },
 
@@ -39,7 +41,7 @@ var userFocus = function(){
             friendNames.push("None");
           }   
         }   
-        return friendNames;
+        return friendNames.sort();
       } 
     },
   });

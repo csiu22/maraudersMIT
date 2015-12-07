@@ -1,6 +1,11 @@
 <template name = "sideBar" >
+  <head>
+    <link href='https://fonts.googleapis.com/css?family=Metal+Mania' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Roboto+Slab' rel='stylesheet' type='text/css'>
+  </head>
+
 	<div id="sidebar">
-		
+
 		<div id="profilebox">
 			<img src="{{currentUser.profile.picture}}" alt="picture">
 	      	{{> loginButtons}}
@@ -12,11 +17,20 @@
 		<!-- List my Marauder Friends -->
     		<div id="friendsList">
     			Your Marauder friends:
-    			<ul>
+    			<div class="scrollable">
+    			<ul class="list-unstyled ">
 				{{#each marauderFriends}}
-					<li> {{ this }} </li>
+					<li> <div class="friend">
+						<div class="icon {{this.status}}"> 
+
+							<img style="float: left;" src={{this.pic}} alt="" />
+							<span><p> {{ this.name }} </p> </span>
+
+						</div>
+					</div></li>
 				{{/each}}
 			</ul>
+			</div>
 		</div>
 
 
@@ -24,7 +38,7 @@
 
 
  		{{#if ifRouteIs 'friends'}}
-	
+
 			<a href="{{pathFor route='maraudersMap'}}">
 				<img id="map-icon" class="icon" src="/icons/map.png" data-toggle="tooltip" data-original-title="View Map" alt="View Map" data-placement="top" >
 			</a>
@@ -52,7 +66,7 @@
 			{{ else }}
 				<img id="check-in" class="icon" src="/icons/check-in.png" data-toggle="tooltip" data-original-title="Check In" alt="Check In" data-placement="top">
 			{{/ if}}
-			
+
 			<a href="{{pathFor route='friends'}}">
 				<img id="friends-icon" class="icon" src="/icons/Friends.png" data-toggle="tooltip" data-original-title="Manage Friends" alt="Manage Friends" data-placement="top">
 			</a>

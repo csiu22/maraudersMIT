@@ -50,7 +50,6 @@ if (Meteor.isServer) {
         user.profile = {name: name, picture: fbPic};
 
         user.facebookfriends.forEach(function(friendFB) {
-          console.log("updating with new friend");
           var isAlreadyFBFriend = false;
           var friend = Meteor.users.findOne({"services.facebook.id": friendFB.id});
           // For each friend, check to see if you are listed as a FB friend

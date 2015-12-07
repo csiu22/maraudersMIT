@@ -3,8 +3,13 @@ MILLISECONDS_IN_MINUTE = 60000;
 if (Meteor.isServer) {
   Meteor.methods({
     // Allows a user to check in to a location with an availability, text status, and a duration.
-    'checkIn': function(availability, text_status, duration, location) {
-      var checkin = {availability: availability, text_status: text_status, duration: duration, loc: location, user_id: Meteor.userId()};
+    'checkIn': function(end_time, availability, text_status, duration, location) {
+      console.log(end_time);
+      console.log(availability);
+      console.log(text_status);
+      console.log(duration);
+      console.log(location);
+      var checkin = {end_time: end_time, availability: availability, text_status: text_status, duration: duration, loc: location, user_id: Meteor.userId()};
       checkIn(checkin);
      },
 
@@ -80,12 +85,17 @@ if (Meteor.isServer) {
       if(Meteor.user() && Meteor.user().friends){
           Meteor.user().friends.forEach(function(friendId) {
           var friend = Meteor.users.findOne({_id: friendId});
-          if (friend.checkin.availability !== "invisible") {
-                locations.push({name: friend.services.facebook.name, pic: friend.picture, checkin: friend.checkin});
+          if (friend.checkin.availability !== "unavailable") {
+                locations.push({id:friendId, name: friend.services.facebook.name, pic: friend.profile.picture, checkin: friend.checkin});
           }
         });
       }
       return locations;
+    },
+
+    // Checks if the id of the given user is the current user's friend
+    'isFriend': function(givenFriendId) {
+      return Meteor.user().friends.indexOf(givenFriendId) !== -1;
     }
   });
 }
