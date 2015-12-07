@@ -45,6 +45,13 @@ var userFocus = function(){
 
  Template.sideBar.helpers({
     marauderFriends: function() {
+
+      var sortFriends = function(a, b){
+          if (a.checkin.availability === b.checkin.availability) {return 0;}
+          else if (a.checkin.availability < b.checkin.availability) {return -1;}
+          else {return 1;}
+        }
+
       if (Meteor.user()) {
         var friendNames = [];
         if(Meteor.user() && Meteor.user().friends){
@@ -56,7 +63,7 @@ var userFocus = function(){
             friendNames.push("None");
           }
         }
-        return friendNames.sort();
+        return friendNames.sort(sortFriends);
       }
     },
   });
