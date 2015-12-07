@@ -19,7 +19,6 @@
     			Your Marauder Friends
     			<div class="scrollable">
     			<ul class="list-unstyled ">
-    		 {{#unless isEmpty marauderFriends}}
 				{{#each marauderFriends}}
 					<li> <div id="clickonFriend" class="friend">
 						<div class="box {{this.checkin.availability}}">
@@ -30,7 +29,6 @@
 						</div>
 					</div></li>
 				{{/each}}
-				{{/unless}}
 			</ul>
 			</div>
 		</div>
