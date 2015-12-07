@@ -59,9 +59,7 @@ var userFocus = function(){
             var friend = Meteor.users.findOne({_id: friendId});
             friendNames.push(friend);
           });
-          if (friendNames.length === 0) {
-            friendNames.push("None");
-          }
+
         }
         return friendNames.sort(sortFriends);
       }
