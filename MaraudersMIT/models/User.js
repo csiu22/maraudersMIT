@@ -4,11 +4,6 @@ if (Meteor.isServer) {
   Meteor.methods({
     // Allows a user to check in to a location with an availability, text status, and a duration.
     'checkIn': function(end_time, availability, text_status, duration, location) {
-      console.log(end_time);
-      console.log(availability);
-      console.log(text_status);
-      console.log(duration);
-      console.log(location);
       var checkin = {end_time: end_time, availability: availability, text_status: text_status, duration: duration, loc: location, user_id: Meteor.userId()};
       checkIn(checkin);
      },
@@ -29,7 +24,6 @@ if (Meteor.isServer) {
         var requests = friend.requests;
         requests.push(Meteor.userId());
         Meteor.users.update({_id: friendId}, {$set: {requests: requests}});
-        console.log("friend request sent");
       }
     },
 
@@ -44,7 +38,6 @@ if (Meteor.isServer) {
         requests.splice(index, 1);
 
         Meteor.users.update({_id: friendId}, {$set: {requests: requests}});
-        console.log("Canceled friend request");
       // }
     },
 
@@ -59,7 +52,7 @@ if (Meteor.isServer) {
       Meteor.users.update({_id: Meteor.userId()}, {$set: {friends: friends, requests: requests}});
 
       Meteor.users.update({_id: friendId}, {$push: {friends: Meteor.userId()}});
-      console.log("accepted friend request");
+  
     },
 
     // Allows user to remove another user from their friends
@@ -76,7 +69,6 @@ if (Meteor.isServer) {
       Meteor.users.update({_id: Meteor.userId()}, {$set: {friends: friends}});
       Meteor.users.update({_id: friendId}, {$set: {friends: deletedFriends}});
 
-      console.log("friend removed");
     },
 
     // Allows a user to get all of their friends' checkins to be displayed on the map

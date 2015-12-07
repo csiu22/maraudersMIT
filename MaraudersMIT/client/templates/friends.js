@@ -2,22 +2,22 @@ if (Meteor.isClient) {
 FriendsService = {
   acceptFriendRequest: function (friendId) {
     Meteor.call('acceptFriendRequest', friendId, function() {
-      console.log("done accepting");
+
     });
   },
   sendFriendRequest: function(friendId) {
     Meteor.call('sendFriendRequest', friendId, function() {
-      console.log("done requesting");
+  
     });
   },
   removeFriend: function(friendId) {
     Meteor.call('removeFriend', friendId, function() {
-      console.log("done unfriending");
+
     });
   },
   cancelFriendRequest: function(friendId) {
     Meteor.call('cancelFriendRequest', friendId, function() {
-      console.log("done canceling");
+   
     });
   },
 
@@ -34,26 +34,21 @@ FriendsService = {
     var userList = [];
     console.log(Meteor.user());
     if( Meteor.user() && Meteor.user().facebookfriends) {
-      console.log("faceobok friends");
-      console.log(Meteor.user().facebookfriends);
+ 
       Meteor.user().facebookfriends.forEach(function(user) {
         var doneChecking = false;
         var currentFriend = Meteor.users.findOne({"services.facebook.id": user.id});
-        console.log("current Friend");
-        console.log(currentFriend);
+     
         // If the current is in our database and is a verified user
         if (currentFriend) {
           // Iterate through all of the user's app friends and check for a match
-          console.log("meteor friends");
+         
 
           if (Meteor.user().friends) {
             Meteor.user().friends.forEach(function(friendId) {
               var friend = Meteor.users.findOne({_id: friendId});
               // The current friend is also the users app friend
-              console.log("friend services facebook");
-              console.log(friend.services.facebook.id);
-              console.log("user id");
-              console.log(user.id);
+
               if (friend.services.facebook.id === user.id) {
                 userList.push({name: user.name, id: currentFriend._id, friend: true, request: false, requested: false, pic: currentFriend.profile.picture});
                 doneChecking = true;

@@ -4,7 +4,6 @@ CheckInService = {
    */
   checkInUser: function (end_time, availability, status, duration, pos) {
     Meteor.call("checkIn", end_time, availability, status, duration, pos, function() {
-      console.log("done submitting");
       maraudersMap.renderSelf();
       if(!timer) {timer = setInterval(maraudersMap.refresh, 60000);}
     });
@@ -37,7 +36,7 @@ Template.checkInOverlay.events({
         lng: position.coords.longitude
       };
 
-      console.log(end_time);
+
       CheckInService.checkInUser(end_time, availability, status, duration, pos);
     }, function() {
       console.log("error can't get location");

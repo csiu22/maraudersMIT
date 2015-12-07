@@ -13,7 +13,7 @@ Accounts.onLogin(function(err) {
 
 Template.login.events({
 	  "click #login" : function (e, tmpl) {
-      console.log("logging in");
+ 
 			Meteor.loginWithFacebook(
 				{requestPermissions: ['user_friends']}, 
 				function (err) {
@@ -32,7 +32,7 @@ Template.login.events({
 				if (err) {
 					//errorhandling
 				} else {
-					console.log("logout!");
+				
 				}
 			});
 		}

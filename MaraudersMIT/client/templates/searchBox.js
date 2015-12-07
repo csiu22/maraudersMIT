@@ -19,7 +19,7 @@ Template.searchBox.helpers({
     'click #clickOnFriend': function (event) {
 
       if (maraudersMap) {
-        console.log(event.target.attributes.friendId.nodeValue);
+       
       if (maraudersMap.markers[event.target.attributes.friendId.nodeValue]){
           maraudersMap.setCenter(maraudersMap.markers[event.target.attributes.friendId.nodeValue].position);
           }
