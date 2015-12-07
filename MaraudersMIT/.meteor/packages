@@ -33,3 +33,4 @@ mizzao:autocomplete
 sanjo:jasmine
 velocity:html-reporter
 meteorhacks:fast-render
+velocity:console-reporter
